@@ -44,7 +44,7 @@ export class AppComponent implements OnInit {
     let sq2 = new joint.shapes.basic.Circle({
       position: { x: 400, y: 200 },
       size: { width: 100, height: 50 },
-      attrs: { circle: { fill: 'black' }, text: { text: 'circ', fill: 'white' } }
+      attrs: { circle: { fill: 'black' }, text: { text: 'Circle', fill: 'white' } }
     });
 
     let rect3 = new joint.shapes.basic.Rect({
