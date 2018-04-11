@@ -14,13 +14,23 @@ export class DiagramComponent implements OnInit {
 
   ngOnInit() {
     let graph = new joint.dia.Graph;
+    let graph2 = new joint.dia.Graph;
 
     let paper = new joint.dia.Paper({
       el: jQuery("#diagram"),
       width: 700,
       height: 1000,
       model: graph,
-      gridSize: 1
+      gridSize: 1,
+    });
+
+    let paper2 = new joint.dia.Paper({
+      el: jQuery("#header"),
+      width: 700,
+      height: 100,
+      model: graph2,
+      gridSize: 1,
+      interactive: false
     });
 
 
@@ -34,7 +44,7 @@ export class DiagramComponent implements OnInit {
         type: 'basic.Polygon',
         attrs: {
           'polygon': { fill: '#FFFFFF', stroke: 'black', width: 1, height: 1 },
-          'text': { 'font-size': 14, 'ref-x': .5, 'ref-y': .5, ref: 'polygon', 'y-alignment': 'middle', 'x-alignment': 'middle' }
+          'text': { 'font-size': 14, 'font-family': 'arial', 'ref-x': .5, 'ref-y': .5, ref: 'polygon', 'y-alignment': 'middle', 'x-alignment': 'middle' }
         }
 
       }, joint.shapes.basic.Generic.prototype.defaults)
@@ -50,7 +60,7 @@ export class DiagramComponent implements OnInit {
         type: 'basic.Polygon',
         attrs: {
           'polygon': { fill: '#FFFFFF', stroke: 'black', width: 1, height: 1 },
-          'text': { 'font-size': 14, 'ref-x': .5, 'ref-y': .5, ref: 'polygon', 'y-alignment': 'middle', 'x-alignment': 'middle' }
+          'text': { 'font-size': 14, 'font-family':'arial', 'ref-x': .5, 'ref-y': .5, ref: 'polygon', 'y-alignment': 'middle', 'x-alignment': 'middle' }
         }
 
       }, joint.shapes.basic.Generic.prototype.defaults)
@@ -60,7 +70,7 @@ export class DiagramComponent implements OnInit {
     // header
 
     var trp =  new joint.shapes.basic.trapez({
-      position: { x: 0, y: 0 },
+      position: { x: 0, y: 1 },
       size: { width: 100, height: 50 },
 // attrs: { 'polygon': { transform: 'rotate(180)'}}
     });
@@ -74,7 +84,7 @@ export class DiagramComponent implements OnInit {
     });
 
     var trp2 =  new joint.shapes.basic.trapez({
-      position: { x: 200, y: 50 },
+      position: { x: 205, y: 50 },
       size: { width: 100, height: 50 },
       attrs: { 'polygon': { transform: 'rotate(180)'}}
     });
@@ -87,14 +97,14 @@ export class DiagramComponent implements OnInit {
     });
 
     let s = new joint.shapes.basic.Circle({
-      position: { x: 200, y: 0 },
+      position: { x: 210, y: 1 },
       size: { width: 100, height: 50 },
       attrs: { circle: { fill: '#33B0FF' }, text: { text: 'FOR', fill: 'white' } }
     });
 
 
     let s2 = new joint.shapes.basic.Circle({
-      position: { x: 305, y: 0 },
+      position: { x: 320, y: 1 },
       size: { width: 100, height: 50 },
       attrs: { circle: { fill: '#33FF51' }, text: { text: 'WHILE', fill: 'white' } }
     });
@@ -102,7 +112,7 @@ export class DiagramComponent implements OnInit {
 
 
     var si =  new joint.shapes.basic.six({
-      position: { x: 410, y: 0 },
+      position: { x: 430, y: 1 },
       size: { width: 100, height: 50 },
     });
     si.attr({
@@ -114,7 +124,7 @@ export class DiagramComponent implements OnInit {
     });
 
     var trp3 =  new joint.shapes.basic.trapez({
-      position: { x: 510, y: 0 },
+      position: { x: 540, y: 1 },
       size: { width: 100, height: 50 },
 // attrs: { 'polygon': { transform: 'rotate(180)'}}
     });
@@ -130,7 +140,7 @@ export class DiagramComponent implements OnInit {
     // diagram
 
     let rect = new joint.shapes.basic.Rect({
-      position: { x: 0, y: 70 },
+      position: { x: 0, y: 1 },
       size: { width: 700, height: 50 },
       attrs: { rect: { fill: 'orange' }, text: { text: 'myFunc', fill: 'white' } }
     });
@@ -259,7 +269,10 @@ export class DiagramComponent implements OnInit {
       target: { id: elseinfor.id }
     });
 
-    graph.addCells([ifinfor, elseinfor, rect, trp, si, trp2, s, s2, trp3, firstwhile, firstelse,
+    graph.addCells([ifinfor, elseinfor, rect ,firstwhile, firstelse,
       firstfor, firstif, secondwhile, secondif, link, link2, link3, link4, link5, link6, link7, link8,]);
+
+  //  header.addCells([trp,si,trp2,s,s2,trp3]);
+    graph2.addCells([trp,si,trp2,s,s2,trp3]);
   }
 }
