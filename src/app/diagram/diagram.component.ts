@@ -130,66 +130,136 @@ export class DiagramComponent implements OnInit {
     // diagram
 
     let rect = new joint.shapes.basic.Rect({
+      position: { x: 0, y: 70 },
+      size: { width: 700, height: 50 },
+      attrs: { rect: { fill: 'orange' }, text: { text: 'myFunc', fill: 'white' } }
+    });
+
+    var firstif =  new joint.shapes.basic.trapez({
       position: { x: 0, y: 200 },
-      size: { width: 100, height: 50 },
-      attrs: { rect: { fill: 'blue' }, text: { text: 'Rect', fill: 'white' } }
+      size: { width: 160, height: 50 },
+// attrs: { 'polygon': { transform: 'rotate(180)'}}
+    });
+    firstif.attr({
+      polygon: { fill: '#ffe665', 'stroke-width': 1, stroke: 'black' },
+      text: {
+        text: 'IF',
+        color: 'black'
+      }
     });
 
-    let rect2 = new joint.shapes.basic.Rect({
-      position: { x: 120, y: 200 },
-      size: { width: 100, height: 50 },
-      attrs: { rect: { fill: 'red' }, text: { text: 'Rect', fill: 'white' } }
+    var secondif =  new joint.shapes.basic.trapez({
+      position: { x: 0, y: 300 },
+      size: { width: 40, height: 50 },
+// attrs: { 'polygon': { transform: 'rotate(180)'}}
+    });
+    secondif.attr({
+
+      polygon: { fill: '#ffe665', 'stroke-width': 1, stroke: 'black' },
+      text: {
+        text: 'IF',
+        color: 'black'
+      }
     });
 
-    let sq = new joint.shapes.basic.Circle({
-      position: { x: 60, y: 100 },
-      size: { width: 100, height: 50 },
-      attrs: { circle: { fill: 'yellow' }, text: { text: 'Rect', fill: 'black' } }
+    var firstelse =  new joint.shapes.basic.trapez({
+      position: { x: 150, y: 350 },
+      size: { width: 60, height: 50 },
+      attrs: { 'polygon': { transform: 'rotate(180)'}}
+    });
+    firstelse.attr({
+      polygon: { fill: '#FFA533', 'stroke-width': 1, stroke: 'black' },
+      text: {
+        text: 'ELSE'
+      }
     });
 
-    let sq2 = new joint.shapes.basic.Circle({
-      position: { x: 400, y: 200 },
-      size: { width: 100, height: 50 },
-      attrs: { circle: { fill: 'black' }, text: { text: 'Circle', fill: 'white' } }
+    let firstwhile = new joint.shapes.basic.Circle({
+      position: { x: 160, y: 200 },
+      size: { width: 160, height: 50 },
+      attrs: { circle: { fill: '#33FF51' }, text: { text: 'WHILE', fill: 'white' } }
     });
 
-    let rect3 = new joint.shapes.basic.Rect({
-      position: { x: 340, y: 400 },
-      size: { width: 100, height: 50 },
-      attrs: { rect: { fill: 'blue' }, text: { text: 'Rect', fill: 'white' } }
+    let firstfor = new joint.shapes.basic.Circle({
+      position: { x: 170, y: 300 },
+      size: { width: 140, height: 50 },
+      attrs: { circle: { fill: '#33B0FF' }, text: { text: 'FOR', fill: 'white' } }
     });
 
-    let rect4 = new joint.shapes.basic.Rect({
-      position: { x: 460, y: 400 },
-      size: { width: 100, height: 50 },
-      attrs: { rect: { fill: 'red' }, text: { text: 'Rect', fill: 'white' } }
+    var ifinfor =  new joint.shapes.basic.trapez({
+      position: { x: 170, y: 400 },
+      size: { width: 40, height: 50 },
+// attrs: { 'polygon': { transform: 'rotate(180)'}}
     });
+    ifinfor.attr({
+
+      polygon: { fill: '#ffe665', 'stroke-width': 1, stroke: 'black' },
+      text: {
+        text: 'IF',
+        color: 'black'
+      }
+    });
+
+    var elseinfor =  new joint.shapes.basic.trapez({
+      position: { x: 300, y: 450 },
+      size: { width: 40, height: 50 },
+      attrs: { 'polygon': { transform: 'rotate(180)'}}
+    });
+    elseinfor.attr({
+      polygon: { fill: '#FFA533', 'stroke-width': 1, stroke: 'black' },
+      text: {
+        text: 'ELSE'
+      }
+    });
+
+    let secondwhile = new joint.shapes.basic.Circle({
+      position: { x: 330, y: 200 },
+      size: { width: 370, height: 50 },
+      attrs: { circle: { fill: '#33FF51' }, text: { text: 'WHILE', fill: 'white' } }
+    });
+
 
     var link = new joint.dia.Link({
-      source: { id: rect.id },
-      target: { id: rect2.id }
-    });
-    var link2 = new joint.dia.Link({
-      source: { id: rect2.id },
-      target: { id: sq.id }
-    });
-    var link3 = new joint.dia.Link({
-      source: { id: rect.id },
-      target: { id: sq.id }
-    });
-    var link4 = new joint.dia.Link({
-      source: { id: sq2.id },
-      target: { id: rect3.id }
-    });
-    var link5 = new joint.dia.Link({
-      source: { id: sq2.id },
-      target: { id: rect4.id }
-    });
-    var link6 = new joint.dia.Link({
-      source: { id: rect2.id },
-      target: { id: sq2.id }
+      source: { id: firstif.id },
+      target: { id: secondif.id }
     });
 
-    graph.addCells([rect, rect2, link, sq, link2, link3, sq2, rect3, rect4, link4, link5, link6, trp,si,trp2,s,s2,trp3]);
+    var link2 = new joint.dia.Link({
+      source: { id: firstif.id },
+      target: { id: firstelse.id }
+    });
+
+    var link3 = new joint.dia.Link({
+      source: { id: firstwhile.id },
+      target: { id: firstfor.id }
+    });
+
+    var link4 = new joint.dia.Link({
+      source: { id: rect.id },
+      target: { id: firstif.id }
+    });
+
+    var link5 = new joint.dia.Link({
+      source: { id: rect.id },
+      target: { id: firstwhile.id }
+    });
+
+    var link6 = new joint.dia.Link({
+      source: { id: rect.id },
+      target: { id: secondwhile.id }
+    });
+
+    var link7 = new joint.dia.Link({
+      source: { id: firstfor.id },
+      target: { id: ifinfor.id }
+    });
+
+    var link8 = new joint.dia.Link({
+      source: { id: firstfor.id },
+      target: { id: elseinfor.id }
+    });
+
+    graph.addCells([ifinfor, elseinfor, rect, trp, si, trp2, s, s2, trp3, firstwhile, firstelse,
+      firstfor, firstif, secondwhile, secondif, link, link2, link3, link4, link5, link6, link7, link8,]);
   }
 }
