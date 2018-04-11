@@ -14,7 +14,6 @@ export class DiagramComponent implements OnInit {
 
   ngOnInit() {
     let graph = new joint.dia.Graph;
-    let graph2 = new joint.dia.Graph;
 
     let paper = new joint.dia.Paper({
       el: jQuery("#diagram"),
@@ -24,14 +23,6 @@ export class DiagramComponent implements OnInit {
       gridSize: 1,
     });
 
-    let paper2 = new joint.dia.Paper({
-      el: jQuery("#header"),
-      width: 700,
-      height: 100,
-      model: graph2,
-      gridSize: 1,
-      interactive: false
-    });
 
 
 
@@ -67,75 +58,7 @@ export class DiagramComponent implements OnInit {
     });
 
 
-    // header
 
-    var trp =  new joint.shapes.basic.trapez({
-      position: { x: 0, y: 1 },
-      size: { width: 100, height: 50 },
-// attrs: { 'polygon': { transform: 'rotate(180)'}}
-    });
-    trp.attr({
-
-      polygon: { fill: '#ffe665', 'stroke-width': 1, stroke: 'black' },
-      text: {
-        text: 'IF',
-        color: 'black'
-      }
-    });
-
-    var trp2 =  new joint.shapes.basic.trapez({
-      position: { x: 205, y: 50 },
-      size: { width: 100, height: 50 },
-      attrs: { 'polygon': { transform: 'rotate(180)'}}
-    });
-    trp2.attr({
-
-      polygon: { fill: '#FFA533', 'stroke-width': 1, stroke: 'black' },
-      text: {
-        text: 'ELSE'
-      }
-    });
-
-    let s = new joint.shapes.basic.Circle({
-      position: { x: 210, y: 1 },
-      size: { width: 100, height: 50 },
-      attrs: { circle: { fill: '#33B0FF' }, text: { text: 'FOR', fill: 'white' } }
-    });
-
-
-    let s2 = new joint.shapes.basic.Circle({
-      position: { x: 320, y: 1 },
-      size: { width: 100, height: 50 },
-      attrs: { circle: { fill: '#33FF51' }, text: { text: 'WHILE', fill: 'white' } }
-    });
-
-
-
-    var si =  new joint.shapes.basic.six({
-      position: { x: 430, y: 1 },
-      size: { width: 100, height: 50 },
-    });
-    si.attr({
-
-      polygon: { fill: '#FF3333', 'stroke-width': 1, stroke: 'black' },
-      text: {
-        text: 'SWITCH'
-      }
-    });
-
-    var trp3 =  new joint.shapes.basic.trapez({
-      position: { x: 540, y: 1 },
-      size: { width: 100, height: 50 },
-// attrs: { 'polygon': { transform: 'rotate(180)'}}
-    });
-    trp3.attr({
-
-      polygon: { fill: '#792fff', 'stroke-width': 1, stroke: 'black' },
-      text: {
-        text: 'CASE',
-        color: 'white'
-      }
-    });
 
     // diagram
 
@@ -272,7 +195,5 @@ export class DiagramComponent implements OnInit {
     graph.addCells([ifinfor, elseinfor, rect ,firstwhile, firstelse,
       firstfor, firstif, secondwhile, secondif, link, link2, link3, link4, link5, link6, link7, link8,]);
 
-  //  header.addCells([trp,si,trp2,s,s2,trp3]);
-    graph2.addCells([trp,si,trp2,s,s2,trp3]);
   }
 }
