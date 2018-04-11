@@ -13,19 +13,21 @@ export class DiagramComponent implements OnInit {
   title = 'ICSD';
 
   ngOnInit() {
-    let graph = new joint.dia.Graph;
-    let graph2 = new joint.dia.Graph;
+    const graph = new joint.dia.Graph;
+    const graph2 = new joint.dia.Graph;
 
-    let paper = new joint.dia.Paper({
-      el: jQuery("#diagram"),
+    const paper = new joint.dia.Paper({
+      el: jQuery('#diagram'),
       width: 700,
       height: 1000,
       model: graph,
       gridSize: 1,
+      interactive: function(cellView, method) {
+        return !(cellView instanceof joint.dia.LinkView); }
     });
 
-    let paper2 = new joint.dia.Paper({
-      el: jQuery("#header"),
+    const paper2 = new joint.dia.Paper({
+      el: jQuery('#header'),
       width: 700,
       height: 100,
       model: graph2,
@@ -44,7 +46,8 @@ export class DiagramComponent implements OnInit {
         type: 'basic.Polygon',
         attrs: {
           'polygon': { fill: '#FFFFFF', stroke: 'black', width: 1, height: 1 },
-          'text': { 'font-size': 14, 'font-family': 'arial', 'ref-x': .5, 'ref-y': .5, ref: 'polygon', 'y-alignment': 'middle', 'x-alignment': 'middle' }
+          'text': { 'font-size': 14, 'font-family': 'arial', 'ref-x': .5, 'ref-y': .5,
+            ref: 'polygon', 'y-alignment': 'middle', 'x-alignment': 'middle' }
         }
 
       }, joint.shapes.basic.Generic.prototype.defaults)
@@ -60,7 +63,8 @@ export class DiagramComponent implements OnInit {
         type: 'basic.Polygon',
         attrs: {
           'polygon': { fill: '#FFFFFF', stroke: 'black', width: 1, height: 1 },
-          'text': { 'font-size': 14, 'font-family':'arial', 'ref-x': .5, 'ref-y': .5, ref: 'polygon', 'y-alignment': 'middle', 'x-alignment': 'middle' }
+          'text': { 'font-size': 14, 'font-family': 'arial', 'ref-x': .5,
+            'ref-y': .5, ref: 'polygon', 'y-alignment': 'middle', 'x-alignment': 'middle' }
         }
 
       }, joint.shapes.basic.Generic.prototype.defaults)
@@ -69,7 +73,7 @@ export class DiagramComponent implements OnInit {
 
     // header
 
-    var trp =  new joint.shapes.basic.trapez({
+    const trp =  new joint.shapes.basic.trapez({
       position: { x: 0, y: 1 },
       size: { width: 100, height: 50 },
 // attrs: { 'polygon': { transform: 'rotate(180)'}}
@@ -83,7 +87,7 @@ export class DiagramComponent implements OnInit {
       }
     });
 
-    var trp2 =  new joint.shapes.basic.trapez({
+    const trp2 =  new joint.shapes.basic.trapez({
       position: { x: 205, y: 50 },
       size: { width: 100, height: 50 },
       attrs: { 'polygon': { transform: 'rotate(180)'}}
@@ -96,14 +100,14 @@ export class DiagramComponent implements OnInit {
       }
     });
 
-    let s = new joint.shapes.basic.Circle({
+    const s = new joint.shapes.basic.Circle({
       position: { x: 210, y: 1 },
       size: { width: 100, height: 50 },
       attrs: { circle: { fill: '#33B0FF' }, text: { text: 'FOR', fill: 'white' } }
     });
 
 
-    let s2 = new joint.shapes.basic.Circle({
+    const s2 = new joint.shapes.basic.Circle({
       position: { x: 320, y: 1 },
       size: { width: 100, height: 50 },
       attrs: { circle: { fill: '#33FF51' }, text: { text: 'WHILE', fill: 'white' } }
@@ -111,7 +115,7 @@ export class DiagramComponent implements OnInit {
 
 
 
-    var si =  new joint.shapes.basic.six({
+    const si =  new joint.shapes.basic.six({
       position: { x: 430, y: 1 },
       size: { width: 100, height: 50 },
     });
@@ -123,7 +127,7 @@ export class DiagramComponent implements OnInit {
       }
     });
 
-    var trp3 =  new joint.shapes.basic.trapez({
+    const trp3 =  new joint.shapes.basic.trapez({
       position: { x: 540, y: 1 },
       size: { width: 100, height: 50 },
 // attrs: { 'polygon': { transform: 'rotate(180)'}}
@@ -139,13 +143,13 @@ export class DiagramComponent implements OnInit {
 
     // diagram
 
-    let rect = new joint.shapes.basic.Rect({
+    const rect = new joint.shapes.basic.Rect({
       position: { x: 0, y: 1 },
       size: { width: 700, height: 50 },
       attrs: { rect: { fill: 'orange' }, text: { text: 'myFunc', fill: 'white' } }
     });
 
-    var firstif =  new joint.shapes.basic.trapez({
+    const firstif =  new joint.shapes.basic.trapez({
       position: { x: 0, y: 200 },
       size: { width: 160, height: 50 },
 // attrs: { 'polygon': { transform: 'rotate(180)'}}
@@ -158,7 +162,7 @@ export class DiagramComponent implements OnInit {
       }
     });
 
-    var secondif =  new joint.shapes.basic.trapez({
+    const secondif =  new joint.shapes.basic.trapez({
       position: { x: 0, y: 300 },
       size: { width: 40, height: 50 },
 // attrs: { 'polygon': { transform: 'rotate(180)'}}
@@ -172,7 +176,7 @@ export class DiagramComponent implements OnInit {
       }
     });
 
-    var firstelse =  new joint.shapes.basic.trapez({
+    const firstelse =  new joint.shapes.basic.trapez({
       position: { x: 150, y: 350 },
       size: { width: 60, height: 50 },
       attrs: { 'polygon': { transform: 'rotate(180)'}}
@@ -184,19 +188,19 @@ export class DiagramComponent implements OnInit {
       }
     });
 
-    let firstwhile = new joint.shapes.basic.Circle({
+    const firstwhile = new joint.shapes.basic.Circle({
       position: { x: 160, y: 200 },
       size: { width: 160, height: 50 },
       attrs: { circle: { fill: '#33FF51' }, text: { text: 'WHILE', fill: 'white' } }
     });
 
-    let firstfor = new joint.shapes.basic.Circle({
+    const firstfor = new joint.shapes.basic.Circle({
       position: { x: 170, y: 300 },
       size: { width: 140, height: 50 },
       attrs: { circle: { fill: '#33B0FF' }, text: { text: 'FOR', fill: 'white' } }
     });
 
-    var ifinfor =  new joint.shapes.basic.trapez({
+    const ifinfor =  new joint.shapes.basic.trapez({
       position: { x: 170, y: 400 },
       size: { width: 40, height: 50 },
 // attrs: { 'polygon': { transform: 'rotate(180)'}}
@@ -210,7 +214,7 @@ export class DiagramComponent implements OnInit {
       }
     });
 
-    var elseinfor =  new joint.shapes.basic.trapez({
+    const elseinfor =  new joint.shapes.basic.trapez({
       position: { x: 300, y: 450 },
       size: { width: 40, height: 50 },
       attrs: { 'polygon': { transform: 'rotate(180)'}}
@@ -222,57 +226,56 @@ export class DiagramComponent implements OnInit {
       }
     });
 
-    let secondwhile = new joint.shapes.basic.Circle({
+    const secondwhile = new joint.shapes.basic.Circle({
       position: { x: 330, y: 200 },
       size: { width: 370, height: 50 },
       attrs: { circle: { fill: '#33FF51' }, text: { text: 'WHILE', fill: 'white' } }
     });
 
 
-    var link = new joint.dia.Link({
+    const link = new joint.dia.Link({
       source: { id: firstif.id },
       target: { id: secondif.id }
     });
 
-    var link2 = new joint.dia.Link({
+    const link2 = new joint.dia.Link({
       source: { id: firstif.id },
       target: { id: firstelse.id }
     });
 
-    var link3 = new joint.dia.Link({
+    const link3 = new joint.dia.Link({
       source: { id: firstwhile.id },
       target: { id: firstfor.id }
     });
 
-    var link4 = new joint.dia.Link({
+    const link4 = new joint.dia.Link({
       source: { id: rect.id },
       target: { id: firstif.id }
     });
 
-    var link5 = new joint.dia.Link({
+    const link5 = new joint.dia.Link({
       source: { id: rect.id },
       target: { id: firstwhile.id }
     });
 
-    var link6 = new joint.dia.Link({
+    const link6 = new joint.dia.Link({
       source: { id: rect.id },
       target: { id: secondwhile.id }
     });
 
-    var link7 = new joint.dia.Link({
+    const link7 = new joint.dia.Link({
       source: { id: firstfor.id },
       target: { id: ifinfor.id }
     });
 
-    var link8 = new joint.dia.Link({
+     const link8 = new joint.dia.Link({
       source: { id: firstfor.id },
       target: { id: elseinfor.id }
     });
 
-    graph.addCells([ifinfor, elseinfor, rect ,firstwhile, firstelse,
-      firstfor, firstif, secondwhile, secondif, link, link2, link3, link4, link5, link6, link7, link8,]);
+    graph2.addCells([trp, si, trp2, s, s2, trp3]);
+    graph.addCells([rect, ifinfor, elseinfor, firstwhile, firstelse,
+      firstfor, firstif, secondwhile, secondif, link, link2, link3, link4, link5, link6, link7, link8]);
 
-  //  header.addCells([trp,si,trp2,s,s2,trp3]);
-    graph2.addCells([trp,si,trp2,s,s2,trp3]);
   }
 }
