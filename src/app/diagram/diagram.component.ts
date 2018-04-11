@@ -22,6 +22,7 @@ export class DiagramComponent implements OnInit {
       height: 1000,
       model: graph,
       gridSize: 1,
+      interactive: false
     });
 
     let paper2 = new joint.dia.Paper({
