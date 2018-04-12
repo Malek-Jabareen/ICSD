@@ -13,8 +13,9 @@ export class DiagramComponent implements OnInit {
   title = 'ICSD';
 
   ngOnInit() {
+
     const graph = new joint.dia.Graph;
-    const graph2 = new joint.dia.Graph;
+
 
     const paper = new joint.dia.Paper({
       el: jQuery('#diagram'),
@@ -26,14 +27,7 @@ export class DiagramComponent implements OnInit {
         return !(cellView instanceof joint.dia.LinkView); }
     });
 
-    const paper2 = new joint.dia.Paper({
-      el: jQuery('#header'),
-      width: 700,
-      height: 100,
-      model: graph2,
-      gridSize: 1,
-      interactive: false
-    });
+
 
 
 
@@ -71,75 +65,8 @@ export class DiagramComponent implements OnInit {
     });
 
 
-    // header
-
-    const trp =  new joint.shapes.basic.trapez({
-      position: { x: 0, y: 1 },
-      size: { width: 100, height: 50 },
-// attrs: { 'polygon': { transform: 'rotate(180)'}}
-    });
-    trp.attr({
-
-      polygon: { fill: '#ffe665', 'stroke-width': 1, stroke: 'black' },
-      text: {
-        text: 'IF',
-        color: 'black'
-      }
-    });
-
-    const trp2 =  new joint.shapes.basic.trapez({
-      position: { x: 205, y: 50 },
-      size: { width: 100, height: 50 },
-      attrs: { 'polygon': { transform: 'rotate(180)'}}
-    });
-    trp2.attr({
-
-      polygon: { fill: '#FFA533', 'stroke-width': 1, stroke: 'black' },
-      text: {
-        text: 'ELSE'
-      }
-    });
-
-    const s = new joint.shapes.basic.Circle({
-      position: { x: 210, y: 1 },
-      size: { width: 100, height: 50 },
-      attrs: { circle: { fill: '#33B0FF' }, text: { text: 'FOR', fill: 'white' } }
-    });
 
 
-    const s2 = new joint.shapes.basic.Circle({
-      position: { x: 320, y: 1 },
-      size: { width: 100, height: 50 },
-      attrs: { circle: { fill: '#33FF51' }, text: { text: 'WHILE', fill: 'white' } }
-    });
-
-
-
-    const si =  new joint.shapes.basic.six({
-      position: { x: 430, y: 1 },
-      size: { width: 100, height: 50 },
-    });
-    si.attr({
-
-      polygon: { fill: '#FF3333', 'stroke-width': 1, stroke: 'black' },
-      text: {
-        text: 'SWITCH'
-      }
-    });
-
-    const trp3 =  new joint.shapes.basic.trapez({
-      position: { x: 540, y: 1 },
-      size: { width: 100, height: 50 },
-// attrs: { 'polygon': { transform: 'rotate(180)'}}
-    });
-    trp3.attr({
-
-      polygon: { fill: '#792fff', 'stroke-width': 1, stroke: 'black' },
-      text: {
-        text: 'CASE',
-        color: 'white'
-      }
-    });
 
     // diagram
 
