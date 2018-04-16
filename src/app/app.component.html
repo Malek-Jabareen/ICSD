@@ -1,11 +1,12 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div style="text-align:center; margin: auto">
 <h1>Interactive Control Structure Diagram</h1>
-<table>
+
+<table align="center">
+  <tr > <button class="clear" (click)="hideDiagram()">Hide Func</button>-//-<button class="clear" (click)="showDiagram()">Show Func</button> </tr>
   <tr>
-    <td style="width:500px; vertical-align:top;"><app-form></app-form></td>
-    <td style="width:500px; vertical-align:top;"><app-diagram></app-diagram></td>
+   <div *ngIf="hide"><td style="width:500px; vertical-align:top;"><app-form></app-form></td></div>
+    <td><app-diagram></app-diagram></td>
   </tr>
 </table>
-
 </div>

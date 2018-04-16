@@ -2,7 +2,9 @@ import { Component, OnInit  } from '@angular/core';
 import * as jQuery from 'jquery';
 import * as _ from 'lodash';
 import * as $ from 'backbone';
+import {getExpressionScope} from '@angular/compiler-cli';
 const joint = require('../../../node_modules/jointjs/dist/joint.js');
+
 
 @Component({
   selector: 'app-diagram',
@@ -12,24 +14,26 @@ const joint = require('../../../node_modules/jointjs/dist/joint.js');
 export class DiagramComponent implements OnInit {
   title = 'ICSD';
 
-  ngOnInit() {
+ngOnInit() {
+
+
     const graph = new joint.dia.Graph;
     const graph2 = new joint.dia.Graph;
-
     const paper = new joint.dia.Paper({
       el: jQuery('#diagram'),
-      width: 700,
+      gridSize: 10,
+      width: 920,
       height: 1000,
       model: graph,
-      gridSize: 1,
       interactive: function(cellView, method) {
         return !(cellView instanceof joint.dia.LinkView); }
     });
 
+
     const paper2 = new joint.dia.Paper({
       el: jQuery('#header'),
-      width: 700,
-      height: 100,
+      width: 920,
+      height: 120,
       model: graph2,
       gridSize: 1,
       interactive: false
