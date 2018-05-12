@@ -3,6 +3,7 @@ import * as jQuery from 'jquery';
 import * as _ from 'lodash';
 import * as $ from 'backbone';
 import {getExpressionScope} from '@angular/compiler-cli';
+import {V} from 'jointjs';
 const joint = require('../../../node_modules/jointjs/dist/joint.js');
 
 
@@ -17,6 +18,70 @@ export class DiagramComponent implements OnInit {
 ngOnInit() {
 
 
+  joint.dia.LightLinkView = joint.dia.CellView.extend({
+    node: V('<path class="connection" fill="none" />'),
+
+    init: function() {
+      this.vel.attr({
+        'class': 'link',
+        'model-id': this.model.id
+      });
+    },
+
+    render: function() {
+
+      const model = this.model;
+      this._sourceModel = model.getSourceElement();
+      this._targetModel = model.getTargetElement();
+
+      this._sourceModel.on('change:position', this.update, this);
+      this._targetModel.on('change:position', this.update, this);
+
+      this.listenTo(model, 'change:vertices change:color change:thickness', this.update);
+
+      const node = this._pathNode = this.node.clone();
+      V(this.el).append(node);
+
+      this.update();
+    },
+
+    update: function() {
+
+      let sourcePosition = this._sourceModel.get('position');
+      let targetPosition = this._targetModel.get('position');
+      const node = this._pathNode;
+      const model = this.model;
+
+      if (sourcePosition && targetPosition) {
+
+        const sourceSize = this._sourceModel.get('size');
+        const targetSize = this._targetModel.get('size');
+
+        sourcePosition = {
+          x: targetPosition.x + targetSize.width / 2,
+          y: sourcePosition.y + sourceSize.height
+        };
+        targetPosition = {
+          x: targetPosition.x + targetSize.width / 2,
+          y: targetPosition.y
+        };
+
+        const connector = (model.get('smooth')) ? 'smooth' : 'normal';
+
+        node.attr('d', joint.connectors[connector](
+          sourcePosition,
+          targetPosition,
+          model.get('vertices') || []
+        ));
+      }
+
+      node.attr({
+        'stroke': model.get('color') || 'black',
+        'stroke-width': model.get('thickness') || 1
+      });
+    }
+  });
+
     const graph = new joint.dia.Graph;
     const graph2 = new joint.dia.Graph;
     const paper = new joint.dia.Paper({
@@ -25,8 +90,10 @@ ngOnInit() {
       width: 920,
       height: 1000,
       model: graph,
-      interactive: function(cellView, method) {
-        return !(cellView instanceof joint.dia.LinkView); }
+      linkView: joint.dia.LightLinkView,
+      interactive: false
+     // interactive: function(cellView, method) {
+       // return !(cellView instanceof joint.dia.LinkView); }
     });
 
 
@@ -57,6 +124,21 @@ ngOnInit() {
       }, joint.shapes.basic.Generic.prototype.defaults)
     });
 
+  joint.shapes.basic.trapezR = joint.shapes.basic.Generic.extend({
+
+    markup: '<g class="rotatable"><g class="scalable"><polygon points="0,0 200,0 180,100 20,100"/></g><text/></g>',
+
+    defaults: joint.util.deepSupplement({
+
+      type: 'basic.Polygon',
+      attrs: {
+        'polygon': { fill: '#FFFFFF', stroke: 'black', width: 1, height: 1 },
+        'text': { 'font-size': 14, 'font-family': 'arial', 'ref-x': .5, 'ref-y': .5,
+          ref: 'polygon', 'y-alignment': 'middle', 'x-alignment': 'middle' }
+      }
+
+    }, joint.shapes.basic.Generic.prototype.defaults)
+  });
 
     joint.shapes.basic.six = joint.shapes.basic.Generic.extend({
 
@@ -148,14 +230,14 @@ ngOnInit() {
     // diagram
 
     const rect = new joint.shapes.basic.Rect({
-      position: { x: 0, y: 1 },
-      size: { width: 700, height: 50 },
+      position: { x: 3, y: 3 },
+      size: { width: 900, height: 50 },
       attrs: { rect: { fill: 'orange' }, text: { text: 'myFunc', fill: 'white' } }
     });
 
     const firstif =  new joint.shapes.basic.trapez({
-      position: { x: 0, y: 200 },
-      size: { width: 160, height: 50 },
+      position: { x: 3, y: 105 },
+      size: { width: 272, height: 50 },
 // attrs: { 'polygon': { transform: 'rotate(180)'}}
     });
     firstif.attr({
@@ -167,8 +249,8 @@ ngOnInit() {
     });
 
     const secondif =  new joint.shapes.basic.trapez({
-      position: { x: 0, y: 300 },
-      size: { width: 40, height: 50 },
+      position: { x: 41, y: 210 },
+      size: { width: 77, height: 50 },
 // attrs: { 'polygon': { transform: 'rotate(180)'}}
     });
     secondif.attr({
@@ -180,10 +262,9 @@ ngOnInit() {
       }
     });
 
-    const firstelse =  new joint.shapes.basic.trapez({
-      position: { x: 150, y: 350 },
-      size: { width: 60, height: 50 },
-      attrs: { 'polygon': { transform: 'rotate(180)'}}
+    const firstelse =  new joint.shapes.basic.trapezR({
+      position: { x: 118, y: 210 },
+      size: { width: 119, height: 50 },
     });
     firstelse.attr({
       polygon: { fill: '#FFA533', 'stroke-width': 1, stroke: 'black' },
@@ -193,20 +274,20 @@ ngOnInit() {
     });
 
     const firstwhile = new joint.shapes.basic.Circle({
-      position: { x: 160, y: 200 },
-      size: { width: 160, height: 50 },
+      position: { x: 275, y: 105 },
+      size: { width: 272, height: 50 },
       attrs: { circle: { fill: '#33FF51' }, text: { text: 'WHILE', fill: 'white' } }
     });
 
     const firstfor = new joint.shapes.basic.Circle({
-      position: { x: 170, y: 300 },
-      size: { width: 140, height: 50 },
+      position: { x: 295, y: 210 },
+      size: { width: 232, height: 50 },
       attrs: { circle: { fill: '#33B0FF' }, text: { text: 'FOR', fill: 'white' } }
     });
 
     const ifinfor =  new joint.shapes.basic.trapez({
-      position: { x: 170, y: 400 },
-      size: { width: 40, height: 50 },
+      position: { x: 318, y: 315 },
+      size: { width: 93, height: 50 },
 // attrs: { 'polygon': { transform: 'rotate(180)'}}
     });
     ifinfor.attr({
@@ -218,10 +299,9 @@ ngOnInit() {
       }
     });
 
-    const elseinfor =  new joint.shapes.basic.trapez({
-      position: { x: 300, y: 450 },
-      size: { width: 40, height: 50 },
-      attrs: { 'polygon': { transform: 'rotate(180)'}}
+    const elseinfor =  new joint.shapes.basic.trapezR({
+      position: { x: 411, y: 315 },
+      size: { width: 93, height: 50 },
     });
     elseinfor.attr({
       polygon: { fill: '#FFA533', 'stroke-width': 1, stroke: 'black' },
@@ -231,8 +311,8 @@ ngOnInit() {
     });
 
     const secondwhile = new joint.shapes.basic.Circle({
-      position: { x: 330, y: 200 },
-      size: { width: 370, height: 50 },
+      position: { x: 547, y: 105 },
+      size: { width: 356, height: 50 },
       attrs: { circle: { fill: '#33FF51' }, text: { text: 'WHILE', fill: 'white' } }
     });
 
@@ -253,8 +333,8 @@ ngOnInit() {
     });
 
     const link4 = new joint.dia.Link({
-      source: { id: rect.id },
-      target: { id: firstif.id }
+      source: { id: rect.id } ,
+      target: { id: firstif.id, port: 'in' } ,
     });
 
     const link5 = new joint.dia.Link({
