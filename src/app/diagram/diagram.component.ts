@@ -81,7 +81,6 @@ ngOnInit() {
       });
     }
   });
-
     const graph = new joint.dia.Graph;
     const graph2 = new joint.dia.Graph;
     const paper = new joint.dia.Paper({
@@ -91,13 +90,12 @@ ngOnInit() {
       height: 1000,
       model: graph,
       linkView: joint.dia.LightLinkView,
-      interactive: false
-     // interactive: function(cellView, method) {
-       // return !(cellView instanceof joint.dia.LinkView); }
+      /*interactive: function(cellView, method) {
+        return !(cellView instanceof joint.dia.ElementView );*/
     });
 
-
-    const paper2 = new joint.dia.Paper({
+  paper.setInteractivity({elementMove: false});
+  const paper2 = new joint.dia.Paper({
       el: jQuery('#header'),
       width: 920,
       height: 120,
