@@ -4,3 +4,13 @@ body {
   margin: 10px;
   line-height: 23px;
 }
+button.clear {
+  font-family: Arial;
+  font-size: large;
+  background-color: #eee;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  cursor: hand;
+}

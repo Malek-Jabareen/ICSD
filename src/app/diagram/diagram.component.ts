@@ -1,9 +1,11 @@
-import { Component, OnInit  } from '@angular/core';
+import { Component, OnInit, Input  } from '@angular/core';
 import * as jQuery from 'jquery';
+import { Ast } from '../Ast';
 import * as _ from 'lodash';
 import * as $ from 'backbone';
 import {getExpressionScope} from '@angular/compiler-cli';
 import {V} from 'jointjs';
+import {build$} from 'protractor/built/element';
 const joint = require('../../../node_modules/jointjs/dist/joint.js');
 
 
@@ -12,12 +14,12 @@ const joint = require('../../../node_modules/jointjs/dist/joint.js');
   templateUrl: './diagram.component.html',
   styleUrls: ['./diagram.component.css']
 })
+
 export class DiagramComponent implements OnInit {
   title = 'ICSD';
+  @Input() functionText = '';
 
 ngOnInit() {
-
-
   joint.dia.LightLinkView = joint.dia.CellView.extend({
     node: V('<path class="connection" fill="none" />'),
 
@@ -83,15 +85,15 @@ ngOnInit() {
   });
     const graph = new joint.dia.Graph;
     const graph2 = new joint.dia.Graph;
-    const paper = new joint.dia.Paper({
+    /*const paper = new joint.dia.Paper({
       el: jQuery('#diagram'),
       gridSize: 10,
       width: 920,
       height: 1000,
       model: graph,
       linkView: joint.dia.LightLinkView,
-      /*interactive: function(cellView, method) {
-        return !(cellView instanceof joint.dia.ElementView );*/
+      interactive: function(cellView, method) {
+        return !(cellView instanceof joint.dia.ElementView );
     });
 
   paper.setInteractivity({elementMove: false});
@@ -102,9 +104,7 @@ ngOnInit() {
       model: graph2,
       gridSize: 1,
       interactive: false
-    });
-
-
+    });*/
 
     joint.shapes.basic.trapez = joint.shapes.basic.Generic.extend({
 
@@ -158,8 +158,8 @@ ngOnInit() {
     // header
 
     const trp =  new joint.shapes.basic.trapez({
-      position: { x: 0, y: 1 },
-      size: { width: 100, height: 50 },
+      position: { x: 20, y: 1 },
+      size: { width: 110, height: 50 },
 // attrs: { 'polygon': { transform: 'rotate(180)'}}
     });
     trp.attr({
@@ -171,37 +171,34 @@ ngOnInit() {
       }
     });
 
-    const trp2 =  new joint.shapes.basic.trapez({
-      position: { x: 205, y: 50 },
-      size: { width: 100, height: 50 },
-      attrs: { 'polygon': { transform: 'rotate(180)'}}
+    const trp2 =  new joint.shapes.basic.trapezR({
+      position: { x: 170, y: 1 },
+      size: { width: 110 , height: 50 },
     });
-    trp2.attr({
-
-      polygon: { fill: '#FFA533', 'stroke-width': 1, stroke: 'black' },
-      text: {
-        text: 'ELSE'
-      }
-    });
-
+  trp2.attr({
+    polygon: { fill: '#FFA533', 'stroke-width': 1, stroke: 'black' },
+    text: {
+      text: 'ELSE'
+    }
+  });
     const s = new joint.shapes.basic.Circle({
-      position: { x: 210, y: 1 },
-      size: { width: 100, height: 50 },
+      position: { x: 320, y: 1 },
+      size: { width: 110, height: 50 },
       attrs: { circle: { fill: '#33B0FF' }, text: { text: 'FOR', fill: 'white' } }
     });
 
 
     const s2 = new joint.shapes.basic.Circle({
-      position: { x: 320, y: 1 },
-      size: { width: 100, height: 50 },
+      position: { x: 470, y: 1 },
+      size: { width: 110, height: 50 },
       attrs: { circle: { fill: '#33FF51' }, text: { text: 'WHILE', fill: 'white' } }
     });
 
 
 
     const si =  new joint.shapes.basic.six({
-      position: { x: 430, y: 1 },
-      size: { width: 100, height: 50 },
+      position: { x: 620, y: 1 },
+      size: { width: 110, height: 50 },
     });
     si.attr({
 
@@ -212,7 +209,7 @@ ngOnInit() {
     });
 
     const trp3 =  new joint.shapes.basic.trapez({
-      position: { x: 540, y: 1 },
+      position: { x: 770, y: 1 },
       size: { width: 100, height: 50 },
 // attrs: { 'polygon': { transform: 'rotate(180)'}}
     });
@@ -358,6 +355,299 @@ ngOnInit() {
     graph2.addCells([trp, si, trp2, s, s2, trp3]);
     graph.addCells([rect, ifinfor, elseinfor, firstwhile, firstelse,
       firstfor, firstif, secondwhile, secondif, link, link2, link3, link4, link5, link6, link7, link8]);
+  }
+  build(Qer: Ast , num: number , graph: joint.dia.Graph , rect: joint.shapes.basic.Generic , c: number ) {
+    joint.shapes.basic.trapez = joint.shapes.basic.Generic.extend({
 
+      markup: '<g class="rotatable"><g class="scalable"><polygon points="20,0 180,0 200,100 0,100"/></g><text/></g>',
+
+      defaults: joint.util.deepSupplement({
+
+        type: 'basic.Polygon',
+        attrs: {
+          'polygon': { fill: '#FFFFFF', stroke: 'black', width: 1, height: 1 },
+          'text': { 'font-size': 14, 'font-family': 'arial', 'ref-x': .5, 'ref-y': .5,
+            ref: 'polygon', 'y-alignment': 'middle', 'x-alignment': 'middle' }
+        }
+
+      }, joint.shapes.basic.Generic.prototype.defaults)
+    });
+
+    joint.shapes.basic.trapezR = joint.shapes.basic.Generic.extend({
+
+      markup: '<g class="rotatable"><g class="scalable"><polygon points="0,0 200,0 180,100 20,100"/></g><text/></g>',
+
+      defaults: joint.util.deepSupplement({
+
+        type: 'basic.Polygon',
+        attrs: {
+          'polygon': { fill: '#FFFFFF', stroke: 'black', width: 1, height: 1 },
+          'text': { 'font-size': 14, 'font-family': 'arial', 'ref-x': .5, 'ref-y': .5,
+            ref: 'polygon', 'y-alignment': 'middle', 'x-alignment': 'middle' }
+        }
+
+      }, joint.shapes.basic.Generic.prototype.defaults)
+    });
+    let qq: Ast;
+    qq = Qer;
+    let ww = 0;
+    for (let i = 0 ; i < qq.ref.length; i++) {
+      ww = ww + parseInt(qq.ref[i].info, 10 );
+    }
+    for (let i = 0 ; i < qq.ref.length; i++) {
+      if ( /* contains */qq.ref[i].text.toLowerCase().indexOf('for') !== -1) {
+        const s = new joint.shapes.basic.Circle({
+          position: { x: c, y: num * 55 + 50 * num },
+          size: { width: ( parseInt(qq.ref[i].info, 10 ) / ww ) * rect.size().width , height: 50 },
+          attrs: { circle: { fill: '#33B0FF' }, text: { text: 'FOR', fill: 'white' } }
+        });
+        const link = new joint.dia.Link({
+          source: { id: rect.id },
+          target: { id: s.id }
+        });
+        graph.addCells([s, link ]);
+        if ( qq.ref[i].ref !== null ) {
+          this.build(qq.ref[i], num + 1, graph, s, c);
+        }
+        c = c + ( parseInt(qq.ref[i].info, 10 ) / ww ) * rect.size().width;
+      } else {
+        if ( /* contains */qq.ref[i].text.toLowerCase().indexOf('while') !== -1) {
+          const s = new joint.shapes.basic.Circle({
+            position: { x: c, y: num * 55 + 50 * num },
+            size: { width: ( parseInt(qq.ref[i].info, 10 ) / ww ) * rect.size().width , height: 50 },
+            attrs: { circle: { fill: '#33FF51' }, text: { text: 'WHILE', fill: 'white' } }
+          });
+          const link = new joint.dia.Link({
+            source: { id: rect.id },
+            target: { id: s.id }
+          });
+          graph.addCells([s, link ]);
+          if ( qq.ref[i].ref !== null ) {
+            this.build(qq.ref[i], num + 1, graph, s, c);
+          }
+          c = c + ( parseInt(qq.ref[i].info, 10 ) / ww ) * rect.size().width;
+        } else {
+          if ( /* contains */qq.ref[i].text.toLowerCase().indexOf('if') !== -1) {
+            const s =  new joint.shapes.basic.trapez({
+              position: { x: c, y: num * 55 + 50 * num },
+              size: { width: ( parseInt(qq.ref[i].info, 10 ) / ww ) * rect.size().width , height: 50 },
+            });
+            s.attr({
+
+              polygon: { fill: '#ffe665', 'stroke-width': 1, stroke: 'black' },
+              text: {
+                text: 'IF',
+                color: 'black'
+              }
+            });
+            const link = new joint.dia.Link({
+              source: { id: rect.id },
+              target: { id: s.id }
+            });
+            graph.addCells([s, link ]);
+            if ( qq.ref[i].ref !== null ) {
+              this.build(qq.ref[i], num + 1, graph, s, c);
+            }
+            c = c + ( parseInt(qq.ref[i].info, 10 ) / ww ) * rect.size().width;
+          } else {
+            if ( /* contains */qq.ref[i].text.toLowerCase().indexOf('else') !== -1) {
+              const s =  new joint.shapes.basic.trapezR({
+                position: { x: c, y: num * 55 + 50 * num },
+                size: { width: ( parseInt(qq.ref[i].info, 10 ) / ww ) * rect.size().width , height: 50 },
+              });
+              s.attr({
+                polygon: { fill: '#FFA533', 'stroke-width': 1, stroke: 'black' },
+                text: {
+                  text: 'ELSE'
+                }
+              });
+              const link = new joint.dia.Link({
+                source: { id: rect.id },
+                target: { id: s.id }
+              });
+              graph.addCells([s, link ]);
+              if ( qq.ref[i].ref !== null ) {
+                this.build(qq.ref[i], num + 1, graph, s, c);
+              }
+              c = c + ( parseInt(qq.ref[i].info, 10 ) / ww ) * rect.size().width;
+            } else {
+              if ( /* contains */qq.ref[i].text.toLowerCase().indexOf('switch') !== -1) {
+                const s =  new joint.shapes.basic.six({
+                  position: { x: c, y: num * 55 + 50 * num },
+                  size: { width: ( parseInt(qq.ref[i].info, 10 ) / ww ) * rect.size().width , height: 50 },
+                });
+                s.attr({
+
+                  polygon: { fill: '#FF3333', 'stroke-width': 1, stroke: 'black' },
+                  text: {
+                    text: 'SWITCH'
+                  }
+                });
+                const link = new joint.dia.Link({
+                  source: { id: rect.id },
+                  target: { id: s.id }
+                });
+                graph.addCells([s, link ]);
+                if ( qq.ref[i].ref !== null ) {
+                  this.build(qq.ref[i], num + 1, graph, s, c);
+                }
+                c = c + ( parseInt(qq.ref[i].info, 10 ) / ww ) * rect.size().width;
+              } else {
+                c = c + ( parseInt(qq.ref[i].info, 10 ) / ww ) * rect.size().width;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  alirt() {
+    const strx  = 'ast[] x; if(this.ref!=null){ x=new ast[this.ref.length+1]; }' +
+      ' else{x=new ast[1];}int i=0; if(this.ref!=null){for (i = 0; i < this.ref.length;' +
+      ' i++){x[i]=this.ref[i];}}x[i]=new ast();x[i].info=function.info;x[i].text=function.text;x[i].textq=function.textq;' +
+      'if(function.ref!=null){x[i].ref=new ast[function.ref.length];for (int j = 0; j < function.ref.length; j++)' +
+      '{x[i].ref[j]=function.ref[j];}}this.ref=x;return this;';
+    const ssss = 'if(x=2){x++;y++;if(z){y--;q+0;}else{w++;w++;w=w+8;q--;}s+=8;z--;}while(true){' +
+      '  x++;for(dd){  w+2;if(wer){q--;m+2;}else{q+1; w++;} l--;}r++;}while(f)' +
+      '{q++;w++;e++;r++;t++;y++;a++;s++;d++;f++;g++;v++;c++;x++;z++;k++;}';
+    const alonAdoni = '\t\tString[] wordsTemp1 = s1.split(" ");\n' +
+      '\t\tString[] wordsTemp2 = s2.split(" ");\n' +
+      '\t\tString[] words1 = new String[wordsTemp1.length];\n' +
+      '\t\tString[] words2 = new String[wordsTemp2.length];\n' +
+      '\t\t\n' +
+      '\t\tint wcounter1=0;\n' +
+      '\t\tint wcounter2=0;\n' +
+      '\t\tfor (int ) {\n' +
+      '\t\t\tif (!wordsTemp1.equals("")) {\n' +
+      '\t\t\t\twords1[x] = wordsTemp1[x];\n' +
+      '\t\t\t\twcounter1++;\n' +
+      'for (int ) {\n' +
+      '\t\t\tif (!wordsTemp1.equals("")) {\n' +
+      '\t\t\t\twords1[x] = wordsTemp1[x];\n' +
+      '\t\t\t\twcounter1++;\n' +
+      '\t\t\t}\n' +
+      '\t\t}\n' +
+      'for (int ) {\n' +
+      '\t\t\tif (!wordsTemp1.equals("")) {\n' +
+      '\t\t\t\twords1[x] = wordsTemp1[x];\n' +
+      '\t\t\t\twcounter1++;\n' +
+      '\t\t\t}\n' +
+      '\t\t}\n' +
+      'for (int ) {\n' +
+      'for (int ) {\n' +
+      '\t\t\tif (!wordsTemp1.equals("")) {\n' +
+      '\t\t\t\twords1[x] = wordsTemp1[x];\n' +
+      '\t\t\t\twcounter1++;\n' +
+      '\t\t\t}\n' +
+      '\t\t}\n' +
+      '\t\t\tif (!wordsTemp1.equals("")) {\n' +
+      '\t\t\t\twords1[x] = wordsTemp1[x];\n' +
+      '\t\t\t\twcounter1++;\n' +
+      '\t\t\t}\n' +
+      '\t\t}\n' +
+      '\t\t\t}\n' +
+      '\t\t}\n' +
+      '\t\tfor (int ) {\n' +
+      'String[] wordsTemp1 = s1.split(" ");\n' +
+      '\t\tString[] wordsTemp2 = s2.split(" ");\n' +
+      '\t\tString[] words1 = new String[wordsTemp1.length];\n' +
+      '\t\t\tif (!wordsTemp2.equals("")) {\n' +
+      '\t\t\t\twords2[x] = wordsTemp2[x];\n' +
+      '\t\t\t\twcounter2++;\n' +
+      'for (int ) {\n' +
+      'String[] wordsTemp1 = s1.split(" ");\n' +
+      '\t\tString[] wordsTemp2 = s2.split(" ");\n' +
+      '\t\tString[] words1 = new String[wordsTemp1.length];\n' +
+      '\t\t\tif (!wordsTemp2.equals("")) {\n' +
+      '\t\t\t\twords2[x] = wordsTemp2[x];\n' +
+      '\t\t\t\twcounter2++;\n' +
+      '\t\t\t}\n' +
+      '\t\t}for (int ) {\n' +
+      'String[] wordsTemp1 = s1.split(" ");\n' +
+      '\t\tString[] wordsTemp2 = s2.split(" ");\n' +
+      '\t\tString[] words1 = new String[wordsTemp1.length];\n' +
+      '\t\t\tif (!wordsTemp2.equals("")) {\n' +
+      '\t\t\t\twords2[x] = wordsTemp2[x];\n' +
+      '\t\t\t\twcounter2++;\n' +
+      '\t\t\t}\n' +
+      'if (!wordsTemp2.equals("")) {\n' +
+      '\t\t\t\twords2[x] = wordsTemp2[x];\n' +
+      '\t\t\t\twcounter2++;\n' +
+      '\t\t\t}\n' +
+      'if (!wordsTemp2.equals("")) {\n' +
+      '\t\t\t\twords2[x] = wordsTemp2[x];\n' +
+      '\t\t\t\twcounter2++;\n' +
+      '\t\t\t}\n' +
+      '\t\t}\n' +
+      '\t\t\t}\n' +
+      '\t\t}\n' +
+      '\t\t\n' +
+      '\t\tString newString = "";\n' +
+      '\t\t\n' +
+      '\t\tfor (int ) {\n' +
+      '\t\t\tfor (int y) {\n' +
+      '\t\t\t\tif (words1[x].equals(words2[y])) {\n' +
+      '\t\t\t\t\tnewString=newString + " " + words1[x];\n' +
+      '\t\t\t\t}\n' +
+      'if (!wordsTemp2.equals("")) {\n' +
+      '\t\t\t\twords2[x] = wordsTemp2[x];\n' +
+      '\t\t\t\twcounter2++;\n' +
+      '\t\t\t}\n' +
+      'if (!wordsTemp2.equals("")) {\n' +
+      '\t\t\t\twords2[x] = wordsTemp2[x];\n' +
+      '\t\t\t\twcounter2++;\n' +
+      '\t\t\t}\n' +
+      '\t\t\t}\n' +
+      'for (int ) {\n' +
+      '\t\t\tfor (int ) {\n' +
+      '\t\t\t\tif (words1[x].equals(words2[y])) {\n' +
+      '\t\t\t\t\tnewString=newString + " " + words1[x];\n' +
+      '\t\t\t\t}\n' +
+      'if (!wordsTemp2.equals("")) {\n' +
+      '\t\t\t\twords2[x] = wordsTemp2[x];\n' +
+      '\t\t\t\twcounter2++;\n' +
+      '\t\t\t}\n' +
+      'if (!wordsTemp2.equals("")) {\n' +
+      '\t\t\t\twords2[x] = wordsTemp2[x];\n' +
+      '\t\t\t\twcounter2++;\n' +
+      '\t\t\t}\n' +
+      '\t\t\t}\n' +
+      '\t\t}\n' +
+      '\t\t}\n' +
+      '\t\t\n' +
+      '\t\tSystem.out.println(newString.trim());\n' +
+      '\t\t\n' +
+      '\tSystem.out.println(newString.trim());\n' +
+      'System.out.println(newString.trim());\n' +
+      'System.out.println(newString.trim());';
+    const graph = new joint.dia.Graph;
+    const paper = new joint.dia.Paper({
+      el: jQuery('#diagramXXX'),
+      gridSize: 10,
+      width: 920,
+      height: 1000,
+      model: graph,
+      linkView: joint.dia.LightLinkView,
+      /*interactive: function(cellView, method) {
+        return !(cellView instanceof joint.dia.ElementView );*/
+    });
+    paper.setInteractivity({elementMove: false});
+    if (this.functionText !== '') {
+     let funcName = '';
+     funcName = this.functionText.substring( 0 , this.functionText.indexOf('('));
+     const a = funcName.split(' ');
+     funcName = a[a.length - 1 ];
+      const rect = new joint.shapes.basic.Rect({
+        position: {x: 3, y: 3},
+        size: {width: 900, height: 50},
+        attrs: {rect: {fill: 'orange'}, text: {text: funcName, fill: 'white'}}
+      });
+      this.functionText = this.functionText.substring(this.functionText.indexOf('{') + 1, this.functionText.lastIndexOf('}'));
+      graph.addCells([rect]);
+      let qq: Ast;
+      qq = null;
+      qq = Ast.build(this.functionText);
+      this.build(qq, 1, graph, rect, 3);
+    }
   }
 }
