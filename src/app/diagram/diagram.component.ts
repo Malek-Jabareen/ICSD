@@ -59,9 +59,46 @@ ngOnInit() {
         const sourceSize = this._sourceModel.get('size');
         const targetSize = this._targetModel.get('size');
 
+        const x0 = sourcePosition.x + sourceSize.width / 2;
+        const y0 = sourcePosition.y + sourceSize.height / 2;
+        const x = targetPosition.x + targetSize.width / 2;
+        const a = sourceSize.width / 2 ;
+        const b = sourceSize.height / 2 ;
+        let q = sourcePosition.y + sourceSize.height;
+        if ( this._sourceModel.attr('text/text') === ('WHILE' ) ) {
+          q = Math.sqrt( 1 - (Math.pow( ( x - x0 ) , 2 ) ) / Math.pow( a , 2 )) * b + y0;
+        }
+        if ( this._sourceModel.attr('text/text') === ('FOR' ) ) {
+          q = Math.sqrt( 1 - (Math.pow( ( x - x0 ) , 2 ) ) / Math.pow( a , 2 )) * b + y0;
+        }
+        if ( this._sourceModel.attr('text/text') === ('ELSE' ) ) {
+          if ( x < sourcePosition.x + 0.1 * sourceSize.width ) {
+            const  m = (sourcePosition.y - (sourcePosition.y + sourceSize.height))
+              / (sourcePosition.x - (sourcePosition.x + 0.1 * sourceSize.width) ) ;
+            q = m * ((targetPosition.x + targetSize.width / 2 ) - sourcePosition.x ) + sourcePosition.y ;
+          }
+          if ( x > sourcePosition.x + 0.9 * sourceSize.width ) {
+            const m1 = (sourcePosition.y - (sourcePosition.y + sourceSize.height))
+              / ((sourcePosition.x + sourceSize.width ) - (sourcePosition.x + 0.9 * sourceSize.width) ) ;
+            q = m1 * ((targetPosition.x + targetSize.width / 2 ) - (sourcePosition.x + sourceSize.width ) ) + sourcePosition.y ;
+          }
+        }
+        if ( this._sourceModel.attr('text/text') === ('SWITCH' ) ) {
+          if ( x < sourcePosition.x + 0.25 * sourceSize.width ) {
+            const  m = ((sourcePosition.y + sourceSize.height / 2 ) - (sourcePosition.y + sourceSize.height))
+              / (sourcePosition.x - (sourcePosition.x + 0.25 * sourceSize.width) ) ;
+            q = m * ((targetPosition.x + targetSize.width / 2 ) - sourcePosition.x ) + (sourcePosition.y + sourceSize.height / 2 );
+          }
+          if ( x > sourcePosition.x + 0.75 * sourceSize.width ) {
+            const  m = ((sourcePosition.y + sourceSize.height / 2 ) - (sourcePosition.y + sourceSize.height))
+              / ((sourcePosition.x + sourceSize.width ) - (sourcePosition.x + 0.75 * sourceSize.width) ) ;
+            q = m * ((targetPosition.x + targetSize.width / 2 ) - (sourcePosition.x + sourceSize.width ) )
+              + (sourcePosition.y + sourceSize.height / 2 );
+          }
+        }
         sourcePosition = {
           x: targetPosition.x + targetSize.width / 2,
-          y: sourcePosition.y + sourceSize.height
+          y: q
         };
         targetPosition = {
           x: targetPosition.x + targetSize.width / 2,
@@ -78,8 +115,8 @@ ngOnInit() {
       }
 
       node.attr({
-        'stroke': model.get('color') || 'black',
-        'stroke-width': model.get('thickness') || 1
+        'stroke': 'black',
+        'stroke-width': 0.3
       });
     }
   });
@@ -403,7 +440,7 @@ ngOnInit() {
         });
         const link = new joint.dia.Link({
           source: { id: rect.id },
-          target: { id: s.id }
+          target: { id: s.id },
         });
         graph.addCells([s, link ]);
         if ( qq.ref[i].ref !== null ) {
@@ -419,7 +456,7 @@ ngOnInit() {
           });
           const link = new joint.dia.Link({
             source: { id: rect.id },
-            target: { id: s.id }
+            target: { id: s.id },
           });
           graph.addCells([s, link ]);
           if ( qq.ref[i].ref !== null ) {
@@ -642,11 +679,11 @@ ngOnInit() {
         size: {width: 900, height: 50},
         attrs: {rect: {fill: 'orange'}, text: {text: funcName, fill: 'white'}}
       });
-      this.functionText = this.functionText.substring(this.functionText.indexOf('{') + 1, this.functionText.lastIndexOf('}'));
       graph.addCells([rect]);
       let qq: Ast;
       qq = null;
-      qq = Ast.build(this.functionText);
+      funcName = this.functionText.substring(this.functionText.indexOf('{') + 1, this.functionText.lastIndexOf('}'));
+      qq = Ast.build(funcName);
       this.build(qq, 1, graph, rect, 3);
     }
   }

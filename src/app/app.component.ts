@@ -148,6 +148,7 @@ export class AppComponent implements OnInit {
         color: 'white'
       }
     });
+
     graph.addCells([trp, si, trp2, s, s2, trp3]);
   }
   build() {
