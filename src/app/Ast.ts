@@ -15,18 +15,35 @@ export class Ast {
     let functionx: Ast = new Ast();
     let str = __function;
     const txtq = '';
-    str = __function.replace(new RegExp('(for)([^;])*(;)([^;])*(;)([^\\)])*\\)', 'g'), 'for()');
+     str = /* replace */str.split('\n').join('#');
     str = /* replace */str.split(';').join(';#');
     str = /* replace */str.split('{').join('#{#');
     str = /* replace */str.split('}').join('#}#');
-    const stt: string[] = str.split('#');
+    let stt: string[] = str.split('#');
+     let c = 0;
+    for (let i = 0; i < stt.length; i++) {
+      if (!/* equals */(<any>((o1: any, o2: any) => { if (o1 && o1.equals) {
+          return o1.equals(o2); } else { return o1 === o2; } })(stt[i].trim(), ''))) {
+        c++;
+      }
+    }
+     const strq: string[] = new Array(c);
+    let ind = 0;
+     for (let i = 0; i < stt.length; i++) {
+       if (!/* equals */(<any>((o1: any, o2: any) => { if (o1 && o1.equals) {
+         return o1.equals(o2); } else { return o1 === o2; } })(stt[i].trim(), ''))) {
+         strq[ind] = stt[i];
+         ind++;
+       }
+     }
+     stt = strq;
     let count = 0;
     let cq = 0;
     let cin = 0;
     let stq = '';
     funcx.textq = '';
     for (let i = 0; i < stt.length; i++) {
-      if (/* contains */stt[i].indexOf(';') !== -1) {
+      if (/* contains */stt[i].indexOf(';') !== -1 && /* contains */stt[i].toLowerCase().indexOf('default') === -1 ) {
         count++;
         stq += stt[i] + ' ';
       }
@@ -43,12 +60,16 @@ export class Ast {
           funcx.info = '1';
           funcx.text = 'for';
           funcx.ref = null;
+          if (/* contains */stt[i + 1].indexOf(';') !== -1) {
+            funcx.textq += '\n' + stt[i + 1];
+            i++;
+          }
           functionx = functionx.add(funcx);
         } else {
           for (let j: number = i + 1; j < stt.length; j++) {
             if (/* contains */stt[j].indexOf('{') !== -1) {
               if (cq !== 0) {
-                funcx.textq += stt[j];
+                funcx.textq += '\n' + stt[j];
               }
               cq++;
             } else {
@@ -58,7 +79,12 @@ export class Ast {
                   funcx.info = cin + '';
                   funcx.text = 'for';
                   funcx.ref = null;
-                  if (/* contains */funcx.textq.indexOf('{') !== -1) { funcx.ref = this.build(funcx.textq).ref; }
+                  if (/* contains */funcx.textq.indexOf('{') !== -1 || /* contains */funcx.textq.toLowerCase().indexOf('case') !== -1
+                  || /* contains */funcx.textq.toLowerCase().indexOf('for') !== -1
+                  || /* contains */funcx.textq.toLowerCase().indexOf('if') !== -1
+                  || /* contains */funcx.textq.toLowerCase().indexOf('else') !== -1
+                  || /* contains */funcx.textq.toLowerCase().indexOf('switch') !== -1
+                  || /* contains */funcx.textq.toLowerCase().indexOf('while') !== -1) { funcx.ref = this.build(funcx.textq).ref; }
                   functionx = functionx.add(funcx);
                   cin = 0;
                   cq = 0;
@@ -66,7 +92,7 @@ export class Ast {
                   funcx.textq = '';
                   break;
                 } else {
-                  funcx.textq += stt[j];
+                  funcx.textq += '\n' + stt[j];
                 }
               } else {
                 if (!(/* equals */(<any>((o1: any, o2: any) => {
@@ -74,7 +100,7 @@ export class Ast {
                       return o1 === o2; } })(stt[j], '')) || /* equals */(<any>((o1: any, o2: any) => { if (o1 && o1.equals) {
                     return o1.equals(o2); } else { return o1 === o2; } })(stt[j], ' ')))) {
                   cin++;
-                  funcx.textq += stt[j];
+                  funcx.textq += '\n' + stt[j];
                 }
               }
             }
@@ -94,12 +120,16 @@ export class Ast {
           funcx.info = '1';
           funcx.text = 'if';
           funcx.ref = null;
+          if (/* contains */stt[i + 1].indexOf(';') !== -1) {
+            funcx.textq += '\n' + stt[i + 1];
+            i++;
+          }
           functionx = functionx.add(funcx);
         } else {
           for (let j: number = i + 1; j < stt.length; j++) {
             if (/* contains */stt[j].indexOf('{') !== -1) {
               if (cq !== 0) {
-                funcx.textq += stt[j];
+                funcx.textq += '\n' + stt[j];
               }
               cq++;
             } else {
@@ -109,7 +139,12 @@ export class Ast {
                   funcx.info = cin + '';
                   funcx.text = 'if';
                   funcx.ref = null;
-                  if (/* contains */funcx.textq.indexOf('{') !== -1) { funcx.ref = this.build(funcx.textq).ref; }
+                  if (/* contains */funcx.textq.indexOf('{') !== -1 || /* contains */funcx.textq.toLowerCase().indexOf('case') !== -1
+                  || /* contains */funcx.textq.toLowerCase().indexOf('for') !== -1
+                  || /* contains */funcx.textq.toLowerCase().indexOf('if') !== -1
+                  || /* contains */funcx.textq.toLowerCase().indexOf('else') !== -1
+                  || /* contains */funcx.textq.toLowerCase().indexOf('switch') !== -1
+                  || /* contains */funcx.textq.toLowerCase().indexOf('while') !== -1) { funcx.ref = this.build(funcx.textq).ref; }
                   functionx = functionx.add(funcx);
                   cin = 0;
                   cq = 0;
@@ -117,7 +152,7 @@ export class Ast {
                   funcx.textq = '';
                   break;
                 } else {
-                  funcx.textq += stt[j];
+                  funcx.textq += '\n' + stt[j];
                 }
               } else {
                 if (!(/* equals */(<any>((o1: any, o2: any) => {
@@ -125,7 +160,7 @@ export class Ast {
                       return o1 === o2; } })(stt[j], '')) || /* equals */(<any>((o1: any, o2: any) => { if (o1 && o1.equals) {
                     return o1.equals(o2); } else { return o1 === o2; } })(stt[j], ' ')))) {
                   cin++;
-                  funcx.textq += stt[j];
+                  funcx.textq += '\n' + stt[j];
                 }
               }
             }
@@ -145,12 +180,16 @@ export class Ast {
           funcx.info = '1';
           funcx.text = 'while';
           funcx.ref = null;
+          if (/* contains */stt[i + 1].indexOf(';') !== -1) {
+            funcx.textq += '\n' + stt[i + 1];
+            i++;
+          }
           functionx = functionx.add(funcx);
         } else {
           for (let j: number = i + 1; j < stt.length; j++) {
             if (/* contains */stt[j].indexOf('{') !== -1) {
               if (cq !== 0) {
-                funcx.textq += stt[j];
+                funcx.textq += '\n' + stt[j];
               }
               cq++;
             } else {
@@ -160,7 +199,12 @@ export class Ast {
                   funcx.info = cin + '';
                   funcx.text = 'while';
                   funcx.ref = null;
-                  if (/* contains */funcx.textq.indexOf('{') !== -1) { funcx.ref = this.build(funcx.textq).ref; }
+                  if (/* contains */funcx.textq.indexOf('{') !== -1 || /* contains */funcx.textq.toLowerCase().indexOf('case') !== -1
+                  || /* contains */funcx.textq.toLowerCase().indexOf('for') !== -1
+                  || /* contains */funcx.textq.toLowerCase().indexOf('if') !== -1
+                  || /* contains */funcx.textq.toLowerCase().indexOf('else') !== -1
+                  || /* contains */funcx.textq.toLowerCase().indexOf('switch') !== -1
+                  || /* contains */funcx.textq.toLowerCase().indexOf('while') !== -1) { funcx.ref = this.build(funcx.textq).ref; }
                   functionx = functionx.add(funcx);
                   cin = 0;
                   cq = 0;
@@ -168,7 +212,7 @@ export class Ast {
                   funcx.textq = '';
                   break;
                 } else {
-                  funcx.textq += stt[j];
+                  funcx.textq += '\n' + stt[j];
                 }
               } else {
                 if (!(/* equals */(<any>((o1: any, o2: any) => {
@@ -176,7 +220,7 @@ export class Ast {
                       return o1 === o2; } })(stt[j], '')) || /* equals */(<any>((o1: any, o2: any) => { if (o1 && o1.equals) {
                     return o1.equals(o2); } else { return o1 === o2; } })(stt[j], ' ')))) {
                   cin++;
-                  funcx.textq += stt[j];
+                  funcx.textq += '\n' + stt[j];
                 }
               }
             }
@@ -201,7 +245,7 @@ export class Ast {
           for (let j: number = i + 1; j < stt.length; j++) {
             if (/* contains */stt[j].indexOf('{') !== -1) {
               if (cq !== 0) {
-                funcx.textq += stt[j];
+                funcx.textq += '\n' + stt[j];
               }
               cq++;
             } else {
@@ -211,7 +255,12 @@ export class Ast {
                   funcx.info = cin + '';
                   funcx.text = 'switch';
                   funcx.ref = null;
-                  if (/* contains */funcx.textq.indexOf('{') !== -1) { funcx.ref = this.build(funcx.textq).ref; }
+                  if (/* contains */funcx.textq.indexOf('{') !== -1 || /* contains */funcx.textq.toLowerCase().indexOf('case') !== -1
+                  || /* contains */funcx.textq.toLowerCase().indexOf('for') !== -1
+                  || /* contains */funcx.textq.toLowerCase().indexOf('if') !== -1
+                  || /* contains */funcx.textq.toLowerCase().indexOf('else') !== -1
+                  || /* contains */funcx.textq.toLowerCase().indexOf('switch') !== -1
+                  || /* contains */funcx.textq.toLowerCase().indexOf('while') !== -1) { funcx.ref = this.build(funcx.textq).ref; }
                   functionx = functionx.add(funcx);
                   cin = 0;
                   cq = 0;
@@ -219,7 +268,7 @@ export class Ast {
                   funcx.textq = '';
                   break;
                 } else {
-                  funcx.textq += stt[j];
+                  funcx.textq += '\n' + stt[j];
                 }
               } else {
                 if (!(/* equals */(<any>((o1: any, o2: any) => {
@@ -227,12 +276,133 @@ export class Ast {
                       return o1 === o2; } })(stt[j], '')) || /* equals */(<any>((o1: any, o2: any) => { if (o1 && o1.equals) {
                     return o1.equals(o2); } else { return o1 === o2; } })(stt[j], ' ')))) {
                   cin++;
-                  funcx.textq += stt[j];
+                  funcx.textq += '\n' + stt[j];
                 }
               }
             }
           }
         }
+      }
+      if (/* contains */stt[i].toLowerCase().indexOf('case') !== -1) {
+        if (count !== 0) {
+          funcx.info = count + '';
+          funcx.text = 'Variable Deceleration';
+          funcx.ref = null;
+          functionx = functionx.add(funcx);
+          count = 0;
+          stq = '';
+        }
+        if (/* contains */stt[i + 1].toLowerCase().indexOf('break') !== -1) {
+          funcx.info = '1';
+          funcx.text = 'case';
+          funcx.textq = stt[i + 1];
+          funcx.ref = null;
+          functionx = functionx.add(funcx);
+        } else {
+          for (let j: number = i + 1; j < stt.length; j++) {
+            if (/* contains */stt[j].toLowerCase().indexOf('break') !== -1) {
+              funcx.info = cin + '';
+              funcx.text = 'case';
+              funcx.textq += stt[j];
+              funcx.ref = null;
+              if (/* contains */funcx.textq.indexOf('{') !== -1 || /* contains */funcx.textq.toLowerCase().indexOf('case') !== -1
+              || /* contains */funcx.textq.toLowerCase().indexOf('for') !== -1
+              || /* contains */funcx.textq.toLowerCase().indexOf('if') !== -1
+              || /* contains */funcx.textq.toLowerCase().indexOf('else') !== -1
+              || /* contains */funcx.textq.toLowerCase().indexOf('switch') !== -1
+              || /* contains */funcx.textq.toLowerCase().indexOf('while') !== -1) { funcx.ref = this.build(funcx.textq).ref; }
+              functionx = functionx.add(funcx);
+              cin = 0;
+              cq = 0;
+              i = j;
+              funcx.textq = '';
+              break;
+            } else {
+             if ( j === stt.length - 1 || /* contains */stt[j + 1].toLowerCase().indexOf('case') !== -1
+               || /* contains */stt[j + 1].toLowerCase().indexOf('default') !== -1 ) {
+                funcx.info = cin + '';
+                funcx.text = 'case';
+                funcx.textq += stt[j];
+                funcx.ref = null;
+                if (/* contains */funcx.textq.indexOf('{') !== -1 || /* contains */funcx.textq.toLowerCase().indexOf('case') !== -1
+                || /* contains */funcx.textq.toLowerCase().indexOf('for') !== -1
+                || /* contains */funcx.textq.toLowerCase().indexOf('if') !== -1
+                || /* contains */funcx.textq.toLowerCase().indexOf('else') !== -1
+                || /* contains */funcx.textq.toLowerCase().indexOf('switch') !== -1
+                || /* contains */funcx.textq.toLowerCase().indexOf('while') !== -1) {
+                  funcx.ref = this.build(funcx.textq).ref;
+                }
+                functionx = functionx.add(funcx);
+                cin = 0;
+                cq = 0;
+                i = j;
+                funcx.textq = '';
+                break;
+              } else {
+              if (!(/* equals */(<any>((o1: any, o2: any) => {
+                  if (o1 && o1.equals) {
+                    return o1.equals(o2);
+                  } else {
+                    return o1 === o2;
+                  }
+                })(stt[j], '')) || /* equals */(<any>((o1: any, o2: any) => {
+                  if (o1 && o1.equals) {
+                    return o1.equals(o2);
+                  } else {
+                    return o1 === o2;
+                  }
+                })(stt[j], ' ')))) {
+                cin++;
+                funcx.textq += stt[j];
+              }
+            }
+            }
+          }
+        }
+      }
+      if (/* contains */stt[i].toLowerCase().indexOf('default') !== -1) {
+        if (count !== 0) {
+          funcx.info = count + '';
+          funcx.text = 'Variable Deceleration';
+          funcx.ref = null;
+          functionx = functionx.add(funcx);
+          count = 0;
+          stq = '';
+        }
+          for (let j: number = i + 1 ; j < stt.length; j++) {
+            if (j === stt.length - 1 ) {
+              if (!(/* equals */(<any>((o1: any, o2: any) => { if (o1 && o1.equals) {
+                  return o1.equals(o2); } else {
+                  return o1 === o2; } })(stt[j], '')) || /* equals */(<any>((o1: any, o2: any) => {
+                  if (o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(stt[j], ' ')))) {
+                cin++;
+                funcx.textq += stt[j];
+              }
+              funcx.info = cin + '';
+              funcx.text = 'case';
+              funcx.ref = null;
+              if (/* contains */funcx.textq.indexOf('{') !== -1 || /* contains */funcx.textq.toLowerCase().indexOf('case') !== -1
+              || /* contains */funcx.textq.toLowerCase().indexOf('for') !== -1
+              || /* contains */funcx.textq.toLowerCase().indexOf('if') !== -1
+              || /* contains */funcx.textq.toLowerCase().indexOf('else') !== -1
+              || /* contains */funcx.textq.toLowerCase().indexOf('switch') !== -1
+              || /* contains */funcx.textq.toLowerCase().indexOf('while') !== -1) { funcx.ref = this.build(funcx.textq).ref; }
+              functionx = functionx.add(funcx);
+              cin = 0;
+              cq = 0;
+              i = j;
+              funcx.textq = '';
+              break;
+            } else {
+              if (!(/* equals */(<any>((o1: any, o2: any) => { if (o1 && o1.equals) {
+                  return o1.equals(o2); } else {
+                  return o1 === o2; } })(stt[j], '')) || /* equals */(<any>((o1: any, o2: any) => {
+                  if (o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(stt[j], ' ')))) {
+                cin++;
+                funcx.textq += stt[j];
+              }
+            }
+          }
       }
       if (/* contains */stt[i].toLowerCase().indexOf('else') !== -1) {
         if (count !== 0) {
@@ -247,12 +417,16 @@ export class Ast {
           funcx.info = '1';
           funcx.text = 'else';
           funcx.ref = null;
+          if (/* contains */stt[i + 1].indexOf(';') !== -1) {
+            funcx.textq += '\n' + stt[i + 1];
+            i++;
+          }
           functionx = functionx.add(funcx);
         } else {
           for (let j: number = i + 1; j < stt.length; j++) {
             if (/* contains */stt[j].indexOf('{') !== -1) {
               if (cq !== 0) {
-                funcx.textq += stt[j];
+                funcx.textq += '\n' + stt[j];
               }
               cq++;
             } else {
@@ -262,7 +436,12 @@ export class Ast {
                   funcx.info = cin + '';
                   funcx.text = 'else';
                   funcx.ref = null;
-                  if (/* contains */funcx.textq.indexOf('{') !== -1) { funcx.ref = this.build(funcx.textq).ref; }
+                  if (/* contains */funcx.textq.indexOf('{') !== -1 || /* contains */funcx.textq.toLowerCase().indexOf('case') !== -1
+                  || /* contains */funcx.textq.toLowerCase().indexOf('for') !== -1
+                  || /* contains */funcx.textq.toLowerCase().indexOf('if') !== -1
+                  || /* contains */funcx.textq.toLowerCase().indexOf('else') !== -1
+                  || /* contains */funcx.textq.toLowerCase().indexOf('switch') !== -1
+                  || /* contains */funcx.textq.toLowerCase().indexOf('while') !== -1) { funcx.ref = this.build(funcx.textq).ref; }
                   functionx = functionx.add(funcx);
                   cin = 0;
                   cq = 0;
@@ -270,7 +449,7 @@ export class Ast {
                   funcx.textq = '';
                   break;
                 } else {
-                  funcx.textq += stt[j];
+                  funcx.textq += '\n' + stt[j];
                 }
               } else {
                 if (!(/* equals */(<any>((o1: any, o2: any) => {
@@ -278,7 +457,7 @@ export class Ast {
                       return o1 === o2; } })(stt[j], '')) || /* equals */(<any>((o1: any, o2: any) => { if (o1 && o1.equals) {
                     return o1.equals(o2); } else { return o1 === o2; } })(stt[j], ' ')))) {
                   cin++;
-                  funcx.textq += stt[j];
+                  funcx.textq += '\n' +  stt[j];
                 }
               }
             }

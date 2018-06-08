@@ -150,6 +150,7 @@ export class AppComponent implements OnInit {
     });
 
     graph.addCells([trp, si, trp2, s, s2, trp3]);
+   
   }
   build() {
     this.component1.alirt();
