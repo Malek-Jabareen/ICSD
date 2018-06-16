@@ -16,8 +16,12 @@ const joint = require('../../../node_modules/jointjs/dist/joint.js');
 })
 
 export class DiagramComponent implements OnInit {
+   public fieldA: Array<any> = [];
+   newAttribute: any = {};
   title = 'ICSD';
   @Input() functionText = '';
+  constructor () {
+  }
 
 ngOnInit() {
   joint.dia.LightLinkView = joint.dia.CellView.extend({
@@ -393,6 +397,7 @@ ngOnInit() {
     graph.addCells([rect, ifinfor, elseinfor, firstwhile, firstelse,
       firstfor, firstif, secondwhile, secondif, link, link2, link3, link4, link5, link6, link7, link8]);
   }
+
   build(Qer: Ast , num: number , graph: joint.dia.Graph , rect: joint.shapes.basic.Generic , c: number ) {
     joint.shapes.basic.trapez = joint.shapes.basic.Generic.extend({
 
@@ -436,7 +441,7 @@ ngOnInit() {
         const s = new joint.shapes.basic.Circle({
           position: { x: c, y: num * 55 + 50 * num },
           size: { width: ( parseInt(qq.ref[i].info, 10 ) / ww ) * rect.size().width , height: 50 },
-          attrs: { circle: { fill: '#33B0FF' }, text: { text: 'FOR', fill: 'white' } }
+          attrs: { circle: { fill: '#33B0FF' }, text: { text: 'FOR', fill: 'white' , textF: qq.ref[i].textq} }
         });
         const link = new joint.dia.Link({
           source: { id: rect.id },
@@ -452,7 +457,7 @@ ngOnInit() {
           const s = new joint.shapes.basic.Circle({
             position: { x: c, y: num * 55 + 50 * num },
             size: { width: ( parseInt(qq.ref[i].info, 10 ) / ww ) * rect.size().width , height: 50 },
-            attrs: { circle: { fill: '#33FF51' }, text: { text: 'WHILE', fill: 'white' } }
+            attrs: { circle: { fill: '#33FF51' }, text: { text: 'WHILE', fill: 'white' , textF: qq.ref[i].textq } }
           });
           const link = new joint.dia.Link({
             source: { id: rect.id },
@@ -474,7 +479,7 @@ ngOnInit() {
               polygon: { fill: '#ffe665', 'stroke-width': 1, stroke: 'black' },
               text: {
                 text: 'IF',
-                color: 'black'
+                color: 'black' , textF: qq.ref[i].textq
               }
             });
             const link = new joint.dia.Link({
@@ -495,7 +500,7 @@ ngOnInit() {
               s.attr({
                 polygon: { fill: '#FFA533', 'stroke-width': 1, stroke: 'black' },
                 text: {
-                  text: 'ELSE'
+                  text: 'ELSE', textF: qq.ref[i].textq
                 }
               });
               const link = new joint.dia.Link({
@@ -517,7 +522,7 @@ ngOnInit() {
 
                   polygon: { fill: '#FF3333', 'stroke-width': 1, stroke: 'black' },
                   text: {
-                    text: 'SWITCH'
+                    text: 'SWITCH' , textF: qq.ref[i].textq
                   }
                 });
                 const link = new joint.dia.Link({
@@ -530,7 +535,30 @@ ngOnInit() {
                 }
                 c = c + ( parseInt(qq.ref[i].info, 10 ) / ww ) * rect.size().width;
               } else {
-                c = c + ( parseInt(qq.ref[i].info, 10 ) / ww ) * rect.size().width;
+                if (/* contains */qq.ref[i].text.toLowerCase().indexOf('case') !== -1) {
+                  const s = new joint.shapes.basic.trapez({
+                    position: {x: c, y: num * 55 + 50 * num},
+                    size: {width: (parseInt(qq.ref[i].info, 10) / ww) * rect.size().width, height: 50},
+                  });
+                  s.attr({
+
+                    polygon: {fill: '#792fff', 'stroke-width': 1, stroke: 'black'},
+                    text: {
+                      text: 'CASE' , textF: qq.ref[i].textq
+                    }
+                  });
+                  const link = new joint.dia.Link({
+                    source: {id: rect.id},
+                    target: {id: s.id}
+                  });
+                  graph.addCells([s, link]);
+                  if (qq.ref[i].ref !== null) {
+                    this.build(qq.ref[i], num + 1, graph, s, c);
+                  }
+                  c = c + (parseInt(qq.ref[i].info, 10) / ww) * rect.size().width;
+                } else {
+                  c = c + (parseInt(qq.ref[i].info, 10) / ww) * rect.size().width;
+                }
               }
             }
           }
@@ -662,7 +690,6 @@ ngOnInit() {
       el: jQuery('#diagramXXX'),
       gridSize: 10,
       width: 920,
-      height: 1000,
       model: graph,
       linkView: joint.dia.LightLinkView,
       /*interactive: function(cellView, method) {
@@ -671,20 +698,36 @@ ngOnInit() {
     paper.setInteractivity({elementMove: false});
     if (this.functionText !== '') {
      let funcName = '';
+      let funcName2 = '';
+      let funcName3 = '';
      funcName = this.functionText.substring( 0 , this.functionText.indexOf('('));
      const a = funcName.split(' ');
      funcName = a[a.length - 1 ];
+      let qq: Ast;
+      qq = null;
+      funcName3 = this.functionText.substring(this.functionText.indexOf('{') + 1, this.functionText.lastIndexOf('}'));
+      funcName2 = /* replaceAll */funcName3.replace(new RegExp('(for)([^;:])*(;)([^;])*(;)([^\\)])*\\)', 'g'), ' for() ');
+      qq = Ast.build(funcName2);
       const rect = new joint.shapes.basic.Rect({
         position: {x: 3, y: 3},
         size: {width: 900, height: 50},
-        attrs: {rect: {fill: 'orange'}, text: {text: funcName, fill: 'white'}}
+        attrs: {rect: {fill: 'orange'}, text: {text: funcName, fill: 'white' , textF: funcName3}}
       });
       graph.addCells([rect]);
-      let qq: Ast;
-      qq = null;
-      funcName = this.functionText.substring(this.functionText.indexOf('{') + 1, this.functionText.lastIndexOf('}'));
-      qq = Ast.build(funcName);
       this.build(qq, 1, graph, rect, 3);
+      let fieldArray: Array<String>;
+      fieldArray = [ ];
+      this.fieldA = fieldArray;
+      paper.on('cell:pointerdown',
+        function(cellView, evt, x, y) {
+          fieldArray.push(cellView.model.attr('text/textF'));
+        }
+      );
+    }
+  }
+  killY() {
+    for (let i = 0 ; i < this.fieldA.length ; i++) {
+      alert(this.fieldA[i]);
     }
   }
 }
