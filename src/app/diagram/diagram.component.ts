@@ -748,7 +748,9 @@ ngOnInit() {
       paper.on('cell:pointerdown',
         function(cellView, evt, x, y) {
           $("#dialog" + dialogNumber).dialog("open");
-          document.getElementById("dialogText" + dialogNumber).innerHTML=cellView.model.attr('text/textF');
+          var text = cellView.model.attr('text/textF');
+var text2 = text.replace(/\n/g,"<br>");
+          document.getElementById("dialogText" + dialogNumber).innerHTML=text2;
           fieldArray.push(cellView.model.attr('text/textF'));
 
 
