@@ -8,6 +8,8 @@ import {V} from 'jointjs';
 import {build$} from 'protractor/built/element';
 const joint = require('../../../node_modules/jointjs/dist/joint.js');
 declare var $: any;
+let dialogNumber=1;
+var cellDialog= [];
 
 @Component({
   selector: 'app-diagram',
@@ -20,29 +22,43 @@ export class DiagramComponent implements OnInit {
    newAttribute: any = {};
   title = 'ICSD';
 
+
   @Input() functionText = '';
+
   constructor () {
   }
 
-
 ngOnInit() {
+
   $( function() {
     $.noConflict();
     $("#dialog1").dialog({
+      close: function() {
+        $("#dialog1").data('p1').model.attr('text/text','');
+      },
       autoOpen: false,
       height: 500,
       width: 500});
     $("#dialog2").dialog({
+      close: function() {
+        $("#dialog2").data('p1').model.attr('text/text','');
+      },
       position: { my: "left top", at: "left bottom" },
       autoOpen: false,
       height: 500,
       width: 500});
     $("#dialog3").dialog({
+      close: function() {
+        $("#dialog3").data('p1').model.attr('text/text','');
+      },
       position: { my: "right top", at: "right bottom" },
       autoOpen: false,
       height: 500,
       width: 500});
     $("#dialog4").dialog({
+      close: function() {
+        $("#dialog4").data('p1').model.attr('text/text','');
+      },
       autoOpen: false,
       height: 500,
       width: 500});
@@ -95,13 +111,13 @@ ngOnInit() {
         const a = sourceSize.width / 2 ;
         const b = sourceSize.height / 2 ;
         let q = sourcePosition.y + sourceSize.height;
-        if ( this._sourceModel.attr('text/text') === ('WHILE' ) ) {
+        if ( this._sourceModel.attr('text/type') === ('WHILE' ) ) {
           q = Math.sqrt( 1 - (Math.pow( ( x - x0 ) , 2 ) ) / Math.pow( a , 2 )) * b + y0;
         }
-        if ( this._sourceModel.attr('text/text') === ('FOR' ) ) {
+        if ( this._sourceModel.attr('text/type') === ('FOR' ) ) {
           q = Math.sqrt( 1 - (Math.pow( ( x - x0 ) , 2 ) ) / Math.pow( a , 2 )) * b + y0;
         }
-        if ( this._sourceModel.attr('text/text') === ('ELSE' ) ) {
+        if ( this._sourceModel.attr('text/type') === ('ELSE' ) ) {
           if ( x < sourcePosition.x + 0.1 * sourceSize.width ) {
             const  m = (sourcePosition.y - (sourcePosition.y + sourceSize.height))
               / (sourcePosition.x - (sourcePosition.x + 0.1 * sourceSize.width) ) ;
@@ -113,7 +129,7 @@ ngOnInit() {
             q = m1 * ((targetPosition.x + targetSize.width / 2 ) - (sourcePosition.x + sourceSize.width ) ) + sourcePosition.y ;
           }
         }
-        if ( this._sourceModel.attr('text/text') === ('SWITCH' ) ) {
+        if ( this._sourceModel.attr('text/type') === ('SWITCH' ) ) {
           if ( x < sourcePosition.x + 0.25 * sourceSize.width ) {
             const  m = ((sourcePosition.y + sourceSize.height / 2 ) - (sourcePosition.y + sourceSize.height))
               / (sourcePosition.x - (sourcePosition.x + 0.25 * sourceSize.width) ) ;
@@ -467,7 +483,7 @@ ngOnInit() {
         const s = new joint.shapes.basic.Circle({
           position: { x: c, y: num * 55 + 50 * num },
           size: { width: ( parseInt(qq.ref[i].info, 10 ) / ww ) * rect.size().width , height: 50 },
-          attrs: { circle: { fill: '#33B0FF' }, text: { text: 'FOR', fill: 'white' , textF: qq.ref[i].textq} }
+          attrs: { circle: { fill: '#33B0FF' }, text: { text: '', type: 'FOR', fill: 'white' , textF: qq.ref[i].textq} }
         });
         const link = new joint.dia.Link({
           source: { id: rect.id },
@@ -504,7 +520,9 @@ ngOnInit() {
 
               polygon: { fill: '#ffe665', 'stroke-width': 1, stroke: 'black' },
               text: {
-                text: 'IF',
+                // if
+                type: 'IF',
+                text: '',
                 color: 'black' , textF: qq.ref[i].textq
               }
             });
@@ -526,7 +544,9 @@ ngOnInit() {
               s.attr({
                 polygon: { fill: '#FFA533', 'stroke-width': 1, stroke: 'black' },
                 text: {
-                  text: 'ELSE', textF: qq.ref[i].textq
+                  // else
+                  type: 'ELSE',
+                  text: '', textF: qq.ref[i].textq
                 }
               });
               const link = new joint.dia.Link({
@@ -548,7 +568,9 @@ ngOnInit() {
 
                   polygon: { fill: '#FF3333', 'stroke-width': 1, stroke: 'black' },
                   text: {
-                    text: 'SWITCH' , textF: qq.ref[i].textq
+                    // switch
+                    type: 'SWITCH',
+                    text: '' , textF: qq.ref[i].textq
                   }
                 });
                 const link = new joint.dia.Link({
@@ -570,7 +592,9 @@ ngOnInit() {
 
                     polygon: {fill: '#792fff', 'stroke-width': 1, stroke: 'black'},
                     text: {
-                      text: 'CASE' , textF: qq.ref[i].textq
+                      // case
+                      type: 'CASE',
+                      text: '' , textF: qq.ref[i].textq
                     }
                   });
                   const link = new joint.dia.Link({
@@ -744,19 +768,29 @@ ngOnInit() {
       let fieldArray: Array<String>;
       fieldArray = [ ];
       this.fieldA = fieldArray;
-     let dialogNumber=1;
+
+
       paper.on('cell:pointerdown',
         function(cellView, evt, x, y) {
-          $("#dialog" + dialogNumber).dialog("open");
+          if (cellDialog[dialogNumber-1] != undefined) {
+            $("#dialog" + dialogNumber).dialog("close");
+          }
+          $("#dialog" + dialogNumber).data('p1', cellView).dialog("open");
           var text = cellView.model.attr('text/textF');
 var text2 = text.replace(/\n/g,"<br>");
           var text3 = text2.replace(/\t/g,"&nbsp;");
           document.getElementById("dialogText" + dialogNumber).innerHTML=text3;
           fieldArray.push(cellView.model.attr('text/textF'));
 
+          cellDialog.splice(dialogNumber, 0, cellView);
 
+        cellView.model.attr('text/text','•');
+        cellView.model.attr('text/fill','red');
           dialogNumber++;
-          if (dialogNumber == 5) { dialogNumber = 1; }
+          if (dialogNumber == 5) {
+            dialogNumber = 1;
+
+          }
         }
       );
     }
