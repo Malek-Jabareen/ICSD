@@ -750,7 +750,8 @@ ngOnInit() {
           $("#dialog" + dialogNumber).dialog("open");
           var text = cellView.model.attr('text/textF');
 var text2 = text.replace(/\n/g,"<br>");
-          document.getElementById("dialogText" + dialogNumber).innerHTML=text2;
+          var text3 = text2.replace(/\t/g,"&nbsp;");
+          document.getElementById("dialogText" + dialogNumber).innerHTML=text3;
           fieldArray.push(cellView.model.attr('text/textF'));
 
 
