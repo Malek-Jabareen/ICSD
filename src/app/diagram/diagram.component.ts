@@ -2,12 +2,12 @@ import { Component, OnInit, Input  } from '@angular/core';
 import * as jQuery from 'jquery';
 import { Ast } from '../Ast';
 import * as _ from 'lodash';
-import * as $ from 'backbone';
+import * as $$ from 'backbone';
 import {getExpressionScope} from '@angular/compiler-cli';
 import {V} from 'jointjs';
 import {build$} from 'protractor/built/element';
 const joint = require('../../../node_modules/jointjs/dist/joint.js');
-
+declare var $: any;
 
 @Component({
   selector: 'app-diagram',
@@ -19,11 +19,37 @@ export class DiagramComponent implements OnInit {
    public fieldA: Array<any> = [];
    newAttribute: any = {};
   title = 'ICSD';
+
   @Input() functionText = '';
   constructor () {
   }
 
+
 ngOnInit() {
+  $( function() {
+    $.noConflict();
+    $("#dialog1").dialog({
+      autoOpen: false,
+      height: 500,
+      width: 500});
+    $("#dialog2").dialog({
+      position: { my: "left top", at: "left bottom" },
+      autoOpen: false,
+      height: 500,
+      width: 500});
+    $("#dialog3").dialog({
+      position: { my: "right top", at: "right bottom" },
+      autoOpen: false,
+      height: 500,
+      width: 500});
+    $("#dialog4").dialog({
+      autoOpen: false,
+      height: 500,
+      width: 500});
+  } );
+
+
+
   joint.dia.LightLinkView = joint.dia.CellView.extend({
     node: V('<path class="connection" fill="none" />'),
 
@@ -718,9 +744,19 @@ ngOnInit() {
       let fieldArray: Array<String>;
       fieldArray = [ ];
       this.fieldA = fieldArray;
+     let dialogNumber=1;
       paper.on('cell:pointerdown',
         function(cellView, evt, x, y) {
+          $("#dialog" + dialogNumber).dialog("open");
+          var text = cellView.model.attr('text/textF');
+var text2 = text.replace(/\n/g,"<br>");
+          var text3 = text2.replace(/\t/g,"&nbsp;");
+          document.getElementById("dialogText" + dialogNumber).innerHTML=text3;
           fieldArray.push(cellView.model.attr('text/textF'));
+
+
+          dialogNumber++;
+          if (dialogNumber == 5) { dialogNumber = 1; }
         }
       );
     }

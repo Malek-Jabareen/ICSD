@@ -2,10 +2,11 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {DiagramComponent} from './diagram/diagram.component';
 import * as jQuery from 'jquery';
 import * as _ from 'lodash';
-import * as $ from 'backbone';
+ import * as $ from 'backbone';
 import {getExpressionScope} from '@angular/compiler-cli';
 import {build$} from 'protractor/built/element';
 const joint = require('./../../node_modules/jointjs/dist/joint.js');
+//declare var $: any;
 
 @Component({
   selector: 'app-root',
@@ -24,6 +25,7 @@ export class AppComponent implements OnInit {
     this.hide = 'yes';
   }
   ngOnInit() {
+
     const graph = new joint.dia.Graph;
     const paper = new joint.dia.Paper({
       el: jQuery('#header'),
