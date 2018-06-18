@@ -3,8 +3,8 @@
 <h1>Interactive Control Structure Diagram</h1>
   <div id="header" style="margin: auto"></div>
   <table align="center">
-  <tr > <button class="clear" (click)="hideDiagram()">Hide Func</button>-//-<button class="clear" (click)="showDiagram()">Show Func</button> </tr>
-  <tr>  <button class="clear" (click)="build()">Convert Function</button>
+  <tr > <button id="hideButton" class="clear" (click)="hideDiagram()">Hide/Show func</button>&nbsp;&nbsp;&nbsp;
+    <button class="clear" (click)="build()" onclick=" document.getElementById('func').cols = 40; document.getElementById('func').rows = 25; document.getElementById('hideButton').style.display='inline-block';">Convert</button>
   </tr>
   <tr>
     <div *ngIf="hide"><td style="width:500px; vertical-align:top;"><app-form (SendEvent)="fT.value=$event"></app-form></td></div>

@@ -1,8 +1,8 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {DiagramComponent} from './diagram/diagram.component';
-import * as jQuery from 'jquery';
+import * as $ from 'jquery';
 import * as _ from 'lodash';
- import * as $ from 'backbone';
+ import * as $$ from 'backbone';
 import {getExpressionScope} from '@angular/compiler-cli';
 import {build$} from 'protractor/built/element';
 const joint = require('./../../node_modules/jointjs/dist/joint.js');
@@ -16,14 +16,12 @@ const joint = require('./../../node_modules/jointjs/dist/joint.js');
 export class AppComponent implements OnInit {
   @ViewChild('component1') component1: DiagramComponent;
   title = 'ICSD';
-  hide = 'yes';
+  hide = true;
   ccc: string;
   hideDiagram() {
-    this.hide = '';
+    this.hide = !this.hide;
   }
-  showDiagram() {
-    this.hide = 'yes';
-  }
+
   ngOnInit() {
 
     const graph = new joint.dia.Graph;
@@ -150,6 +148,7 @@ export class AppComponent implements OnInit {
         color: 'white'
       }
     });
+
 
     graph.addCells([trp, si, trp2, s, s2, trp3]);
   }

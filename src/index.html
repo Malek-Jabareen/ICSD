@@ -7,11 +7,18 @@
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-
+  <script>
+    // expand the textarea only at the first time the web starts and hide the button
+    function load() {
+      document.getElementById('func').cols = 120;
+      document.getElementById('func').rows = 60;
+      document.getElementById('hideButton').style.display='none';
+    }
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
-<body>
+<body onload="load()">
 
   <app-root></app-root>
 
