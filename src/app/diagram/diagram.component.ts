@@ -17,6 +17,7 @@ var cellDialog= [];
   styleUrls: ['./diagram.component.css']
 })
 
+
 export class DiagramComponent implements OnInit {
    public fieldA: Array<any> = [];
    newAttribute: any = {};
@@ -28,20 +29,43 @@ export class DiagramComponent implements OnInit {
   constructor () {
   }
 
+
+
 ngOnInit() {
+
+  function closeDialogEvent(cellv) {
+    cellv.model.attr('text/text','');
+
+    if (cellv.model.attr('text/type') == 'ELSE') {
+      cellv.model.attr('polygon/fill','#FFA533');
+    } else if ( cellv.model.attr('text/type') == 'IF') {
+      cellv.model.attr('polygon/fill','#ffe665');
+    } else if ( cellv.model.attr('text/type') == 'CASE') {
+      cellv.model.attr('polygon/fill','#792fff');
+
+    } else if ( cellv.model.attr('text/type') == 'SWITCH') {
+      cellv.model.attr('polygon/fill','#FF3333');
+
+    } else if ( cellv.model.attr('text/type') == 'FOR') {
+      cellv.model.attr('circle/fill','#33B0FF');
+    } else if ( cellv.model.attr('text/type') == 'WHILE') {
+      cellv.model.attr('circle/fill','#33FF51');
+    }
+  }
+
 
   $( function() {
     $.noConflict();
     $("#dialog1").dialog({
       close: function() {
-        $("#dialog1").data('p1').model.attr('text/text','');
+        closeDialogEvent($("#dialog1").data('p1'));
       },
       autoOpen: false,
       height: 500,
       width: 500});
     $("#dialog2").dialog({
       close: function() {
-        $("#dialog2").data('p1').model.attr('text/text','');
+        closeDialogEvent($("#dialog2").data('p1'));
       },
       position: { my: "left top", at: "left bottom" },
       autoOpen: false,
@@ -49,7 +73,7 @@ ngOnInit() {
       width: 500});
     $("#dialog3").dialog({
       close: function() {
-        $("#dialog3").data('p1').model.attr('text/text','');
+        closeDialogEvent($("#dialog3").data('p1'));
       },
       position: { my: "right top", at: "right bottom" },
       autoOpen: false,
@@ -57,7 +81,7 @@ ngOnInit() {
       width: 500});
     $("#dialog4").dialog({
       close: function() {
-        $("#dialog4").data('p1').model.attr('text/text','');
+        closeDialogEvent($("#dialog4").data('p1'));
       },
       autoOpen: false,
       height: 500,
@@ -783,6 +807,22 @@ var text2 = text.replace(/\n/g,"<br>");
           fieldArray.push(cellView.model.attr('text/textF'));
 
           cellDialog.splice(dialogNumber, 0, cellView);
+
+          if (cellView.model.attr('text/type') == 'ELSE') {
+            cellView.model.attr('polygon/fill','#EA780D');
+          } else if ( cellView.model.attr('text/type') == 'IF') {
+            cellView.model.attr('polygon/fill','#FFDD08');
+        } else if ( cellView.model.attr('text/type') == 'CASE') {
+        cellView.model.attr('polygon/fill','#6C0E9E');
+
+        } else if ( cellView.model.attr('text/type') == 'SWITCH') {
+        cellView.model.attr('polygon/fill','#AD1F12');
+
+        } else if ( cellView.model.attr('text/type') == 'FOR') {
+        cellView.model.attr('circle/fill','#247ED6');
+          } else if ( cellView.model.attr('text/type') == 'WHILE') {
+            cellView.model.attr('circle/fill','#68D624');
+          }
 
         cellView.model.attr('text/text','•');
         cellView.model.attr('text/fill','red');
