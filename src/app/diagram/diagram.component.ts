@@ -811,7 +811,7 @@ var text2 = text.replace(/\n/g,"<br>");
           if (cellView.model.attr('text/type') == 'ELSE') {
             cellView.model.attr('polygon/fill','#EA780D');
           } else if ( cellView.model.attr('text/type') == 'IF') {
-            cellView.model.attr('polygon/fill','#FFDD08');
+            cellView.model.attr('polygon/fill','#ffd700');
         } else if ( cellView.model.attr('text/type') == 'CASE') {
         cellView.model.attr('polygon/fill','#6C0E9E');
 
