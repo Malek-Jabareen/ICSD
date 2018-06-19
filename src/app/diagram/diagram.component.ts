@@ -1000,6 +1000,7 @@ this.funcTextEvent.emit(' \tprivate Dimension getSize(Container parent, LayoutSi
     }
   }
   alirt() {
+    graphScale=1;
     const strx  = 'ast[] x; if(this.ref!=null){ x=new ast[this.ref.length+1]; }' +
       ' else{x=new ast[1];}int i=0; if(this.ref!=null){for (i = 0; i < this.ref.length;' +
       ' i++){x[i]=this.ref[i];}}x[i]=new ast();x[i].info=function.info;x[i].text=function.text;x[i].textq=function.textq;' +
