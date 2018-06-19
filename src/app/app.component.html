@@ -5,7 +5,7 @@
   <table align="center">
   <tr > <button id="hideButton" class="clear" (click)="hideDiagram()" title="hide or show the function code">Hide/Show</button>&nbsp;&nbsp;
     <button id="popup" class="clear" onclick="$('#dialogFunc').dialog('open');" title="open the function code in a big window">Pop up</button>&nbsp;&nbsp;
-    <button class="clear" (click)="build()" onclick=" document.getElementById('func').cols = 40; document.getElementById('func').rows = 25; document.getElementById('hideButton').style.display='inline-block'; document.getElementById('popup').style.display='inline-block';">Convert</button>
+    <button id="convert" class="clear" (click)="build()" onclick=" document.getElementById('func').cols = 40; document.getElementById('func').rows = 25; document.getElementById('hideButton').style.display='inline-block'; document.getElementById('popup').style.display='inline-block';">Convert</button>
   </tr>
   <tr>
     <div *ngIf="hide"><td style="width:500px; vertical-align:top;"><app-form (SendEvent)="fT.value=$event" [funcText]="fT2"></app-form></td></div>

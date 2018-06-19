@@ -391,7 +391,7 @@ this.funcTextEvent.emit(' \tprivate Dimension getSize(Container parent, LayoutSi
     if (cellv.model.attr('text/type') == 'ELSE') {
       cellv.model.attr('polygon/fill','#FFA533');
     } else if ( cellv.model.attr('text/type') == 'IF') {
-      cellv.model.attr('polygon/fill','#ffe665');
+      cellv.model.attr('polygon/fill','#fff58c');
     } else if ( cellv.model.attr('text/type') == 'CASE') {
       cellv.model.attr('polygon/fill','#792fff');
 
@@ -411,6 +411,7 @@ this.funcTextEvent.emit(' \tprivate Dimension getSize(Container parent, LayoutSi
     $( document ).tooltip();
     $("#dialogFunc").dialog({
      open: function() {  $('#func2').scrollTop(0); },
+      close: function() { $('#convert').focus(); },
       autoOpen: false,
       height: 580,
       width: 800});
@@ -1171,7 +1172,7 @@ var text2 = text.replace(/\n/g,"<br>");
           if (cellView.model.attr('text/type') == 'ELSE') {
             cellView.model.attr('polygon/fill','#ea6c0d');
           } else if ( cellView.model.attr('text/type') == 'IF') {
-            cellView.model.attr('polygon/fill','#ffcd00');
+            cellView.model.attr('polygon/fill','#ffdb03');
         } else if ( cellView.model.attr('text/type') == 'CASE') {
         cellView.model.attr('polygon/fill','#6C0E9E');
 
