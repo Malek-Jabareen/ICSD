@@ -18,9 +18,12 @@ export class AppComponent implements OnInit {
   title = 'ICSD';
   hide = true;
   ccc: string;
+  fT2='';
+
   hideDiagram() {
     this.hide = !this.hide;
   }
+
 
   ngOnInit() {
 
