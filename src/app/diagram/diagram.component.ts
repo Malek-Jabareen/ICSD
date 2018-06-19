@@ -1210,7 +1210,7 @@ var text2 = text.replace(/\n/g,"<br>");
   }
   zoomout() {
     graphScale -= 0.1;
-    paper.setDimensions(920-(graphScale-1)*1000, 800);
+    paper.setDimensions(920+(graphScale-1)*1000, 800);
     paper.scale(graphScale, graphScale);
   }
 
