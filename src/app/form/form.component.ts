@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter , Output } from '@angular/core';
+import {Component, OnInit, EventEmitter, Output, Input} from '@angular/core';
 
 @Component({
   selector: 'app-form',
@@ -7,7 +7,7 @@ import { Component, OnInit, EventEmitter , Output } from '@angular/core';
 })
 export class FormComponent implements OnInit {
   @Output() SendEvent = new EventEmitter<string>();
-
+  @Input() funcText = '';
   onchange(value: string) {
     this.SendEvent.emit(value);
   }

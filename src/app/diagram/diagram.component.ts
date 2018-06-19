@@ -1,4 +1,4 @@
-import { Component, OnInit, Input  } from '@angular/core';
+import {Component, OnInit, Input, EventEmitter, Output} from '@angular/core';
 import * as jQuery from 'jquery';
 import { Ast } from '../Ast';
 import * as _ from 'lodash';
@@ -10,6 +10,7 @@ const joint = require('../../../node_modules/jointjs/dist/joint.js');
 declare var $: any;
 let dialogNumber=1;
 var cellDialog= [];
+let paper;
 
 @Component({
   selector: 'app-diagram',
@@ -19,6 +20,13 @@ var cellDialog= [];
 
 
 export class DiagramComponent implements OnInit {
+  @Output() funcTextEvent = new EventEmitter<string>();
+
+  onchange(value: string) {
+    this.funcTextEvent.emit(value);
+    //alert('hello');
+  }
+
    public fieldA: Array<any> = [];
    newAttribute: any = {};
   title = 'ICSD';
@@ -32,14 +40,358 @@ export class DiagramComponent implements OnInit {
 
 
 ngOnInit() {
+this.funcTextEvent.emit(' \tprivate Dimension getSize(Container parent, LayoutSize layoutSize, boolean fillRawSizes,\n' +
+  '\t\t\t  Dimension gridSize, List<List<ExtendedGridLayoutConstraints>> gridRows,\n' +
+  '\t\t\t  Set<ExtendedGridLayoutConstraints> colspans,\n' +
+  '\t\t\t  Set<ExtendedGridLayoutConstraints> rowspans,\n' +
+  '\t\t\t  int[][] resultArrays)\n' +
+  '{\n' +
+  '\tif (fillRawSizes && (resultArrays.length < 6))\n' +
+  '\t{\n' +
+  '\t\tthrow new IllegalArgumentException(" fillRawSizes is true, resultArrays.length must be >= 6 (" + resultArrays.length + \')\');\n' +
+  '\t}\n' +
+  '\tint[] minimumColWidths = new int[gridSize.width];\n' +
+  '\tint[] minimumRowHeights = new int[gridSize.height];\n' +
+  '\tint[] preferredColWidths = new int[gridSize.width];\n' +
+  '\tint[] preferredRowHeights = new int[gridSize.height];\n' +
+  '\tint[] maximumColWidths = new int[gridSize.width];\n' +
+  '\tint[] maximumRowHeights = new int[gridSize.height];\n' +
+  '\tArrays.fill(minimumColWidths,0);\n' +
+  '\tArrays.fill(minimumRowHeights,0);\n' +
+  '\tArrays.fill(preferredColWidths,0);\n' +
+  '\tArrays.fill(preferredRowHeights,0);\n' +
+  '\tArrays.fill(maximumColWidths,0);\n' +
+  '\tArrays.fill(maximumRowHeights,0);\n' +
+  '\n' +
+  '\t// get the maximum of the minimum sizes,\n' +
+  '\t//     the maximum of the preferred sizes and\n' +
+  '\t//     the minimum of the maximum sizes\n' +
+  '\t// of all rows and columns, not taking\n' +
+  '\t// rowspans and colspans into account\n' +
+  '\tfor (int row=0 ; row<gridSize.height ; row++)\n' +
+  '                                       {\n' +
+  '                                       List<ExtendedGridLayoutConstraints> gridRow = gridRows.get(row);\n' +
+  '\t\tfor (int col=0 ; col<gridSize.width ; col++)\n' +
+  '                                        {\n' +
+  '                                        ExtendedGridLayoutConstraints cell = gridRow.get(col);\n' +
+  '                                        if ((null != cell) && (null != cell.getComponent()))\n' +
+  '                                        {\n' +
+  '                                        Component component = cell.getComponent();\n' +
+  '                                        Dimension minimumSize = component.getMinimumSize();\n' +
+  '                                        Dimension preferredSize = component.getPreferredSize();\n' +
+  '                                        Dimension maximumSize = component.getMaximumSize();\n' +
+  '                                        if (!colspans.contains(cell))\n' +
+  '                                        {\n' +
+  '                                        minimumColWidths[col] = Math.max(minimumColWidths[col],minimumSize.width);\n' +
+  '                                        preferredColWidths[col] = Math.max(preferredColWidths[col],preferredSize.width);\n' +
+  '                                        maximumColWidths[col] = Math.max(maximumColWidths[col],maximumSize.width);\n' +
+  '                                        }\n' +
+  '                                        if (!rowspans.contains(cell))\n' +
+  '                                        {\n' +
+  '                                        minimumRowHeights[row] = Math.max(minimumRowHeights[row],minimumSize.height);\n' +
+  '                                        preferredRowHeights[row] = Math.max(preferredRowHeights[row],preferredSize.height);\n' +
+  '                                        maximumRowHeights[row] = Math.max(maximumRowHeights[row],maximumSize.height);\n' +
+  '                                        }\n' +
+  '                                        }\n' +
+  '                                        }\n' +
+  '                                        }\n' +
+  '\n' +
+  '                                        for (int col=0 ; col<gridSize.width ; col++)\n' +
+  '                                                                            {\n' +
+  '                                                                            if (minimumColWidths[col] >= maximumColWidths[col])\n' +
+  '\t\t{\n' +
+  '\t\t\tmaximumColWidths[col] = minimumColWidths[col];\n' +
+  '\t\t\tpreferredColWidths[col] = minimumColWidths[col];\n' +
+  '\t\t}\n' +
+  '\t\telse{ if (preferredColWidths[col] < minimumColWidths[col])\n' +
+  '\t\t{\n' +
+  '\t\t\tpreferredColWidths[col] = minimumColWidths[col];\n' +
+  '\t}\n' +
+  '\n' +
+  '\t\telse{ if (preferredColWidths[col] > maximumColWidths[col])\n' +
+  '\t\t{\n' +
+  '\t\t\tpreferredColWidths[col] = maximumColWidths[col];\n' +
+  '\t\t}\n' +
+  '\t\t}\n' +
+  '\t\t}\n' +
+  '\t}\n' +
+  '\n' +
+  '\t// plug in the colspans and correct the minimum, preferred and\n' +
+  '\t// maximum column widths the colspans are part of\n' +
+  '\tfor (ExtendedGridLayoutConstraints cell : colspans)\n' +
+  '\t{\n' +
+  '\t\tint fromCol = cell.getCol();\n' +
+  '\t\tint colspan = cell.getEffectiveColspan();\n' +
+  '\t\tint toCol = fromCol + colspan;\n' +
+  '\t\tint currentMinimumColWidth = 0;\n' +
+  '\t\tint currentPreferredColWidth = 0;\n' +
+  '\t\tint currentMaximumColWidth = 0;\n' +
+  '\t\tfor (int col=fromCol ; col<toCol ; col++)\n' +
+  '                                     {\n' +
+  '                                     int minimumColWidth = minimumColWidths[col];\n' +
+  '                                     if ((Integer.MAX_VALUE-minimumColWidth) < currentMinimumColWidth)\n' +
+  '\t\t\t{\n' +
+  '\t\t\t\tcurrentMinimumColWidth = Integer.MAX_VALUE;\n' +
+  '\t\t\t}\n' +
+  '\t\t\telse\n' +
+  '\t\t\t{\n' +
+  '\t\t\t\tcurrentMinimumColWidth += minimumColWidth;\n' +
+  '\t\t\t}\n' +
+  '\t\t\tint preferredColWidth = preferredColWidths[col];\n' +
+  '\t\t\tif ((Integer.MAX_VALUE-preferredColWidth) < currentPreferredColWidth)\n' +
+  '\t\t{\n' +
+  '\t\t\tcurrentPreferredColWidth = Integer.MAX_VALUE;\n' +
+  '\t\t}\n' +
+  '\t\telse\n' +
+  '\t\t{\n' +
+  '\t\t\tcurrentPreferredColWidth += preferredColWidth;\n' +
+  '\t\t}\n' +
+  '\t\tint maximumColWidth = maximumColWidths[col];\n' +
+  '\t\tif ((Integer.MAX_VALUE-maximumColWidth) < currentMaximumColWidth)\n' +
+  '\t\t{\n' +
+  '\t\t\tcurrentMaximumColWidth = Integer.MAX_VALUE;\n' +
+  '\t\t}\n' +
+  '\t\telse\n' +
+  '\t\t{\n' +
+  '\t\t\tcurrentMaximumColWidth += maximumColWidth;\n' +
+  '\t\t}\n' +
+  '\t}\n' +
+  '\tComponent component = cell.getComponent();\n' +
+  '\tint wantedMaximumColWidth = component.getMaximumSize().width - ((colspan - 1) * hgap);\n' +
+  '\tif (currentMaximumColWidth < wantedMaximumColWidth)\n' +
+  '\t{\n' +
+  '\t\tredistributeSpace(currentMaximumColWidth,\n' +
+  '\t\t\t\t  wantedMaximumColWidth,\n' +
+  '\t\t\t\t  fromCol,toCol,\n' +
+  '\t\t\t\t  maximumColWidths,\n' +
+  '\t\t\t\t  maximumColWidths,\n' +
+  '\t\t\t\t  maximumColWidths);\n' +
+  '\t}\n' +
+  '\tint wantedMinimumColWidth = component.getMinimumSize().width - ((colspan - 1) * hgap);\n' +
+  '\tif (currentMinimumColWidth < wantedMinimumColWidth)\n' +
+  '\t{\n' +
+  '\t\tredistributeSpace(currentMinimumColWidth,\n' +
+  '\t\t\t\t  wantedMinimumColWidth,\n' +
+  '\t\t\t\t  fromCol,toCol,\n' +
+  '\t\t\t\t  minimumColWidths,\n' +
+  '\t\t\t  minimumColWidths,\n' +
+  '\t\t\t\t  maximumColWidths);\n' +
+  '\t}\n' +
+  '\tint wantedPreferredColWidth = component.getPreferredSize().width - ((colspan - 1) * hgap);\n' +
+  '\tif (currentPreferredColWidth < wantedPreferredColWidth)\n' +
+  '{\n' +
+  '\t\tredistributeSpace(currentPreferredColWidth,\n' +
+  '\t\t\t\t  wantedPreferredColWidth,\n' +
+  '\t\t\t\t  fromCol,toCol,\n' +
+  '\t\t\t\t  preferredColWidths,\n' +
+  '\t\t\t  minimumColWidths,\n' +
+  '\t\t\t\t  maximumColWidths);\n' +
+  '\t}\n' +
+  '}\n' +
+  '\n' +
+  'for (int col=0 ; col<gridSize.width ; col++)\n' +
+  '                                    {\n' +
+  '                                    if (minimumColWidths[col] >= maximumColWidths[col])\n' +
+  '{\n' +
+  '\t\tmaximumColWidths[col] = minimumColWidths[col];\n' +
+  '\t\tpreferredColWidths[col] = minimumColWidths[col];\n' +
+  '\t}\n' +
+  '\telse{ if (preferredColWidths[col] < minimumColWidths[col])\n' +
+  '\t{\n' +
+  '\t\tpreferredColWidths[col] = minimumColWidths[col];\n' +
+  '\t}\n' +
+  '\telse {if (preferredColWidths[col] > maximumColWidths[col])\n' +
+  '\t{\n' +
+  '\t\tpreferredColWidths[col] = maximumColWidths[col];\n' +
+  '\t}\n' +
+  '\t}\n' +
+  '\t}\n' +
+  '}\n' +
+  '\n' +
+  '\n' +
+  'for (i)\n' +
+  '{\n' +
+  '\tif (minimumRowHeights[row] >= maximumRowHeights[row])\n' +
+  '\t{\n' +
+  '\t\tmaximumRowHeights[row] = minimumRowHeights[row];\n' +
+  '\t\tpreferredRowHeights[row] = minimumRowHeights[row];\n' +
+  '\t}\n' +
+  '\telse{ if (preferredRowHeights[row] < minimumRowHeights[row])\n' +
+  '\t{\n' +
+  '\t\tpreferredRowHeights[row] = minimumRowHeights[row];\n' +
+  '\t}\n' +
+  '\telse{ if (preferredRowHeights[row] > maximumRowHeights[row])\n' +
+  '\t{\n' +
+  '\t\tpreferredRowHeights[row] = maximumRowHeights[row];\n' +
+  '\t}\n' +
+  '\t}}\n' +
+  '}\n' +
+  '\n' +
+  '// plug in the rowspans and correct the minimum, preferred and\n' +
+  '// maximum row heights the rowspans are part of\n' +
+  'for (int row=0 ; row<gridSize.height ; row++)\n' +
+  '                                     {\n' +
+  '                                     int fromRow = cell.getRow();\n' +
+  '                                     int rowspan = cell.getEffectiveRowspan();\n' +
+  '                                     int toRow = fromRow + rowspan;\n' +
+  '                                     int currentMinimumRowHeight = 0;\n' +
+  '                                     int currentPreferredRowHeight = 0;\n' +
+  '                                     int currentMaximumRowHeight = 0;\n' +
+  '                                     for (ExtendedGridLayoutConstraints cell : rowspans)\n' +
+  '                                     {\n' +
+  '                                     int minimumRowHeight = minimumRowHeights[row];\n' +
+  '                                     if ((Integer.MAX_VALUE-minimumRowHeight) < currentMinimumRowHeight)\n' +
+  '\t\t{\n' +
+  '\t\t\tcurrentMinimumRowHeight = Integer.MAX_VALUE;\n' +
+  '\t\t}\n' +
+  '\t\telse\n' +
+  '\t\t{\n' +
+  '\t\t\tcurrentMinimumRowHeight += minimumRowHeight;\n' +
+  '\t\t}\n' +
+  '\t\tint preferredRowHeight = preferredRowHeights[row];\n' +
+  '\t\tif ((Integer.MAX_VALUE-preferredRowHeight) < currentPreferredRowHeight)\n' +
+  '\t\t{\n' +
+  '\t\t\tcurrentPreferredRowHeight = Integer.MAX_VALUE;\n' +
+  '\t\t}\n' +
+  '\t\telse\n' +
+  '\t\t{\n' +
+  '\t\t\tcurrentPreferredRowHeight += preferredRowHeight;\n' +
+  '\t\t}\n' +
+  '\t\tint maximumRowHeight = maximumRowHeights[row];\n' +
+  '\t\tif ((Integer.MAX_VALUE-maximumRowHeight) < currentMaximumRowHeight)\n' +
+  '\t\t{\n' +
+  '\t\t\tcurrentMaximumRowHeight = Integer.MAX_VALUE;\n' +
+  '\t\t}\n' +
+  '\t\telse\n' +
+  '\t\t{\n' +
+  '\t\t\tcurrentMaximumRowHeight += maximumRowHeight;\n' +
+  '\t\t}\n' +
+  '\t}\n' +
+  '\tComponent component = cell.getComponent();\n' +
+  '\tint wantedMaximumRowHeight = component.getMaximumSize().height - ((rowspan - 1) * vgap);\n' +
+  '\tif (currentMaximumRowHeight < wantedMaximumRowHeight)\n' +
+  '\t{\n' +
+  '\t\tredistributeSpace(currentMaximumRowHeight,\n' +
+  '\t\t\t\t  wantedMaximumRowHeight,\n' +
+  '\t\t\t\t  fromRow,toRow,\n' +
+  '\t\t\t\t  maximumRowHeights,\n' +
+  '\t\t\t\t  maximumRowHeights,\n' +
+  '\t\t\t\t  maximumRowHeights);\n' +
+  '\t}\n' +
+  '\tint wantedMinimumRowHeight = component.getMinimumSize().height - ((rowspan - 1) * vgap);\n' +
+  '\tif (currentMinimumRowHeight < wantedMinimumRowHeight)\n' +
+  '{\n' +
+  '\t\tredistributeSpace(currentMinimumRowHeight,\n' +
+  '\t\t\t\t  wantedMinimumRowHeight,\n' +
+  '\t\t\t\t  fromRow,toRow,\n' +
+  '\t\t\t\t  minimumRowHeights,\n' +
+  '\t\t\t\t  minimumRowHeights,\n' +
+  '\t\t\t\t  maximumRowHeights);\n' +
+  '}\n' +
+  '\tint wantedPreferredRowHeight = component.getPreferredSize().height - ((rowspan - 1) * vgap);\n' +
+  '\tif (currentPreferredRowHeight < wantedPreferredRowHeight)\n' +
+  '\t{\n' +
+  '\t\tredistributeSpace(currentPreferredRowHeight,\n' +
+  '\t\t\t\t  wantedPreferredRowHeight,\n' +
+  '\t\t\t\t  fromRow,toRow,\n' +
+  '\t\t\t\t  preferredRowHeights,\n' +
+  '\t\t\t\t  minimumRowHeights,\n' +
+  '\t\t\t\t  maximumRowHeights);\n' +
+  '\t}\n' +
+  '}\n' +
+  '\n' +
+  'for (int row=0 ; row<gridSize.height ; row++)\n' +
+  '                                     {\n' +
+  '                                     if (minimumRowHeights[row] >= maximumRowHeights[row])\n' +
+  '\t{\n' +
+  '\t\tmaximumRowHeights[row] = minimumRowHeights[row];\n' +
+  '\t\tpreferredRowHeights[row] = minimumRowHeights[row];\n' +
+  '\t}\n' +
+  '\telse{ if (preferredRowHeights[row] < minimumRowHeights[row])\n' +
+  '\t{\n' +
+  '\t\tpreferredRowHeights[row] = minimumRowHeights[row];\n' +
+  '\t}\n' +
+  '\telse {if (preferredRowHeights[row] > maximumRowHeights[row])\n' +
+  '\t{\n' +
+  '\t\tpreferredRowHeights[row] = maximumRowHeights[row];\n' +
+  '\t}\n' +
+  '\t}}\n' +
+  '}\n' +
+  '\n' +
+  '// copies the computed sizes to the result arrays\n' +
+  'if (fillRawSizes)\n' +
+  '{\n' +
+  '\tresultArrays[0] = minimumColWidths;\n' +
+  '\tresultArrays[1] = minimumRowHeights;\n' +
+  '\tresultArrays[2] = preferredColWidths;\n' +
+  '\tresultArrays[3] = preferredRowHeights;\n' +
+  '\tresultArrays[4] = maximumColWidths;\n' +
+  '\tresultArrays[5] = maximumRowHeights;\n' +
+  '}\n' +
+  '\n' +
+  'int[] colWidths;\n' +
+  'int[] rowHeights;\n' +
+  'switch (layoutSize)\n' +
+  '{\n' +
+  '\tcase MINIMUM:\n' +
+  '\t\tcolWidths = minimumColWidths;\n' +
+  '\t\trowHeights = minimumRowHeights;\n' +
+  '\t\tbreak;\n' +
+  '\n' +
+  '\tcase PREFERRED:\n' +
+  '\t\tcolWidths = preferredColWidths;\n' +
+  '\t\trowHeights = preferredRowHeights;\n' +
+  '\t\tbreak;\n' +
+  '\n' +
+  '\tcase MAXIMUM:\n' +
+  '\t\tcolWidths = maximumColWidths;\n' +
+  '\t\trowHeights = maximumRowHeights;\n' +
+  '\t\tbreak;\n' +
+  '\n' +
+  '\tdefault:\n' +
+  '\t\tthrow new InternalError(");\n' +
+  '}\n' +
+  'long totalWidth = 0;\n' +
+  'long totalHeight = 0;\n' +
+  'for (int width : colWidths)\n' +
+  '{\n' +
+  '\ttotalWidth += width;\n' +
+  '}\n' +
+  'for (int height : rowHeights )\n' +
+  '{\n' +
+  '\ttotalHeight += height;\n' +
+  '}\n' +
+  '\n' +
+  'if (!fillRawSizes)\n' +
+  '{\n' +
+  '\tInsets insets = parent.getInsets();\n' +
+  '\ttotalWidth += insets.left + insets.right + ((gridSize.width - 1) * hgap) + distanceToBorders.left + distanceToBorders.right;\n' +
+  '\ttotalHeight += insets.top + insets.bottom + ((gridSize.height - 1) * vgap) + distanceToBorders.top + distanceToBorders.bottom;\n' +
+  '}\n' +
+  '\n' +
+  'if (totalWidth > Integer.MAX_VALUE)\n' +
+  '{\n' +
+  '\ttotalWidth = Integer.MAX_VALUE;\n' +
+  '}\n' +
+  'if (totalHeight > Integer.MAX_VALUE)\n' +
+  '{\n' +
+  '\ttotalHeight = Integer.MAX_VALUE;\n' +
+  '}\n' +
+  '\n' +
+  'return new Dimension((int)totalWidth,(int)totalHeight);\n' +
+  '}\n');
+
+
+  function expandDiagram() {
+    paper.setDimensions(1000, 800);
+  }
 
   function closeDialogEvent(cellv) {
-    cellv.model.attr('text/text','');
-
+  //  cellv.model.attr('text/text','');
     if (cellv.model.attr('text/type') == 'ELSE') {
       cellv.model.attr('polygon/fill','#FFA533');
     } else if ( cellv.model.attr('text/type') == 'IF') {
-      cellv.model.attr('polygon/fill','#ffe665');
+      cellv.model.attr('polygon/fill','#fff58c');
     } else if ( cellv.model.attr('text/type') == 'CASE') {
       cellv.model.attr('polygon/fill','#792fff');
 
@@ -56,36 +408,43 @@ ngOnInit() {
 
   $( function() {
     $.noConflict();
+    $( document ).tooltip();
+    $("#dialogFunc").dialog({
+     open: function() {  $('#func2').scrollTop(0); },
+      close: function() { $('#convert').focus(); },
+      autoOpen: false,
+      height: 580,
+      width: 800});
     $("#dialog1").dialog({
       close: function() {
         closeDialogEvent($("#dialog1").data('p1'));
       },
       autoOpen: false,
-      height: 500,
-      width: 500});
+      height: 580,
+      width: 580});
     $("#dialog2").dialog({
       close: function() {
         closeDialogEvent($("#dialog2").data('p1'));
       },
       position: { my: "left top", at: "left bottom" },
       autoOpen: false,
-      height: 500,
-      width: 500});
+      height: 580,
+      width: 580});
     $("#dialog3").dialog({
       close: function() {
         closeDialogEvent($("#dialog3").data('p1'));
       },
       position: { my: "right top", at: "right bottom" },
       autoOpen: false,
-      height: 500,
-      width: 500});
+      height: 580,
+      width: 580});
     $("#dialog4").dialog({
       close: function() {
         closeDialogEvent($("#dialog4").data('p1'));
       },
       autoOpen: false,
-      height: 500,
-      width: 500});
+      height: 580,
+      width: 580});
   } );
 
 
@@ -542,7 +901,7 @@ ngOnInit() {
             });
             s.attr({
 
-              polygon: { fill: '#ffe665', 'stroke-width': 1, stroke: 'black' },
+              polygon: { fill: '#fff58c', 'stroke-width': 1, stroke: 'black' },
               text: {
                 // if
                 type: 'IF',
@@ -760,7 +1119,7 @@ ngOnInit() {
       'System.out.println(newString.trim());\n' +
       'System.out.println(newString.trim());';
     const graph = new joint.dia.Graph;
-    const paper = new joint.dia.Paper({
+     paper = new joint.dia.Paper({
       el: jQuery('#diagramXXX'),
       gridSize: 10,
       width: 920,
@@ -771,6 +1130,8 @@ ngOnInit() {
     });
     paper.setInteractivity({elementMove: false});
     if (this.functionText !== '') {
+    //  document.getElementById('func2').innerHTML=this.functionText;
+
      let funcName = '';
       let funcName2 = '';
       let funcName3 = '';
@@ -809,9 +1170,9 @@ var text2 = text.replace(/\n/g,"<br>");
           cellDialog.splice(dialogNumber, 0, cellView);
 
           if (cellView.model.attr('text/type') == 'ELSE') {
-            cellView.model.attr('polygon/fill','#EA780D');
+            cellView.model.attr('polygon/fill','#ea6c0d');
           } else if ( cellView.model.attr('text/type') == 'IF') {
-            cellView.model.attr('polygon/fill','#ffd700');
+            cellView.model.attr('polygon/fill','#ffdb03');
         } else if ( cellView.model.attr('text/type') == 'CASE') {
         cellView.model.attr('polygon/fill','#6C0E9E');
 
@@ -821,11 +1182,13 @@ var text2 = text.replace(/\n/g,"<br>");
         } else if ( cellView.model.attr('text/type') == 'FOR') {
         cellView.model.attr('circle/fill','#247ED6');
           } else if ( cellView.model.attr('text/type') == 'WHILE') {
-            cellView.model.attr('circle/fill','#68D624');
+            cellView.model.attr('circle/fill','#29d646');
           }
 
-        cellView.model.attr('text/text','•');
-        cellView.model.attr('text/fill','red');
+
+         //   cellView.model.attr('text/text', '•');
+           // cellView.model.attr('text/fill', 'red');
+
           dialogNumber++;
           if (dialogNumber == 5) {
             dialogNumber = 1;
@@ -840,4 +1203,5 @@ var text2 = text.replace(/\n/g,"<br>");
       alert(this.fieldA[i]);
     }
   }
+
 }

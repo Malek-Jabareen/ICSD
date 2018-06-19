@@ -3,12 +3,13 @@
 <h1>Interactive Control Structure Diagram</h1>
   <div id="header" style="margin: auto"></div>
   <table align="center">
-  <tr > <button id="hideButton" class="clear" (click)="hideDiagram()">Hide/Show func</button>&nbsp;&nbsp;&nbsp;
-    <button class="clear" (click)="build()" onclick=" document.getElementById('func').cols = 40; document.getElementById('func').rows = 25; document.getElementById('hideButton').style.display='inline-block';">Convert</button>
+  <tr > <button id="hideButton" class="clear" (click)="hideDiagram()" title="hide or show the function code">Hide/Show</button>&nbsp;&nbsp;
+    <button id="popup" class="clear" onclick="$('#dialogFunc').dialog('open');" title="open the function code in a big window">Pop up</button>&nbsp;&nbsp;
+    <button id="convert" class="clear" (click)="build()" onclick=" document.getElementById('func').cols = 40; document.getElementById('func').rows = 25; document.getElementById('hideButton').style.display='inline-block'; document.getElementById('popup').style.display='inline-block';">Convert</button>
   </tr>
   <tr>
-    <div *ngIf="hide"><td style="width:500px; vertical-align:top;"><app-form (SendEvent)="fT.value=$event"></app-form></td></div>
-    <td><input type="hidden" #fT (keyup)="0"><app-diagram #component1 [functionText]="fT.value"></app-diagram></td>
+    <div *ngIf="hide"><td style="width:500px; vertical-align:top;"><app-form (SendEvent)="fT.value=$event" [funcText]="fT2"></app-form></td></div>
+    <td><input type="hidden" #fT (keyup)="0"><app-diagram #component1 [functionText]="fT.value" (funcTextEvent)="fT2=$event"></app-diagram></td>
   </tr>
 </table>
 </div>

@@ -18,9 +18,12 @@ export class AppComponent implements OnInit {
   title = 'ICSD';
   hide = true;
   ccc: string;
+  fT2='';
+
   hideDiagram() {
     this.hide = !this.hide;
   }
+
 
   ngOnInit() {
 
@@ -28,7 +31,7 @@ export class AppComponent implements OnInit {
     const paper = new joint.dia.Paper({
       el: jQuery('#header'),
       width: 920,
-      height: 120,
+      height: 70,
       model: graph,
       gridSize: 1,
       interactive: false
@@ -91,7 +94,7 @@ export class AppComponent implements OnInit {
     });
     trp.attr({
 
-      polygon: { fill: '#ffe665', 'stroke-width': 1, stroke: 'black' },
+      polygon: { fill: '#fff58c', 'stroke-width': 1, stroke: 'black' },
       text: {
         text: 'IF',
         color: 'black'

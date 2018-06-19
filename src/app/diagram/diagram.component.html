@@ -12,15 +12,18 @@
 
 
 
-     <div id="dialog1" title="Code 1">
+     <div id="dialog1" title="Code">
       <p id="dialogText1"></p>
      </div>
-     <div id="dialog2" title="Code 2">
+     <div id="dialog2" title="Code">
        <p id="dialogText2"></p>
      </div>
-     <div id="dialog3" title="Code 3">
+     <div id="dialog3" title="Code">
        <p id="dialogText3"></p>
      </div>
-     <div id="dialog4" title="Code 4">
+     <div id="dialog4" title="Code">
        <p id="dialogText4"></p>
      </div>
+  <div id="dialogFunc" title="Function">
+    <textarea autofocus id="func2" style="width:750px; height:500px;" [(ngModel)]="functionText" #functionTextSend (keyup)="onchange(functionTextSend.value)"></textarea>
+  </div>
