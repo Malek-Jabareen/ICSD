@@ -388,6 +388,7 @@ this.funcTextEvent.emit(' \tprivate Dimension getSize(Container parent, LayoutSi
 
   function closeDialogEvent(cellv) {
   //  cellv.model.attr('text/text','');
+    $('#convert').focus();
     if (cellv.model.attr('text/type') == 'ELSE') {
       cellv.model.attr('polygon/fill','#FFA533');
     } else if ( cellv.model.attr('text/type') == 'IF') {
@@ -409,6 +410,16 @@ this.funcTextEvent.emit(' \tprivate Dimension getSize(Container parent, LayoutSi
   $( function() {
     $.noConflict();
     $( document ).tooltip();
+    $("#dialogHelp").dialog({
+      close: function() { $('#convert').focus(); },
+      buttons:{
+        "Close":{
+          text:'Close',
+          click: function() { $(this).dialog('close'); }
+        }},
+      autoOpen: false,
+      height: 400,
+      width: 400});
     $("#dialogFunc").dialog({
      open: function() {  $('#func2').scrollTop(0); },
       close: function() { $('#convert').focus(); },
@@ -1213,6 +1224,9 @@ var text2 = text.replace(/\n/g,"<br>");
     graphScale -= 0.1;
     paper.setDimensions(920+(graphScale-1)*1000, 800);
     paper.scale(graphScale, graphScale);
+  }
+  help() {
+    $('#dialogHelp').dialog('open');
   }
 
 }

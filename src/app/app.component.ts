@@ -165,5 +165,8 @@ export class AppComponent implements OnInit {
   zoomout() {
     this.component1.zoomout();
   }
+  help() {
+    this.component1.help();
+  }
 
 }
