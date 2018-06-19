@@ -11,6 +11,8 @@ declare var $: any;
 let dialogNumber=1;
 var cellDialog= [];
 let paper;
+var graphScale = 1;
+
 
 @Component({
   selector: 'app-diagram',
@@ -382,9 +384,7 @@ this.funcTextEvent.emit(' \tprivate Dimension getSize(Container parent, LayoutSi
   '}\n');
 
 
-  function expandDiagram() {
-    paper.setDimensions(1000, 800);
-  }
+
 
   function closeDialogEvent(cellv) {
   //  cellv.model.attr('text/text','');
@@ -1202,6 +1202,16 @@ var text2 = text.replace(/\n/g,"<br>");
     for (let i = 0 ; i < this.fieldA.length ; i++) {
       alert(this.fieldA[i]);
     }
+  }
+  zoomin() {
+    graphScale += 0.1;
+    paper.setDimensions(920+(graphScale-1)*1000, 800);
+    paper.scale(graphScale, graphScale);
+  }
+  zoomout() {
+    graphScale -= 0.1;
+    paper.setDimensions(920-(graphScale-1)*1000, 800);
+    paper.scale(graphScale, graphScale);
   }
 
 }

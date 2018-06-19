@@ -14,7 +14,37 @@
       document.getElementById('func').rows = 60;
       document.getElementById('hideButton').style.display='none';
       document.getElementById('popup').style.display='none';
+      document.getElementById('zoomin').style.display='none';
+      document.getElementById('zoomout').style.display='none';
+      document.getElementById('zoomin2').style.display='none';
+      document.getElementById('zoomout2').style.display='none';
     }
+function conv(){
+  document.getElementById('func').cols = 40;
+  document.getElementById('func').rows = 25;
+  document.getElementById('hideButton').style.display='inline-block';
+  document.getElementById('popup').style.display='inline-block';
+  document.getElementById('zoomin').style.display='inline-block';
+  document.getElementById('zoomout').style.display='inline-block';
+}
+    function hideAndShow(){
+
+      if (document.getElementById('zoomin2').style.display=='none') {
+        document.getElementById('zoomin2').style.display='inline-block';
+        document.getElementById('zoomout2').style.display='inline-block';
+
+        document.getElementById('zoomin').style.display='none';
+        document.getElementById('zoomout').style.display='none';
+      }
+      else {
+        document.getElementById('zoomin2').style.display='none';
+        document.getElementById('zoomout2').style.display='none';
+
+        document.getElementById('zoomin').style.display='inline-block';
+        document.getElementById('zoomout').style.display='inline-block';
+      }
+    }
+  </script>
   </script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
