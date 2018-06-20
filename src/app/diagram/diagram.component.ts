@@ -11,6 +11,8 @@ declare var $: any;
 let dialogNumber=1;
 var cellDialog= [];
 let paper;
+var graphScale = 1;
+
 
 @Component({
   selector: 'app-diagram',
@@ -382,12 +384,11 @@ this.funcTextEvent.emit(' \tprivate Dimension getSize(Container parent, LayoutSi
   '}\n');
 
 
-  function expandDiagram() {
-    paper.setDimensions(1000, 800);
-  }
+
 
   function closeDialogEvent(cellv) {
   //  cellv.model.attr('text/text','');
+    $('#convert').focus();
     if (cellv.model.attr('text/type') == 'ELSE') {
       cellv.model.attr('polygon/fill','#FFA533');
     } else if ( cellv.model.attr('text/type') == 'IF') {
@@ -409,6 +410,16 @@ this.funcTextEvent.emit(' \tprivate Dimension getSize(Container parent, LayoutSi
   $( function() {
     $.noConflict();
     $( document ).tooltip();
+    $("#dialogHelp").dialog({
+      close: function() { $('#convert').focus(); },
+      buttons:{
+        "Close":{
+          text:'Close',
+          click: function() { $(this).dialog('close'); }
+        }},
+      autoOpen: false,
+      height: 400,
+      width: 400});
     $("#dialogFunc").dialog({
      open: function() {  $('#func2').scrollTop(0); },
       close: function() { $('#convert').focus(); },
@@ -1000,6 +1011,7 @@ this.funcTextEvent.emit(' \tprivate Dimension getSize(Container parent, LayoutSi
     }
   }
   alirt() {
+    graphScale=1;
     const strx  = 'ast[] x; if(this.ref!=null){ x=new ast[this.ref.length+1]; }' +
       ' else{x=new ast[1];}int i=0; if(this.ref!=null){for (i = 0; i < this.ref.length;' +
       ' i++){x[i]=this.ref[i];}}x[i]=new ast();x[i].info=function.info;x[i].text=function.text;x[i].textq=function.textq;' +
@@ -1202,6 +1214,19 @@ var text2 = text.replace(/\n/g,"<br>");
     for (let i = 0 ; i < this.fieldA.length ; i++) {
       alert(this.fieldA[i]);
     }
+  }
+  zoomin() {
+    graphScale += 0.1;
+    paper.setDimensions(920+(graphScale-1)*1000, 800);
+    paper.scale(graphScale, graphScale);
+  }
+  zoomout() {
+    graphScale -= 0.1;
+    paper.setDimensions(920+(graphScale-1)*1000, 800);
+    paper.scale(graphScale, graphScale);
+  }
+  help() {
+    $('#dialogHelp').dialog('open');
   }
 
 }

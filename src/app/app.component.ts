@@ -22,6 +22,7 @@ export class AppComponent implements OnInit {
 
   hideDiagram() {
     this.hide = !this.hide;
+
   }
 
 
@@ -158,4 +159,14 @@ export class AppComponent implements OnInit {
   build() {
     this.component1.alirt();
   }
+  zoomin() {
+    this.component1.zoomin();
+  }
+  zoomout() {
+    this.component1.zoomout();
+  }
+  help() {
+    this.component1.help();
+  }
+
 }
