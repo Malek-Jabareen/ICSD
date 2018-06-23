@@ -47,12 +47,13 @@ export class Ast {
         count++;
         stq += stt[i] + ' ';
       }
-      if (/* contains */stt[i].toLowerCase().indexOf('for') !== -1) {
+      if (/* contains */stt[i].toLowerCase().trim().indexOf('for') === 0) {
         if (count !== 0) {
           funcx.info = count + '';
           funcx.text = 'Variable Deceleration';
           funcx.ref = null;
           functionx = functionx.add(funcx);
+          funcx.textq = '';
           count = 0;
           stq = '';
         }
@@ -65,6 +66,7 @@ export class Ast {
             i++;
           }
           functionx = functionx.add(funcx);
+          funcx.textq = '';
         } else {
           for (let j: number = i + 1; j < stt.length; j++) {
             if (/* contains */stt[j].indexOf('{') !== -1) {
@@ -79,12 +81,12 @@ export class Ast {
                   funcx.info = cin + '';
                   funcx.text = 'for';
                   funcx.ref = null;
-                  if (/* contains */funcx.textq.indexOf('{') !== -1 || /* contains */funcx.textq.toLowerCase().indexOf('case') !== -1
-                  || /* contains */funcx.textq.toLowerCase().indexOf('for') !== -1
-                  || /* contains */funcx.textq.toLowerCase().indexOf('if') !== -1
-                  || /* contains */funcx.textq.toLowerCase().indexOf('else') !== -1
-                  || /* contains */funcx.textq.toLowerCase().indexOf('switch') !== -1
-                  || /* contains */funcx.textq.toLowerCase().indexOf('while') !== -1) { funcx.ref = this.build(funcx.textq).ref; }
+                  if (/* contains */funcx.textq.indexOf('{') !== -1 || /* contains */funcx.textq.toLowerCase().trim().indexOf('case') === 0
+                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('for') === 0
+                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('if') === 0
+                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('else') === 0
+                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('switch') === 0
+                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('while') === 0) { funcx.ref = this.build(funcx.textq).ref; }
                   functionx = functionx.add(funcx);
                   cin = 0;
                   cq = 0;
@@ -107,12 +109,13 @@ export class Ast {
           }
         }
       }
-      if (/* contains */stt[i].toLowerCase().indexOf('if') !== -1) {
+      if (/* contains */(stt[i].toLowerCase()).trim().indexOf('if') === 0) {
         if (count !== 0) {
           funcx.info = count + '';
           funcx.text = 'Variable Deceleration';
           funcx.ref = null;
           functionx = functionx.add(funcx);
+          funcx.textq = '';
           count = 0;
           stq = '';
         }
@@ -125,6 +128,7 @@ export class Ast {
             i++;
           }
           functionx = functionx.add(funcx);
+          funcx.textq = '';
         } else {
           for (let j: number = i + 1; j < stt.length; j++) {
             if (/* contains */stt[j].indexOf('{') !== -1) {
@@ -139,12 +143,12 @@ export class Ast {
                   funcx.info = cin + '';
                   funcx.text = 'if';
                   funcx.ref = null;
-                  if (/* contains */funcx.textq.indexOf('{') !== -1 || /* contains */funcx.textq.toLowerCase().indexOf('case') !== -1
-                  || /* contains */funcx.textq.toLowerCase().indexOf('for') !== -1
-                  || /* contains */funcx.textq.toLowerCase().indexOf('if') !== -1
-                  || /* contains */funcx.textq.toLowerCase().indexOf('else') !== -1
-                  || /* contains */funcx.textq.toLowerCase().indexOf('switch') !== -1
-                  || /* contains */funcx.textq.toLowerCase().indexOf('while') !== -1) { funcx.ref = this.build(funcx.textq).ref; }
+                  if (/* contains */funcx.textq.indexOf('{') !== -1 || /* contains */funcx.textq.toLowerCase().trim().indexOf('case') === 0
+                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('for') === 0
+                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('if') === 0
+                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('else') === 0
+                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('switch') === 0
+                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('while') === 0) { funcx.ref = this.build(funcx.textq).ref; }
                   functionx = functionx.add(funcx);
                   cin = 0;
                   cq = 0;
@@ -167,12 +171,13 @@ export class Ast {
           }
         }
       }
-      if (/* contains */stt[i].toLowerCase().indexOf('while') !== -1) {
+      if (/* contains */(stt[i].toLowerCase()).trim().indexOf('while') === 0) {
         if (count !== 0) {
           funcx.info = count + '';
           funcx.text = 'Variable Deceleration';
           funcx.ref = null;
           functionx = functionx.add(funcx);
+          funcx.textq = '';
           count = 0;
           stq = '';
         }
@@ -185,6 +190,7 @@ export class Ast {
             i++;
           }
           functionx = functionx.add(funcx);
+          funcx.textq = '';
         } else {
           for (let j: number = i + 1; j < stt.length; j++) {
             if (/* contains */stt[j].indexOf('{') !== -1) {
@@ -199,12 +205,12 @@ export class Ast {
                   funcx.info = cin + '';
                   funcx.text = 'while';
                   funcx.ref = null;
-                  if (/* contains */funcx.textq.indexOf('{') !== -1 || /* contains */funcx.textq.toLowerCase().indexOf('case') !== -1
-                  || /* contains */funcx.textq.toLowerCase().indexOf('for') !== -1
-                  || /* contains */funcx.textq.toLowerCase().indexOf('if') !== -1
-                  || /* contains */funcx.textq.toLowerCase().indexOf('else') !== -1
-                  || /* contains */funcx.textq.toLowerCase().indexOf('switch') !== -1
-                  || /* contains */funcx.textq.toLowerCase().indexOf('while') !== -1) { funcx.ref = this.build(funcx.textq).ref; }
+                  if (/* contains */funcx.textq.indexOf('{') !== -1 || /* contains */funcx.textq.toLowerCase().trim().indexOf('case') === 0
+                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('for') === 0
+                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('if') === 0
+                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('else') === 0
+                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('switch') === 0
+                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('while') === 0) { funcx.ref = this.build(funcx.textq).ref; }
                   functionx = functionx.add(funcx);
                   cin = 0;
                   cq = 0;
@@ -227,12 +233,13 @@ export class Ast {
           }
         }
       }
-      if (/* contains */stt[i].toLowerCase().indexOf('switch') !== -1) {
+      if (/* contains */(stt[i].toLowerCase()).trim().indexOf('switch') === 0) {
         if (count !== 0) {
           funcx.info = count + '';
           funcx.text = 'Variable Deceleration';
           funcx.ref = null;
           functionx = functionx.add(funcx);
+          funcx.textq = '';
           count = 0;
           stq = '';
         }
@@ -241,6 +248,7 @@ export class Ast {
           funcx.text = 'switch';
           funcx.ref = null;
           functionx = functionx.add(funcx);
+          funcx.textq = '';
         } else {
           for (let j: number = i + 1; j < stt.length; j++) {
             if (/* contains */stt[j].indexOf('{') !== -1) {
@@ -255,12 +263,12 @@ export class Ast {
                   funcx.info = cin + '';
                   funcx.text = 'switch';
                   funcx.ref = null;
-                  if (/* contains */funcx.textq.indexOf('{') !== -1 || /* contains */funcx.textq.toLowerCase().indexOf('case') !== -1
-                  || /* contains */funcx.textq.toLowerCase().indexOf('for') !== -1
-                  || /* contains */funcx.textq.toLowerCase().indexOf('if') !== -1
-                  || /* contains */funcx.textq.toLowerCase().indexOf('else') !== -1
-                  || /* contains */funcx.textq.toLowerCase().indexOf('switch') !== -1
-                  || /* contains */funcx.textq.toLowerCase().indexOf('while') !== -1) { funcx.ref = this.build(funcx.textq).ref; }
+                  if (/* contains */funcx.textq.indexOf('{') !== -1 || /* contains */funcx.textq.toLowerCase().trim().indexOf('case') === 0
+                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('for') === 0
+                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('if') === 0
+                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('else') === 0
+                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('switch') === 0
+                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('while') === 0) { funcx.ref = this.build(funcx.textq).ref; }
                   functionx = functionx.add(funcx);
                   cin = 0;
                   cq = 0;
@@ -283,34 +291,36 @@ export class Ast {
           }
         }
       }
-      if (/* contains */stt[i].toLowerCase().indexOf('case') !== -1) {
+      if (/* contains */(stt[i].toLowerCase()).trim().indexOf('case') === 0) {
         if (count !== 0) {
           funcx.info = count + '';
           funcx.text = 'Variable Deceleration';
           funcx.ref = null;
           functionx = functionx.add(funcx);
+          funcx.textq = '';
           count = 0;
           stq = '';
         }
-        if (/* contains */stt[i + 1].toLowerCase().indexOf('break') !== -1) {
+        if (/* contains */(stt[i + 1].toLowerCase()).trim().indexOf('break') === 0) {
           funcx.info = '1';
           funcx.text = 'case';
           funcx.textq = stt[i + 1];
           funcx.ref = null;
           functionx = functionx.add(funcx);
+          funcx.textq = '';
         } else {
           for (let j: number = i + 1; j < stt.length; j++) {
-            if (/* contains */stt[j].toLowerCase().indexOf('break') !== -1) {
+            if (/* contains */(stt[j].toLowerCase()).trim().indexOf('break') === 0) {
               funcx.info = cin + '';
               funcx.text = 'case';
               funcx.textq += stt[j];
               funcx.ref = null;
-              if (/* contains */funcx.textq.indexOf('{') !== -1 || /* contains */funcx.textq.toLowerCase().indexOf('case') !== -1
-              || /* contains */funcx.textq.toLowerCase().indexOf('for') !== -1
-              || /* contains */funcx.textq.toLowerCase().indexOf('if') !== -1
-              || /* contains */funcx.textq.toLowerCase().indexOf('else') !== -1
-              || /* contains */funcx.textq.toLowerCase().indexOf('switch') !== -1
-              || /* contains */funcx.textq.toLowerCase().indexOf('while') !== -1) { funcx.ref = this.build(funcx.textq).ref; }
+              if (/* contains */funcx.textq.indexOf('{') !== -1 || /* contains */funcx.textq.toLowerCase().trim().indexOf('case') === 0
+              || /* contains */funcx.textq.toLowerCase().trim().indexOf('for') === 0
+              || /* contains */funcx.textq.toLowerCase().trim().indexOf('if') === 0
+              || /* contains */funcx.textq.toLowerCase().trim().indexOf('else') === 0
+              || /* contains */funcx.textq.toLowerCase().trim().indexOf('switch') === 0
+              || /* contains */funcx.textq.toLowerCase().trim().indexOf('while') === 0) { funcx.ref = this.build(funcx.textq).ref; }
               functionx = functionx.add(funcx);
               cin = 0;
               cq = 0;
@@ -318,18 +328,18 @@ export class Ast {
               funcx.textq = '';
               break;
             } else {
-             if ( j === stt.length - 1 || /* contains */stt[j + 1].toLowerCase().indexOf('case') !== -1
-               || /* contains */stt[j + 1].toLowerCase().indexOf('default') !== -1 ) {
+             if ( j === stt.length - 1 || /* contains */stt[j + 1].toLowerCase().trim().indexOf('case') === 0
+               || /* contains */stt[j + 1].toLowerCase().trim().indexOf('default') === 0 ) {
                 funcx.info = cin + '';
                 funcx.text = 'case';
                 funcx.textq += stt[j];
                 funcx.ref = null;
-                if (/* contains */funcx.textq.indexOf('{') !== -1 || /* contains */funcx.textq.toLowerCase().indexOf('case') !== -1
-                || /* contains */funcx.textq.toLowerCase().indexOf('for') !== -1
-                || /* contains */funcx.textq.toLowerCase().indexOf('if') !== -1
-                || /* contains */funcx.textq.toLowerCase().indexOf('else') !== -1
-                || /* contains */funcx.textq.toLowerCase().indexOf('switch') !== -1
-                || /* contains */funcx.textq.toLowerCase().indexOf('while') !== -1) {
+                if (/* contains */funcx.textq.indexOf('{') !== -1 || /* contains */funcx.textq.toLowerCase().trim().indexOf('case') === 0
+                || /* contains */funcx.textq.toLowerCase().trim().indexOf('for') === 0
+                || /* contains */funcx.textq.toLowerCase().trim().indexOf('if') === 0
+                || /* contains */funcx.textq.toLowerCase().trim().indexOf('else') === 0
+                || /* contains */funcx.textq.toLowerCase().trim().indexOf('switch') === 0
+                || /* contains */funcx.textq.toLowerCase().trim().indexOf('while') === 0) {
                   funcx.ref = this.build(funcx.textq).ref;
                 }
                 functionx = functionx.add(funcx);
@@ -360,12 +370,13 @@ export class Ast {
           }
         }
       }
-      if (/* contains */stt[i].toLowerCase().indexOf('default') !== -1) {
+      if (/* contains */stt[i].toLowerCase().trim().indexOf('default') === 0) {
         if (count !== 0) {
           funcx.info = count + '';
           funcx.text = 'Variable Deceleration';
           funcx.ref = null;
           functionx = functionx.add(funcx);
+          funcx.textq = '';
           count = 0;
           stq = '';
         }
@@ -381,12 +392,12 @@ export class Ast {
               funcx.info = cin + '';
               funcx.text = 'case';
               funcx.ref = null;
-              if (/* contains */funcx.textq.indexOf('{') !== -1 || /* contains */funcx.textq.toLowerCase().indexOf('case') !== -1
-              || /* contains */funcx.textq.toLowerCase().indexOf('for') !== -1
-              || /* contains */funcx.textq.toLowerCase().indexOf('if') !== -1
-              || /* contains */funcx.textq.toLowerCase().indexOf('else') !== -1
-              || /* contains */funcx.textq.toLowerCase().indexOf('switch') !== -1
-              || /* contains */funcx.textq.toLowerCase().indexOf('while') !== -1) { funcx.ref = this.build(funcx.textq).ref; }
+              if (/* contains */funcx.textq.indexOf('{') !== -1 || /* contains */funcx.textq.toLowerCase().trim().indexOf('case') === 0
+              || /* contains */funcx.textq.toLowerCase().trim().indexOf('for') === 0
+              || /* contains */funcx.textq.toLowerCase().trim().indexOf('if') === 0
+              || /* contains */funcx.textq.toLowerCase().trim().indexOf('else') === 0
+              || /* contains */funcx.textq.toLowerCase().trim().indexOf('switch') === 0
+              || /* contains */funcx.textq.toLowerCase().trim().indexOf('while') === 0) { funcx.ref = this.build(funcx.textq).ref; }
               functionx = functionx.add(funcx);
               cin = 0;
               cq = 0;
@@ -404,12 +415,13 @@ export class Ast {
             }
           }
       }
-      if (/* contains */stt[i].toLowerCase().indexOf('else') !== -1) {
+      if (/* contains */(stt[i].toLowerCase()).trim().indexOf('else') === 0) {
         if (count !== 0) {
           funcx.info = count + '';
           funcx.text = 'Variable Deceleration';
           funcx.ref = null;
           functionx = functionx.add(funcx);
+          funcx.textq = '';
           count = 0;
           stq = '';
         }
@@ -422,6 +434,7 @@ export class Ast {
             i++;
           }
           functionx = functionx.add(funcx);
+          funcx.textq = '';
         } else {
           for (let j: number = i + 1; j < stt.length; j++) {
             if (/* contains */stt[j].indexOf('{') !== -1) {
@@ -436,12 +449,12 @@ export class Ast {
                   funcx.info = cin + '';
                   funcx.text = 'else';
                   funcx.ref = null;
-                  if (/* contains */funcx.textq.indexOf('{') !== -1 || /* contains */funcx.textq.toLowerCase().indexOf('case') !== -1
-                  || /* contains */funcx.textq.toLowerCase().indexOf('for') !== -1
-                  || /* contains */funcx.textq.toLowerCase().indexOf('if') !== -1
-                  || /* contains */funcx.textq.toLowerCase().indexOf('else') !== -1
-                  || /* contains */funcx.textq.toLowerCase().indexOf('switch') !== -1
-                  || /* contains */funcx.textq.toLowerCase().indexOf('while') !== -1) { funcx.ref = this.build(funcx.textq).ref; }
+                  if (/* contains */funcx.textq.indexOf('{') !== -1 || /* contains */funcx.textq.toLowerCase().trim().indexOf('case') === 0
+                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('for') === 0
+                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('if') === 0
+                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('else') === 0
+                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('switch') === 0
+                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('while') === 0) { funcx.ref = this.build(funcx.textq).ref; }
                   functionx = functionx.add(funcx);
                   cin = 0;
                   cq = 0;
@@ -470,6 +483,7 @@ export class Ast {
       funcx.text = 'Variable Deceleration';
       funcx.ref = null;
       functionx = functionx.add(funcx);
+      funcx.textq = '';
       count = 0;
       stq = null;
     }
