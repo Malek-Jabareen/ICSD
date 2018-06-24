@@ -12,7 +12,11 @@ export class Ast {
   static are(): Ast {
     return null;
   }
-   static build(__function: string): Ast {
+
+
+
+
+  static build(__function: string): Ast {
     const funcx: Ast = new Ast();
     let functionx: Ast = new Ast();
     let str = __function;
@@ -565,7 +569,11 @@ export class Ast {
     this.ref = x;
     return this;
   }
-  constructor() {
+
+
+
+
+constructor() {
     this.info = null;
     this.text = null;
     this.textq = null;

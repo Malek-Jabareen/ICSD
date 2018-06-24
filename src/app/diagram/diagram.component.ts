@@ -12,6 +12,7 @@ let dialogNumber = 1;
 const cellDialog = [];
 let paper;
 let graphScale = 1;
+let activeDialogs=0;
 
 
 @Component({
@@ -29,7 +30,8 @@ export class DiagramComponent implements OnInit {
     /* alert('hello'); */
   }
 
-   public fieldA: Array<any> = [];
+
+  public fieldA: Array<any> = [];
    newAttribute: any = {};
   title = 'ICSD';
 
@@ -744,8 +746,10 @@ this.funcTextEvent.emit('private Dimension getSize(Container parent, LayoutSize 
 
 
 
+
   function closeDialogEvent(cellv) {
   //  cellv.model.attr('text/text','');
+    activeDialogs--;
     $('#convert').focus();
     if (cellv.model.attr('text/type') === 'ELSE') {
       cellv.model.attr('polygon/fill', '#FFA533');
@@ -1527,10 +1531,16 @@ this.funcTextEvent.emit('private Dimension getSize(Container parent, LayoutSize 
 
       paper.on('cell:pointerdown',
         function(cellView, evt, x, y) {
+        var dont=0;
           if (cellDialog[dialogNumber - 1] !== undefined) {
             $('#dialog' + dialogNumber).dialog('close');
+            dont=1;
           }
           $('#dialog' + dialogNumber).data('p1', cellView).dialog('open');
+
+          activeDialogs++;
+        if (dont == 0) { $('#dialog' + dialogNumber).dialog('option', 'title', 'Code '  + activeDialogs); }
+
           const text = cellView.model.attr('text/textF');
 const text2 = text.replace(/\n/g, '<br>');
           const text3 = text2.replace(/\t/g, '&nbsp;');
