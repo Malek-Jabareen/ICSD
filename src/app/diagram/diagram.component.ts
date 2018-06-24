@@ -593,7 +593,7 @@ this.funcTextEvent.emit('private Dimension getSize(Container parent, LayoutSize 
 
     joint.shapes.basic.trapez = joint.shapes.basic.Generic.extend({
 
-      markup: '<g class="rotatable"><g class="scalable"><polygon points="20,0 180,0 200,100 0,100"/></g><text/></g>',
+      markup: '<g class="rotatable"><g class="scalable"><polygon points="60,0 140,0 200,100 0,100"/></g><text/></g>',
 
       defaults: joint.util.deepSupplement({
 
@@ -845,7 +845,7 @@ this.funcTextEvent.emit('private Dimension getSize(Container parent, LayoutSize 
   build(Qer: Ast , num: number , graph: joint.dia.Graph , rect: joint.shapes.basic.Generic , c: number ) {
     joint.shapes.basic.trapez = joint.shapes.basic.Generic.extend({
 
-      markup: '<g class="rotatable"><g class="scalable"><polygon points="20,0 180,0 200,100 0,100"/></g><text/></g>',
+      markup: '<g class="rotatable"><g class="scalable"><polygon points="60,0 140,0 200,100 0,100"/></g><text/></g>',
 
       defaults: joint.util.deepSupplement({
 
@@ -861,7 +861,7 @@ this.funcTextEvent.emit('private Dimension getSize(Container parent, LayoutSize 
 
     joint.shapes.basic.trapezR = joint.shapes.basic.Generic.extend({
 
-      markup: '<g class="rotatable"><g class="scalable"><polygon points="0,0 200,0 180,100 20,100"/></g><text/></g>',
+      markup: '<g class="rotatable"><g class="scalable"><polygon points="0,0 200,0 140,100 60,100"/></g><text/></g>',
 
       defaults: joint.util.deepSupplement({
 
@@ -885,7 +885,7 @@ this.funcTextEvent.emit('private Dimension getSize(Container parent, LayoutSize 
         const s = new joint.shapes.basic.Circle({
           position: { x: c, y: num * 55 + 50 * num },
           size: { width: ( parseInt(qq.ref[i].info, 10 ) / ww ) * rect.size().width , height: 50 },
-          attrs: { circle: { fill: '#33B0FF' }, text: { text: '', type: 'FOR', fill: 'white' , textF: qq.ref[i].textq} }
+          attrs: { circle: { fill: '#33B0FF' }, text: { text: '', type: 'FOR', fill: 'white' , textF: qq.ref[i].fullTextq} }
         });
         const link = new joint.dia.Link({
           source: { id: rect.id },
@@ -901,7 +901,7 @@ this.funcTextEvent.emit('private Dimension getSize(Container parent, LayoutSize 
           const s = new joint.shapes.basic.Circle({
             position: { x: c, y: num * 55 + 50 * num },
             size: { width: ( parseInt(qq.ref[i].info, 10 ) / ww ) * rect.size().width , height: 50 },
-            attrs: { circle: { fill: '#33FF51' }, text: { text: 'WHILE', fill: 'white' , textF: qq.ref[i].textq } }
+            attrs: { circle: { fill: '#33FF51' }, text: { text: 'WHILE', fill: 'white' , textF: qq.ref[i].fullTextq } }
           });
           const link = new joint.dia.Link({
             source: { id: rect.id },
@@ -925,7 +925,7 @@ this.funcTextEvent.emit('private Dimension getSize(Container parent, LayoutSize 
                 // if
                 type: 'IF',
                 text: '',
-                color: 'black' , textF: qq.ref[i].textq
+                color: 'black' , textF: qq.ref[i].fullTextq
               }
             });
             const link = new joint.dia.Link({
@@ -948,7 +948,7 @@ this.funcTextEvent.emit('private Dimension getSize(Container parent, LayoutSize 
                 text: {
                   // else
                   type: 'ELSE',
-                  text: '', textF: qq.ref[i].textq
+                  text: '', textF: qq.ref[i].fullTextq
                 }
               });
               const link = new joint.dia.Link({
@@ -972,7 +972,7 @@ this.funcTextEvent.emit('private Dimension getSize(Container parent, LayoutSize 
                   text: {
                     // switch
                     type: 'SWITCH',
-                    text: '' , textF: qq.ref[i].textq
+                    text: '' , textF: qq.ref[i].fullTextq
                   }
                 });
                 const link = new joint.dia.Link({
@@ -996,7 +996,7 @@ this.funcTextEvent.emit('private Dimension getSize(Container parent, LayoutSize 
                     text: {
                       // case
                       type: 'CASE',
-                      text: '' , textF: qq.ref[i].textq
+                      text: '' , textF: qq.ref[i].fullTextq
                     }
                   });
                   const link = new joint.dia.Link({
@@ -1166,7 +1166,7 @@ this.funcTextEvent.emit('private Dimension getSize(Container parent, LayoutSize 
       const rect = new joint.shapes.basic.Rect({
         position: {x: 3, y: 3},
         size: {width: 900, height: 50},
-        attrs: {rect: {fill: 'orange'}, text: {text: funcName, fill: 'white' , textF: funcName3}}
+        attrs: {rect: {fill: 'orange'}, text: {text: funcName, fill: 'white' , textF: this.functionText}}
       });
       graph.addCells([rect]);
       this.build(qq, 1, graph, rect, 3);

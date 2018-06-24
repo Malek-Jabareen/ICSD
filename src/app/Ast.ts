@@ -5,6 +5,8 @@ export class Ast {
 
   public textq: string;
 
+  public fullTextq: string;
+
   public ref: Ast[];
 
   static are(): Ast {
@@ -47,7 +49,8 @@ export class Ast {
         count++;
         stq += stt[i] + ' ';
       }
-      if (/* contains */stt[i].toLowerCase().trim().indexOf('for') === 0) {
+      if (/* contains */(stt[i].toLowerCase()).trim().indexOf('for') === 0) {
+        funcx.fullTextq += '\n' + stt[i];
         if (count !== 0) {
           funcx.info = count + '';
           funcx.text = 'Variable Deceleration';
@@ -63,19 +66,23 @@ export class Ast {
           funcx.ref = null;
           if (/* contains */stt[i + 1].indexOf(';') !== -1) {
             funcx.textq += '\n' + stt[i + 1];
+            funcx.fullTextq += '\n' + stt[i + 1];
             i++;
           }
           functionx = functionx.add(funcx);
           funcx.textq = '';
+          funcx.fullTextq = '';
         } else {
           for (let j: number = i + 1; j < stt.length; j++) {
             if (/* contains */stt[j].indexOf('{') !== -1) {
+              funcx.fullTextq += '\n' + stt[j];
               if (cq !== 0) {
                 funcx.textq += '\n' + stt[j];
               }
               cq++;
             } else {
               if (/* contains */stt[j].indexOf('}') !== -1) {
+                funcx.fullTextq += '\n' + stt[j];
                 cq--;
                 if (cq === 0) {
                   funcx.info = cin + '';
@@ -92,6 +99,7 @@ export class Ast {
                   cq = 0;
                   i = j;
                   funcx.textq = '';
+                  funcx.fullTextq = '';
                   break;
                 } else {
                   funcx.textq += '\n' + stt[j];
@@ -103,6 +111,7 @@ export class Ast {
                     return o1.equals(o2); } else { return o1 === o2; } })(stt[j], ' ')))) {
                   cin++;
                   funcx.textq += '\n' + stt[j];
+                  funcx.fullTextq += '\n' + stt[j];
                 }
               }
             }
@@ -110,6 +119,7 @@ export class Ast {
         }
       }
       if (/* contains */(stt[i].toLowerCase()).trim().indexOf('if') === 0) {
+        funcx.fullTextq += '\n' + stt[i];
         if (count !== 0) {
           funcx.info = count + '';
           funcx.text = 'Variable Deceleration';
@@ -125,19 +135,23 @@ export class Ast {
           funcx.ref = null;
           if (/* contains */stt[i + 1].indexOf(';') !== -1) {
             funcx.textq += '\n' + stt[i + 1];
+            funcx.fullTextq += '\n' + stt[i + 1];
             i++;
           }
           functionx = functionx.add(funcx);
           funcx.textq = '';
+          funcx.fullTextq = '';
         } else {
           for (let j: number = i + 1; j < stt.length; j++) {
             if (/* contains */stt[j].indexOf('{') !== -1) {
+              funcx.fullTextq += '\n' + stt[j];
               if (cq !== 0) {
                 funcx.textq += '\n' + stt[j];
               }
               cq++;
             } else {
               if (/* contains */stt[j].indexOf('}') !== -1) {
+                funcx.fullTextq += '\n' + stt[j];
                 cq--;
                 if (cq === 0) {
                   funcx.info = cin + '';
@@ -154,6 +168,7 @@ export class Ast {
                   cq = 0;
                   i = j;
                   funcx.textq = '';
+                  funcx.fullTextq = '';
                   break;
                 } else {
                   funcx.textq += '\n' + stt[j];
@@ -165,6 +180,7 @@ export class Ast {
                     return o1.equals(o2); } else { return o1 === o2; } })(stt[j], ' ')))) {
                   cin++;
                   funcx.textq += '\n' + stt[j];
+                  funcx.fullTextq += '\n' + stt[j];
                 }
               }
             }
@@ -172,6 +188,7 @@ export class Ast {
         }
       }
       if (/* contains */(stt[i].toLowerCase()).trim().indexOf('while') === 0) {
+        funcx.fullTextq += '\n' + stt[i];
         if (count !== 0) {
           funcx.info = count + '';
           funcx.text = 'Variable Deceleration';
@@ -187,19 +204,23 @@ export class Ast {
           funcx.ref = null;
           if (/* contains */stt[i + 1].indexOf(';') !== -1) {
             funcx.textq += '\n' + stt[i + 1];
+            funcx.fullTextq += '\n' + stt[i + 1];
             i++;
           }
           functionx = functionx.add(funcx);
           funcx.textq = '';
+          funcx.fullTextq = '';
         } else {
           for (let j: number = i + 1; j < stt.length; j++) {
             if (/* contains */stt[j].indexOf('{') !== -1) {
+              funcx.fullTextq += '\n' + stt[j];
               if (cq !== 0) {
                 funcx.textq += '\n' + stt[j];
               }
               cq++;
             } else {
               if (/* contains */stt[j].indexOf('}') !== -1) {
+                funcx.fullTextq += '\n' + stt[j];
                 cq--;
                 if (cq === 0) {
                   funcx.info = cin + '';
@@ -216,6 +237,7 @@ export class Ast {
                   cq = 0;
                   i = j;
                   funcx.textq = '';
+                  funcx.fullTextq = '';
                   break;
                 } else {
                   funcx.textq += '\n' + stt[j];
@@ -227,6 +249,7 @@ export class Ast {
                     return o1.equals(o2); } else { return o1 === o2; } })(stt[j], ' ')))) {
                   cin++;
                   funcx.textq += '\n' + stt[j];
+                  funcx.fullTextq += '\n' + stt[j];
                 }
               }
             }
@@ -234,6 +257,7 @@ export class Ast {
         }
       }
       if (/* contains */(stt[i].toLowerCase()).trim().indexOf('switch') === 0) {
+        funcx.fullTextq += '\n' + stt[i];
         if (count !== 0) {
           funcx.info = count + '';
           funcx.text = 'Variable Deceleration';
@@ -248,10 +272,12 @@ export class Ast {
           funcx.text = 'switch';
           funcx.ref = null;
           functionx = functionx.add(funcx);
+          funcx.fullTextq = '\n' + stt[i + 1];
           funcx.textq = '';
         } else {
           for (let j: number = i + 1; j < stt.length; j++) {
             if (/* contains */stt[j].indexOf('{') !== -1) {
+              funcx.fullTextq += '\n' + stt[j];
               if (cq !== 0) {
                 funcx.textq += '\n' + stt[j];
               }
@@ -259,6 +285,7 @@ export class Ast {
             } else {
               if (/* contains */stt[j].indexOf('}') !== -1) {
                 cq--;
+                funcx.fullTextq += '\n' + stt[j];
                 if (cq === 0) {
                   funcx.info = cin + '';
                   funcx.text = 'switch';
@@ -274,9 +301,11 @@ export class Ast {
                   cq = 0;
                   i = j;
                   funcx.textq = '';
+                  funcx.fullTextq = '';
                   break;
                 } else {
                   funcx.textq += '\n' + stt[j];
+                  funcx.fullTextq += '\n' + stt[j];
                 }
               } else {
                 if (!(/* equals */(<any>((o1: any, o2: any) => {
@@ -284,6 +313,7 @@ export class Ast {
                       return o1 === o2; } })(stt[j], '')) || /* equals */(<any>((o1: any, o2: any) => { if (o1 && o1.equals) {
                     return o1.equals(o2); } else { return o1 === o2; } })(stt[j], ' ')))) {
                   cin++;
+                  funcx.fullTextq += '\n' + stt[j];
                   funcx.textq += '\n' + stt[j];
                 }
               }
@@ -292,6 +322,7 @@ export class Ast {
         }
       }
       if (/* contains */(stt[i].toLowerCase()).trim().indexOf('case') === 0) {
+        funcx.fullTextq += '\n' + stt[i];
         if (count !== 0) {
           funcx.info = count + '';
           funcx.text = 'Variable Deceleration';
@@ -305,15 +336,18 @@ export class Ast {
           funcx.info = '1';
           funcx.text = 'case';
           funcx.textq = stt[i + 1];
+          funcx.fullTextq += '\n' + stt[i + 1];
           funcx.ref = null;
           functionx = functionx.add(funcx);
           funcx.textq = '';
+          funcx.fullTextq = '';
         } else {
           for (let j: number = i + 1; j < stt.length; j++) {
             if (/* contains */(stt[j].toLowerCase()).trim().indexOf('break') === 0) {
               funcx.info = cin + '';
               funcx.text = 'case';
               funcx.textq += stt[j];
+              funcx.fullTextq += '\n' + stt[j];
               funcx.ref = null;
               if (/* contains */funcx.textq.indexOf('{') !== -1 || /* contains */funcx.textq.toLowerCase().trim().indexOf('case') === 0
               || /* contains */funcx.textq.toLowerCase().trim().indexOf('for') === 0
@@ -326,6 +360,7 @@ export class Ast {
               cq = 0;
               i = j;
               funcx.textq = '';
+              funcx.fullTextq = '';
               break;
             } else {
              if ( j === stt.length - 1 || /* contains */stt[j + 1].toLowerCase().trim().indexOf('case') === 0
@@ -333,6 +368,7 @@ export class Ast {
                 funcx.info = cin + '';
                 funcx.text = 'case';
                 funcx.textq += stt[j];
+               funcx.fullTextq += '\n' + stt[j];
                 funcx.ref = null;
                 if (/* contains */funcx.textq.indexOf('{') !== -1 || /* contains */funcx.textq.toLowerCase().trim().indexOf('case') === 0
                 || /* contains */funcx.textq.toLowerCase().trim().indexOf('for') === 0
@@ -347,6 +383,7 @@ export class Ast {
                 cq = 0;
                 i = j;
                 funcx.textq = '';
+               funcx.fullTextq = '';
                 break;
               } else {
               if (!(/* equals */(<any>((o1: any, o2: any) => {
@@ -363,6 +400,7 @@ export class Ast {
                   }
                 })(stt[j], ' ')))) {
                 cin++;
+                funcx.fullTextq += '\n' + stt[j];
                 funcx.textq += stt[j];
               }
             }
@@ -371,6 +409,7 @@ export class Ast {
         }
       }
       if (/* contains */stt[i].toLowerCase().trim().indexOf('default') === 0) {
+        funcx.fullTextq += '\n' + stt[i];
         if (count !== 0) {
           funcx.info = count + '';
           funcx.text = 'Variable Deceleration';
@@ -388,6 +427,7 @@ export class Ast {
                   if (o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(stt[j], ' ')))) {
                 cin++;
                 funcx.textq += stt[j];
+                funcx.fullTextq += '\n' + stt[j];
               }
               funcx.info = cin + '';
               funcx.text = 'case';
@@ -403,6 +443,7 @@ export class Ast {
               cq = 0;
               i = j;
               funcx.textq = '';
+              funcx.fullTextq = '';
               break;
             } else {
               if (!(/* equals */(<any>((o1: any, o2: any) => { if (o1 && o1.equals) {
@@ -411,11 +452,13 @@ export class Ast {
                   if (o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(stt[j], ' ')))) {
                 cin++;
                 funcx.textq += stt[j];
+                funcx.fullTextq += '\n' + stt[j];
               }
             }
           }
       }
       if (/* contains */(stt[i].toLowerCase()).trim().indexOf('else') === 0) {
+        funcx.fullTextq += '\n' + stt[i];
         if (count !== 0) {
           funcx.info = count + '';
           funcx.text = 'Variable Deceleration';
@@ -431,19 +474,23 @@ export class Ast {
           funcx.ref = null;
           if (/* contains */stt[i + 1].indexOf(';') !== -1) {
             funcx.textq += '\n' + stt[i + 1];
+            funcx.fullTextq += '\n' + stt[i + 1];
             i++;
           }
           functionx = functionx.add(funcx);
           funcx.textq = '';
+          funcx.fullTextq = '';
         } else {
           for (let j: number = i + 1; j < stt.length; j++) {
             if (/* contains */stt[j].indexOf('{') !== -1) {
+              funcx.fullTextq += '\n' + stt[j];
               if (cq !== 0) {
                 funcx.textq += '\n' + stt[j];
               }
               cq++;
             } else {
               if (/* contains */stt[j].indexOf('}') !== -1) {
+                funcx.fullTextq += '\n' + stt[j];
                 cq--;
                 if (cq === 0) {
                   funcx.info = cin + '';
@@ -460,6 +507,7 @@ export class Ast {
                   cq = 0;
                   i = j;
                   funcx.textq = '';
+                  funcx.fullTextq = '';
                   break;
                 } else {
                   funcx.textq += '\n' + stt[j];
@@ -471,6 +519,7 @@ export class Ast {
                     return o1.equals(o2); } else { return o1 === o2; } })(stt[j], ' ')))) {
                   cin++;
                   funcx.textq += '\n' +  stt[j];
+                  funcx.fullTextq += '\n' + stt[j];
                 }
               }
             }
@@ -506,6 +555,7 @@ export class Ast {
     x[i].info = __function.info;
     x[i].text = __function.text;
     x[i].textq = __function.textq;
+    x[i].fullTextq = __function.fullTextq;
     if (__function.ref != null) {
       x[i].ref = new Array(__function.ref.length);
       for (let j = 0; j < __function.ref.length; j++) {
@@ -520,6 +570,7 @@ export class Ast {
     this.text = null;
     this.textq = null;
     this.ref = null;
+    this.fullTextq = '';
   }
 }
 

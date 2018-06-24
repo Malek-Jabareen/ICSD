@@ -39,7 +39,7 @@ export class AppComponent implements OnInit {
     });
     joint.shapes.basic.trapez = joint.shapes.basic.Generic.extend({
 
-      markup: '<g class="rotatable"><g class="scalable"><polygon points="20,0 180,0 200,100 0,100"/></g><text/></g>',
+      markup: '<g class="rotatable"><g class="scalable"><polygon points="60,0 140,0 200,100 0,100"/></g><text/></g>',
 
       defaults: joint.util.deepSupplement({
 
@@ -55,7 +55,7 @@ export class AppComponent implements OnInit {
 
     joint.shapes.basic.trapezR = joint.shapes.basic.Generic.extend({
 
-      markup: '<g class="rotatable"><g class="scalable"><polygon points="0,0 200,0 180,100 20,100"/></g><text/></g>',
+      markup: '<g class="rotatable"><g class="scalable"><polygon points="0,0 200,0 140,100 60,100"/></g><text/></g>',
 
       defaults: joint.util.deepSupplement({
 
