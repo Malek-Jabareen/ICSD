@@ -12,7 +12,116 @@ export class Ast {
   static are(): Ast {
     return null;
   }
-   static build(__function: string): Ast {
+
+
+  public stringToArray(str: string): string[] {
+    let arr= str.split("");
+    let array = [""];
+    let result = [""];
+    let y = 0;
+    let ignore = 0;
+    let counter = 0;
+    let case1 = 0;
+    let ignoreAll = false;
+    var howManyClosersAndOpeners = 0;
+    let counting = 0;
+
+    for (var x = 0; x < arr.length ; x++) {
+      // remove tabs and new line
+      if (arr[x] !== '\t' && arr[x] !== '\n') {
+        array[counter] = arr[x];
+        counter++;
+      }
+// make sure that there is no more than 1 space in a row
+      if (arr[x] === ' ') {
+        var z = x;
+        for (; z < arr.length ; z++) {
+          if (arr[z] !== ' ') {
+            break;
+          }
+        }
+        x = z - 1;
+      }
+    }
+
+    for (var x = 0; x < array.length; x++) {
+      result[x] = "";
+    }
+    for (var x=0;x<array.length;x++) {
+      // avoid keywords like 'for' , 'while','case' inside a quote
+      if (array[x].includes("\"")) {
+        result[y] += array[x];
+        ignoreAll=!ignoreAll;
+      }
+      if (ignoreAll) { result[y] += array[x]; continue; }
+
+      if (counting > 0 && howManyClosersAndOpeners == -1) {
+        counting--;
+        result[y]='}';
+        y++;
+      }
+
+      if (array[x].includes(';') && ignore == 0) {
+        result[y] += array[x];
+        y++;
+      }
+      else if (array[x].includes('{')) {
+        y++;
+        result[y] = '{';
+        y++;
+        if (counting > 0) { howManyClosersAndOpeners++; }
+      }
+      else if (array[x].includes('}')) {
+        result[y] = '}';
+        y++;
+        if (counting > 0) { howManyClosersAndOpeners--; }
+      }
+      else if (array[x].includes('e') && array[x+1].includes('l') && array[x+2].includes('s') && array[x+3].includes('e') && array[x+5].includes('i') && array[x+6].includes('f') ) {
+        result[y] = 'else';
+        y++;
+        result[y] = '{';
+        y++;
+        result[y] = 'if';
+        x=x+7;
+        counting++;
+      }
+      else if (array[x].includes('e') && array[x+1].includes('l') && array[x+2].includes('s') && array[x+3].includes('e')) {
+        result[y] = 'else';
+        y++;
+        x=x+3;
+      }
+      else if (array[x].includes('f') && array[x+1].includes('o') && array[x+2].includes('r')) {
+        result[y] += array[x];
+        ignore=1;
+      }
+      else if (array[x].includes('c') && array[x+1].includes('a') && array[x+2].includes('s') && array[x+3].includes('e')) {
+        result[y] += array[x];
+        case1=1;
+      }
+      else if (case1 == 1 && array[x].includes(':')) {
+        case1=0;
+        result[y] += array[x];
+        y++;
+      }
+      else if (array[x].includes('d') && array[x+1].includes('e') && array[x+2].includes('f') && array[x+3].includes('a')) {
+        result[y] += 'default:';
+        x = x + 7;
+        y++;
+      }
+      else if (ignore === 1 && array[x].includes(')')) {
+        ignore = 0;
+        result[y] += array[x];
+      }
+      else
+      {
+        result[y] += array[x];
+      }
+    }
+    return result;
+  }
+
+
+  static build(__function: string): Ast {
     const funcx: Ast = new Ast();
     let functionx: Ast = new Ast();
     let str = __function;
@@ -565,7 +674,11 @@ export class Ast {
     this.ref = x;
     return this;
   }
-  constructor() {
+
+
+
+
+constructor() {
     this.info = null;
     this.text = null;
     this.textq = null;
