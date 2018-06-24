@@ -6,7 +6,7 @@ import * as _ from 'lodash';
 import {getExpressionScope} from '@angular/compiler-cli';
 import {build$} from 'protractor/built/element';
 const joint = require('./../../node_modules/jointjs/dist/joint.js');
-//declare var $: any;
+/* declare var $: any; */
 
 @Component({
   selector: 'app-root',
@@ -18,7 +18,7 @@ export class AppComponent implements OnInit {
   title = 'ICSD';
   hide = true;
   ccc: string;
-  fT2='';
+  fT2 = '';
 
   hideDiagram() {
     this.hide = !this.hide;
