@@ -12,7 +12,7 @@ let dialogNumber = 1;
 const cellDialog = [];
 let paper;
 let graphScale = 1;
-let maxWindows=6;
+let maxWindows=4;
 
 
 @Component({
@@ -753,8 +753,15 @@ this.funcTextEvent.emit('private Dimension getSize(Container parent, LayoutSize 
        cellv.model.attr('text/text','');
     }
 
-
     cellDialog[n - 1] = undefined;
+
+// bug fix
+    let x = 0; let y = 0;
+    while ( x < n - 1 ) {
+      if (cellDialog[x] === undefined) { y = 1; }
+      x++;
+    }
+    if (y == 0) { dialogNumber = n; }
 
     $('#convert').focus();
     if (cellv.model.attr('text/type') === 'ELSE') {
@@ -822,21 +829,6 @@ this.funcTextEvent.emit('private Dimension getSize(Container parent, LayoutSize 
       close: function() {
         closeDialogEvent($('#dialog4').data('p1'),4);
       },
-      autoOpen: false,
-      height: 580,
-      width: 580});
-    $('#dialog5').dialog({
-      close: function() {
-        closeDialogEvent($('#dialog5').data('p1'),5);
-      },
-      autoOpen: false,
-      height: 580,
-      width: 580});
-    $('#dialog6').dialog({
-      close: function() {
-        closeDialogEvent($('#dialog6').data('p1'),6);
-      },
-      position: { my: 'left top', at: 'left bottom' },
       autoOpen: false,
       height: 580,
       width: 580});
@@ -1550,26 +1542,26 @@ this.funcTextEvent.emit('private Dimension getSize(Container parent, LayoutSize 
       fieldArray = [ ];
       this.fieldA = fieldArray;
 
-
       paper.on('cell:pointerdown',
         function(cellView, evt, x, y) {
-        let dont = 0;
+
           if (cellDialog[dialogNumber - 1] !== undefined) {
             $('#dialog' + dialogNumber).dialog('close');
-            dont = 1 ;
           }
           $('#dialog' + dialogNumber).data('p1', cellView).dialog('open');
 
 
-          let nn = 0;
-          for (let n = 0; n < maxWindows; n++) {
-            if (cellDialog[n] !== undefined) { nn++; }
+          let n = 0;
+         while ( n < maxWindows) {
+            if (cellDialog[n] === undefined) { break; }
+            n++;
           }
-          nn++;
+          let nn = n + 1;
+
+       //  alert(cellDialog[0] + ' ' + cellDialog[1] + ' ' + cellDialog[2] + ' ' + cellDialog[3]);
 
 
-
-     if (dont === 0) { $('#dialog' + dialogNumber).dialog('option', 'title', 'Code '  + nn); }
+     $('#dialog' + dialogNumber).dialog('option', 'title', 'Code '  + nn);
           const text = cellView.model.attr('text/textF');
 const text2 = text.replace(/\n/g, '<br>');
           const text3 = text2.replace(/\t/g, '&nbsp;');
@@ -1597,7 +1589,7 @@ const text2 = text.replace(/\n/g, '<br>');
           }
 
           let t = $('#dialog' + dialogNumber).dialog('option', 'title');
-          let t2 = t.replace('Code ','');
+          let t2 = t.replace('Code ', '');
 
           if (cellView.model.attr('text/text') === '') {
             cellView.model.attr('text/text', t2);
@@ -1605,7 +1597,7 @@ const text2 = text.replace(/\n/g, '<br>');
            // cellView.model.attr('text/fill', 'red');
 
           dialogNumber++;
-          if (dialogNumber === maxWindows+1) {
+          if (dialogNumber === maxWindows + 1) {
             dialogNumber = 1;
 
           }
