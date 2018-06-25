@@ -12,7 +12,7 @@ let dialogNumber = 1;
 const cellDialog = [];
 let paper;
 let graphScale = 1;
-let activeDialogs=0;
+let maxWindows=6;
 
 
 @Component({
@@ -32,6 +32,7 @@ export class DiagramComponent implements OnInit {
 
 
   public fieldA: Array<any> = [];
+  public number: number = 1;
    newAttribute: any = {};
   title = 'ICSD';
 
@@ -747,9 +748,14 @@ this.funcTextEvent.emit('private Dimension getSize(Container parent, LayoutSize 
 
 
 
-  function closeDialogEvent(cellv) {
-  //  cellv.model.attr('text/text','');
-    activeDialogs--;
+  function closeDialogEvent(cellv, n) {
+     if (isNaN(parseInt(cellv.model.attr('text/text'))) === false) {
+       cellv.model.attr('text/text','');
+    }
+
+
+    cellDialog[n - 1] = undefined;
+
     $('#convert').focus();
     if (cellv.model.attr('text/type') === 'ELSE') {
       cellv.model.attr('polygon/fill', '#FFA533');
@@ -782,6 +788,7 @@ this.funcTextEvent.emit('private Dimension getSize(Container parent, LayoutSize 
       autoOpen: false,
       height: 400,
       width: 400});
+
     $('#dialogFunc').dialog({
      open: function() {  $('#func2').scrollTop(0); },
       close: function() { $('#convert').focus(); },
@@ -790,14 +797,14 @@ this.funcTextEvent.emit('private Dimension getSize(Container parent, LayoutSize 
       width: 800});
     $('#dialog1').dialog({
       close: function() {
-        closeDialogEvent($('#dialog1').data('p1'));
+        closeDialogEvent($('#dialog1').data('p1'),1);
       },
       autoOpen: false,
       height: 580,
       width: 580});
     $('#dialog2').dialog({
       close: function() {
-        closeDialogEvent($('#dialog2').data('p1'));
+        closeDialogEvent($('#dialog2').data('p1'),2);
       },
       position: { my: 'left top', at: 'left bottom' },
       autoOpen: false,
@@ -805,7 +812,7 @@ this.funcTextEvent.emit('private Dimension getSize(Container parent, LayoutSize 
       width: 580});
     $('#dialog3').dialog({
       close: function() {
-        closeDialogEvent($('#dialog3').data('p1'));
+        closeDialogEvent($('#dialog3').data('p1'),3);
       },
       position: { my: 'right top', at: 'right bottom' },
       autoOpen: false,
@@ -813,8 +820,23 @@ this.funcTextEvent.emit('private Dimension getSize(Container parent, LayoutSize 
       width: 580});
     $('#dialog4').dialog({
       close: function() {
-        closeDialogEvent($('#dialog4').data('p1'));
+        closeDialogEvent($('#dialog4').data('p1'),4);
       },
+      autoOpen: false,
+      height: 580,
+      width: 580});
+    $('#dialog5').dialog({
+      close: function() {
+        closeDialogEvent($('#dialog5').data('p1'),5);
+      },
+      autoOpen: false,
+      height: 580,
+      width: 580});
+    $('#dialog6').dialog({
+      close: function() {
+        closeDialogEvent($('#dialog6').data('p1'),6);
+      },
+      position: { my: 'left top', at: 'left bottom' },
       autoOpen: false,
       height: 580,
       width: 580});
@@ -1531,23 +1553,32 @@ this.funcTextEvent.emit('private Dimension getSize(Container parent, LayoutSize 
 
       paper.on('cell:pointerdown',
         function(cellView, evt, x, y) {
-        var dont=0;
+        let dont = 0;
           if (cellDialog[dialogNumber - 1] !== undefined) {
             $('#dialog' + dialogNumber).dialog('close');
-            dont=1;
+            dont = 1 ;
           }
           $('#dialog' + dialogNumber).data('p1', cellView).dialog('open');
 
-          activeDialogs++;
-        if (dont == 0) { $('#dialog' + dialogNumber).dialog('option', 'title', 'Code '  + activeDialogs); }
 
+          let nn = 0;
+          for (let n = 0; n < maxWindows; n++) {
+            if (cellDialog[n] !== undefined) { nn++; }
+          }
+          nn++;
+
+
+
+     if (dont === 0) { $('#dialog' + dialogNumber).dialog('option', 'title', 'Code '  + nn); }
           const text = cellView.model.attr('text/textF');
 const text2 = text.replace(/\n/g, '<br>');
           const text3 = text2.replace(/\t/g, '&nbsp;');
           document.getElementById('dialogText' + dialogNumber).innerHTML = text3;
           fieldArray.push(cellView.model.attr('text/textF'));
 
-          cellDialog.splice(dialogNumber, 0, cellView);
+          //cellDialog.splice(dialogNumber-1, 0, cellView);
+
+          cellDialog[dialogNumber - 1] = cellView;
 
           if (cellView.model.attr('text/type') === 'ELSE') {
             cellView.model.attr('polygon/fill', '#ea6c0d');
@@ -1565,12 +1596,16 @@ const text2 = text.replace(/\n/g, '<br>');
             cellView.model.attr('circle/fill', '#29d646' );
           }
 
+          let t = $('#dialog' + dialogNumber).dialog('option', 'title');
+          let t2 = t.replace('Code ','');
 
-         //   cellView.model.attr('text/text', '•');
+          if (cellView.model.attr('text/text') === '') {
+            cellView.model.attr('text/text', t2);
+          }
            // cellView.model.attr('text/fill', 'red');
 
           dialogNumber++;
-          if (dialogNumber === 5) {
+          if (dialogNumber === maxWindows+1) {
             dialogNumber = 1;
 
           }
