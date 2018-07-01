@@ -73,6 +73,7 @@ export class Ast {
             funcx.fullTextq += '\n' + stt[i + 1];
             i++;
           }
+
           functionx = functionx.add(funcx);
           funcx.textq = '';
           funcx.fullTextq = '';

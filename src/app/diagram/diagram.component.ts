@@ -14,6 +14,9 @@ let paper;
 let graphScale = 1;
 let maxWindows=4;
 
+let bigDialog = [];
+let bigDialogCounter= 0 ;
+let ctrlCodeArray = [];
 
 @Component({
   selector: 'app-diagram',
@@ -44,7 +47,13 @@ export class DiagramComponent implements OnInit {
 
 
 
+
 ngOnInit() {
+  /* $(document).keydown(function(event){
+    if(event.which=="17")
+      cntrlIsPressed = true;
+  }); */
+
     this.functionText = 'private Dimension getSize(Container parent, LayoutSize layoutSize, boolean fillRawSizes,\n' +
       '    \t\t\t\t\t  Dimension gridSize, List<List<ExtendedGridLayoutConstraints>> gridRows,\n' +
       '    \t\t\t\t\t  Set<ExtendedGridLayoutConstraints> colspans,\n' +
@@ -764,6 +773,10 @@ this.funcTextEvent.emit('private Dimension getSize(Container parent, LayoutSize 
     if (y == 0) { dialogNumber = n; }
 
     $('#convert').focus();
+    originalColor(cellv);
+  }
+
+  function originalColor(cellv) {
     if (cellv.model.attr('text/type') === 'ELSE') {
       cellv.model.attr('polygon/fill', '#FFA533');
     } else if ( cellv.model.attr('text/type') === 'IF') {
@@ -780,6 +793,7 @@ this.funcTextEvent.emit('private Dimension getSize(Container parent, LayoutSize 
       cellv.model.attr('circle/fill', '#33FF51');
     }
   }
+
 
 
   $( function() {
@@ -832,6 +846,16 @@ this.funcTextEvent.emit('private Dimension getSize(Container parent, LayoutSize 
       autoOpen: false,
       height: 580,
       width: 580});
+    $('#dialogBig').dialog({
+      close: function() {
+         originalColor(bigDialog[0]);
+        originalColor(bigDialog[1]);
+       bigDialogCounter = 0;
+      },
+      autoOpen: false,
+      modal: true,
+      height: 600,
+      width: 1000});
   } );
 
 
@@ -1386,6 +1410,7 @@ this.funcTextEvent.emit('private Dimension getSize(Container parent, LayoutSize 
       }
     }
   }
+
   alirt() {
     graphScale = 1;
     const strx  = 'ast[] x; if(this.ref!=null){ x=new ast[this.ref.length+1]; }' +
@@ -1542,8 +1567,21 @@ this.funcTextEvent.emit('private Dimension getSize(Container parent, LayoutSize 
       fieldArray = [ ];
       this.fieldA = fieldArray;
 
+
       paper.on('cell:pointerdown',
         function(cellView, evt, x, y) {
+
+        var cntrlIsPressed = false;
+
+        if (evt.ctrlKey) {
+          cntrlIsPressed = true;
+        }
+        else {
+          cntrlIsPressed = false;
+        }
+
+
+        if (!cntrlIsPressed) {
 
           if (cellDialog[dialogNumber - 1] !== undefined) {
             $('#dialog' + dialogNumber).dialog('close');
@@ -1552,41 +1590,136 @@ this.funcTextEvent.emit('private Dimension getSize(Container parent, LayoutSize 
 
 
           let n = 0;
-         while ( n < maxWindows) {
-            if (cellDialog[n] === undefined) { break; }
+          while (n < maxWindows) {
+            if (cellDialog[n] === undefined) {
+              break;
+            }
             n++;
           }
           let nn = n + 1;
 
-       //  alert(cellDialog[0] + ' ' + cellDialog[1] + ' ' + cellDialog[2] + ' ' + cellDialog[3]);
+          //  alert(cellDialog[0] + ' ' + cellDialog[1] + ' ' + cellDialog[2] + ' ' + cellDialog[3]);
 
-
-     $('#dialog' + dialogNumber).dialog('option', 'title', 'Code '  + nn);
+          $('#dialog' + dialogNumber).dialog('option', 'title', 'Code ' + nn);
           const text = cellView.model.attr('text/textF');
-const text2 = text.replace(/\n/g, '<br>');
+          const text2 = text.replace(/\n/g, '<br>');
           const text3 = text2.replace(/\t/g, '&nbsp;');
-          document.getElementById('dialogText' + dialogNumber).innerHTML = text3;
+
+          let y = 0; let y2 = 0;
+          while (y < maxWindows) {
+            if (cellDialog[y] !== undefined) {
+              y2++;
+            }
+            y++;
+          }
+
           fieldArray.push(cellView.model.attr('text/textF'));
 
           //cellDialog.splice(dialogNumber-1, 0, cellView);
 
           cellDialog[dialogNumber - 1] = cellView;
 
+          let table = '';
+          if (y2 > 0) {
+
+            table  += '<table style="width:50%; border: 1px solid #f1f1f1; font-size:12px; padding:0px; line-height: 14px; margin:auto; "><tr><th>Code A</th><th>Code B</th><th>Comp ratio</th></tr>';
+
+            for (let z = 0; z < maxWindows; z++) {
+              if (cellDialog[z] !== undefined) {
+                for (let zz = 0; zz < maxWindows; zz++) {
+                  if (z === zz) { continue; }
+                  if (z < zz) { continue; }
+                  if (cellDialog[zz] !== undefined) {
+                    let z2 = z+1; let zz2 = zz+1;
+                    table += '<tr><td>Code ' + z2 + '</td><td>Code ' + zz2 + '</td><td>';
+
+
+
+                    var a = $('#dialog' + z2).data('p1').model.attr('text/textF');
+                    var b = $('#dialog' + zz2).data('p1').model.attr('text/textF');
+
+                     a = a.replace(/\n/g, '');
+                    a = a.replace(/\t/g, '');
+                    a = a.replace(/ /g, '');
+
+                    b = b.replace(/\n/g, '');
+                    b = b.replace(/\t/g, '');
+                    b = b.replace(/ /g, '');
+
+
+
+                    var l2 = a.length;
+                    var l2 = b.length;
+                    var grade = 0;
+                    var minLength = 0;
+                    var maxLength = 0;
+
+                    if (a.length > b.length) {
+                      minLength = b.length;
+                      maxLength = a.length;
+                    } else {
+                      minLength = a.length;
+                      maxLength = b.length;
+                    }
+
+                    for (let i = 0; i < minLength; i++) {
+                      if (a[i] === b[i]) {
+                        grade++;
+                      }
+                    }
+
+                    let weight = grade / maxLength;
+                    let result = (weight * 100);
+
+                    table += Math.round(result) + '%</td></tr>';
+                  }
+                }
+              }
+            }
+            table += '</table>';
+          }
+          document.getElementById('dialogText' + dialogNumber).innerHTML = table + '<code>' + text3 + '</code>';
+
+
+        }
+        else {
+           bigDialog[bigDialogCounter] = cellView;
+
+          ctrlCodeArray[bigDialogCounter]=cellView.model.attr('text/textF');
+          bigDialogCounter++;
+
+          if (bigDialogCounter == 2) {
+            $('#dialogBig').dialog('open');
+            const text = ctrlCodeArray[0];
+            const text2 = text.replace(/\n/g, '<br>');
+            const text3 = text2.replace(/\t/g, '&nbsp;');
+
+            const tex = ctrlCodeArray[1];
+            const tex2 = tex.replace(/\n/g, '<br>');
+            const tex3 = tex2.replace(/\t/g, '&nbsp;');
+
+
+            document.getElementById('dialogTextBig').innerHTML = '<table><tr><td style="width:50%; vertical-align:top;"><code>' + text3 + '</code><td style="width:1%; background:#f1f1f1;"></td></td><td style="width:49%; vertical-align:top;"><code>' + tex3 + '</code></td></tr>';
+          }
+        }
+
           if (cellView.model.attr('text/type') === 'ELSE') {
             cellView.model.attr('polygon/fill', '#ea6c0d');
           } else if ( cellView.model.attr('text/type') === 'IF') {
             cellView.model.attr('polygon/fill', '#ffdb03');
-        } else if ( cellView.model.attr('text/type') === 'CASE') {
-        cellView.model.attr('polygon/fill', '#6C0E9E');
+          } else if ( cellView.model.attr('text/type') === 'CASE') {
+            cellView.model.attr('polygon/fill', '#6C0E9E');
 
-        } else if ( cellView.model.attr('text/type') === 'SWITCH') {
-        cellView.model.attr('polygon/fill', '#AD1F12');
+          } else if ( cellView.model.attr('text/type') === 'SWITCH') {
+            cellView.model.attr('polygon/fill', '#AD1F12');
 
-        } else if ( cellView.model.attr('text/type') === 'FOR') {
-        cellView.model.attr('circle/fill', '#247ED6');
+          } else if ( cellView.model.attr('text/type') === 'FOR') {
+            cellView.model.attr('circle/fill', '#247ED6');
           } else if ( cellView.model.attr('text/type') === 'WHILE') {
             cellView.model.attr('circle/fill', '#29d646' );
           }
+
+          if (cntrlIsPressed) { return; }
 
           let t = $('#dialog' + dialogNumber).dialog('option', 'title');
           let t2 = t.replace('Code ', '');
