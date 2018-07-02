@@ -1622,7 +1622,7 @@ this.funcTextEvent.emit('private Dimension getSize(Container parent, LayoutSize 
           let table = '';
           if (y2 > 0) {
 
-            table  += '<table style="width:50%; border: 1px solid #f1f1f1; font-size:12px; padding:0px; line-height: 14px; margin:auto; "><tr><th>Code A</th><th>Code B</th><th>Comp ratio</th></tr>';
+            table  += '<table style="width:50%; border: 1px solid #f1f1f1; font-size:12px; padding:0px; line-height: 14px; margin:auto; "><tr><th>Code A</th><th>Code B</th><th>Similarity</th></tr>';
 
             for (let z = 0; z < maxWindows; z++) {
               if (cellDialog[z] !== undefined) {
@@ -1642,9 +1642,33 @@ this.funcTextEvent.emit('private Dimension getSize(Container parent, LayoutSize 
                     a = a.replace(/\t/g, '');
                     a = a.replace(/ /g, '');
 
+                    var regex = /(int)(\w+)/g;
+
+                    let matches = [];
+                    a.replace(regex, function(s, x, m)  { matches.push(m); });
+
+                    for (let x = 0; x < matches.length; x++){
+                      var re = new RegExp(matches[x],"g");
+                      a = a.replace(re,'x');
+                    }
+
+
+                   // a = a.replace(regex, "$1");
+          //          var regex2 = /(if)(\u0028\w+\W\w+\u0029)/g;
+              //      a = a.replace(regex2, "$1()");
+
+
                     b = b.replace(/\n/g, '');
                     b = b.replace(/\t/g, '');
                     b = b.replace(/ /g, '');
+
+                     matches = [];
+                    b.replace(regex, function(s, x, m)  { matches.push(m); });
+
+                    for (let x = 0; x < matches.length; x++){
+                      var re = new RegExp(matches[x],"g");
+                      b = b.replace(re,'x');
+                    }
 
 
 
@@ -1678,8 +1702,16 @@ this.funcTextEvent.emit('private Dimension getSize(Container parent, LayoutSize 
             }
             table += '</table>';
           }
-          document.getElementById('dialogText' + dialogNumber).innerHTML = table + '<code>' + text3 + '</code>';
+          document.getElementById('dialogText' + dialogNumber).innerHTML = '<code>' + text3 + '</code>';
 
+          document.getElementById('ratio' + dialogNumber).innerHTML = table;
+
+          for (let x = 1; x < maxWindows+1; x++) {
+            if (x === dialogNumber) {continue;}
+            document.getElementById('ratio' + x).innerHTML = '';
+            document.getElementById('ratio' + x).innerHTML = '';
+            document.getElementById('ratio' + x).innerHTML = '';
+          }
 
         }
         else {
