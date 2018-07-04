@@ -21,6 +21,7 @@ export class Ast {
     let functionx: Ast = new Ast();
     let str = __function;
     const txtq = '';
+    str = /* replace */str.split('else').join('else#');
      str = /* replace */str.split('\n').join('#');
     str = /* replace */str.split(';').join(';#');
     str = /* replace */str.split('{').join('#{#');
@@ -46,6 +47,7 @@ export class Ast {
     let count = 0;
     let cq = 0;
     let cin = 0;
+    let qin = 0;
     let stq = '';
     funcx.textq = '';
     for (let i = 0; i < stt.length; i++) {
@@ -54,55 +56,93 @@ export class Ast {
         stq += stt[i] + ' ';
       }
       if (/* contains */(stt[i].toLowerCase()).trim().indexOf('for') === 0) {
+        cin++;
         funcx.fullTextq += '\n' + stt[i];
         if (count !== 0) {
           funcx.info = count + '';
           funcx.text = 'Variable Deceleration';
           funcx.ref = null;
+          funcx.fullTextq = /* replaceAll */funcx.fullTextq.replace(new
+          RegExp('for([ ]*)\\(([^,:]*)(,)([^,]*)(,)([^\\)]*)\\)', 'g'), ' for$1($2;$4;$6) ');
           functionx = functionx.add(funcx);
           funcx.textq = '';
           count = 0;
           stq = '';
         }
+        if ( qin === 1 ) {
+          funcx.textq += '\n' + stt[i];
+          funcx.info = cin + '';
+        }
         if (/* contains */stt[i + 1].indexOf('{') !== -1 === false) {
-          funcx.info = '1';
-          funcx.text = 'for';
+          if ( qin === 0 ) {
+            funcx.info = '1';
+            funcx.text = 'for';
+          }
           funcx.ref = null;
+          if (/* contains */stt[i + 1].trim().indexOf('if') === 0
+          || /* contains */stt[i + 1].trim().indexOf('for') === 0
+          || /* contains */stt[i + 1].trim().indexOf('while') === 0
+          || /* contains */stt[i + 1].trim().indexOf('switch') === 0
+          || /* contains */stt[i + 1].trim().indexOf('else') === 0) {
+            funcx.info = cin + '';
+            funcx.text = 'for';
+            qin = 1 ;
+            continue;
+          }
           if (/* contains */stt[i + 1].indexOf(';') !== -1) {
+            cin++;
             funcx.textq += '\n' + stt[i + 1];
             funcx.fullTextq += '\n' + stt[i + 1];
+            funcx.info = cin + '';
             i++;
           }
-
+          funcx.fullTextq = /* replaceAll */funcx.fullTextq.replace(new
+          RegExp('for([ ]*)\\(([^,:]*)(,)([^,]*)(,)([^\\)]*)\\)', 'g'), ' for$1($2;$4;$6) ');
+         funcx.info = cin + '';
+          if ( qin === 1) {
+            funcx.ref = this.build(funcx.textq).ref;
+          }
           functionx = functionx.add(funcx);
           funcx.textq = '';
           funcx.fullTextq = '';
+          cin = 0;
         } else {
           for (let j: number = i + 1; j < stt.length; j++) {
             if (/* contains */stt[j].indexOf('{') !== -1) {
+              cin++;
               funcx.fullTextq += '\n' + stt[j];
-              if (cq !== 0) {
+              if (cq !== 0 || qin === 1 ) {
                 funcx.textq += '\n' + stt[j];
               }
               cq++;
             } else {
               if (/* contains */stt[j].indexOf('}') !== -1) {
+                cin++;
                 funcx.fullTextq += '\n' + stt[j];
                 cq--;
                 if (cq === 0) {
+                  if ( qin === 1) {
+                    funcx.textq += '\n' + stt[j];
+                    funcx.info = cin + '';
+                  } else {
+                    funcx.info = cin + '';
+                    funcx.text = 'for';
+                    funcx.ref = null;
+                  }
                   funcx.info = cin + '';
-                  funcx.text = 'for';
-                  funcx.ref = null;
                   if (/* contains */funcx.textq.indexOf('{') !== -1 || /* contains */funcx.textq.toLowerCase().trim().indexOf('case') === 0
                   || /* contains */funcx.textq.toLowerCase().trim().indexOf('for') === 0
                   || /* contains */funcx.textq.toLowerCase().trim().indexOf('if') === 0
                   || /* contains */funcx.textq.toLowerCase().trim().indexOf('else') === 0
                   || /* contains */funcx.textq.toLowerCase().trim().indexOf('switch') === 0
                   || /* contains */funcx.textq.toLowerCase().trim().indexOf('while') === 0) { funcx.ref = this.build(funcx.textq).ref; }
+                  funcx.fullTextq = /* replaceAll */funcx.fullTextq.replace(new
+                  RegExp('for([ ]*)\\(([^,:]*)(,)([^,]*)(,)([^\\)]*)\\)', 'g'), ' for$1($2;$4;$6) ');
                   functionx = functionx.add(funcx);
                   cin = 0;
                   cq = 0;
                   i = j;
+                  qin = 0;
                   funcx.textq = '';
                   funcx.fullTextq = '';
                   break;
@@ -124,54 +164,106 @@ export class Ast {
         }
       }
       if (/* contains */(stt[i].toLowerCase()).trim().indexOf('if') === 0) {
+       cin++;
         funcx.fullTextq += '\n' + stt[i];
         if (count !== 0) {
           funcx.info = count + '';
           funcx.text = 'Variable Deceleration';
           funcx.ref = null;
+          funcx.fullTextq = /* replaceAll */funcx.fullTextq.replace(new
+          RegExp('for([ ]*)\\(([^,:]*)(,)([^,]*)(,)([^\\)]*)\\)', 'g'), ' for$1($2;$4;$6) ');
           functionx = functionx.add(funcx);
           funcx.textq = '';
           count = 0;
           stq = '';
         }
-        if (/* contains */stt[i + 1].indexOf('{') !== -1 === false) {
+        if ( qin === 1 ) {
+          funcx.textq += '\n' + stt[i];
           funcx.info = '1';
-          funcx.text = 'if';
+        }
+        if (/* contains */stt[i + 1].indexOf('{') !== -1 === false) {
+          if ( qin === 0 ) {
+            funcx.info = '1';
+            funcx.text = 'if';
+          }
           funcx.ref = null;
+          if (/* contains */stt[i + 1].trim().indexOf('if') === 0
+          || /* contains */stt[i + 1].trim().indexOf('for') === 0
+          || /* contains */stt[i + 1].trim().indexOf('while') === 0
+          || /* contains */stt[i + 1].trim().indexOf('switch') === 0
+          || /* contains */stt[i + 1].trim().indexOf('else') === 0) {
+            funcx.info = '1';
+            funcx.text = 'if';
+            qin = 1 ;
+            continue;
+          }
           if (/* contains */stt[i + 1].indexOf(';') !== -1) {
+            cin++;
             funcx.textq += '\n' + stt[i + 1];
             funcx.fullTextq += '\n' + stt[i + 1];
             i++;
+            //
+            if (i + 1 < stt.length) {
+            if (stt[i + 1].trim().indexOf('else') === 0 && qin === 1) {
+              continue;
+            }
+          }
+            //
+          }
+          funcx.fullTextq = /* replaceAll */funcx.fullTextq.replace(new
+          RegExp('for([ ]*)\\(([^,:]*)(,)([^,]*)(,)([^\\)]*)\\)', 'g'), ' for$1($2;$4;$6) ');
+          funcx.info = cin + '';
+          if ( qin === 1) {
+            funcx.info = cin + '';
+            funcx.ref = this.build(funcx.textq).ref;
           }
           functionx = functionx.add(funcx);
           funcx.textq = '';
+          cin = 0;
           funcx.fullTextq = '';
         } else {
           for (let j: number = i + 1; j < stt.length; j++) {
             if (/* contains */stt[j].indexOf('{') !== -1) {
+              cin++;
               funcx.fullTextq += '\n' + stt[j];
-              if (cq !== 0) {
+              if (cq !== 0 || qin === 1 ) {
                 funcx.textq += '\n' + stt[j];
               }
               cq++;
             } else {
               if (/* contains */stt[j].indexOf('}') !== -1) {
+                cin++;
                 funcx.fullTextq += '\n' + stt[j];
                 cq--;
                 if (cq === 0) {
+                  if ( qin === 1) {
+                    funcx.textq += '\n' + stt[j];
+                    funcx.info = cin + '';
+                    if (j + 1 < stt.length) {
+                      if (stt[j + 1].trim().indexOf('else') === 0 && qin === 1) {
+                        i = j;
+                        break;
+                      }
+                    }
+                  } else {
+                    funcx.info = cin + '';
+                    funcx.text = 'if';
+                    funcx.ref = null;
+                  }
                   funcx.info = cin + '';
-                  funcx.text = 'if';
-                  funcx.ref = null;
                   if (/* contains */funcx.textq.indexOf('{') !== -1 || /* contains */funcx.textq.toLowerCase().trim().indexOf('case') === 0
                   || /* contains */funcx.textq.toLowerCase().trim().indexOf('for') === 0
                   || /* contains */funcx.textq.toLowerCase().trim().indexOf('if') === 0
                   || /* contains */funcx.textq.toLowerCase().trim().indexOf('else') === 0
                   || /* contains */funcx.textq.toLowerCase().trim().indexOf('switch') === 0
                   || /* contains */funcx.textq.toLowerCase().trim().indexOf('while') === 0) { funcx.ref = this.build(funcx.textq).ref; }
+                  funcx.fullTextq = /* replaceAll */funcx.fullTextq.replace(new
+                  RegExp('for([ ]*)\\(([^,:]*)(,)([^,]*)(,)([^\\)]*)\\)', 'g'), ' for$1($2;$4;$6) ');
                   functionx = functionx.add(funcx);
                   cin = 0;
                   cq = 0;
                   i = j;
+                  qin = 0;
                   funcx.textq = '';
                   funcx.fullTextq = '';
                   break;
@@ -193,54 +285,92 @@ export class Ast {
         }
       }
       if (/* contains */(stt[i].toLowerCase()).trim().indexOf('while') === 0) {
+        cin++;
         funcx.fullTextq += '\n' + stt[i];
         if (count !== 0) {
           funcx.info = count + '';
           funcx.text = 'Variable Deceleration';
           funcx.ref = null;
+          funcx.fullTextq = /* replaceAll */funcx.fullTextq.replace(new
+          RegExp('for([ ]*)\\(([^,:]*)(,)([^,]*)(,)([^\\)]*)\\)', 'g'), ' for$1($2;$4;$6) ');
           functionx = functionx.add(funcx);
           funcx.textq = '';
           count = 0;
           stq = '';
         }
+        if ( qin === 1 ) {
+          funcx.textq += '\n' + stt[i];
+          funcx.info = cin + '';
+        }
         if (/* contains */stt[i + 1].indexOf('{') !== -1 === false) {
-          funcx.info = '1';
-          funcx.text = 'while';
+          if ( qin === 0 ) {
+            funcx.info = '1';
+            funcx.text = 'while';
+          }
           funcx.ref = null;
+          if (/* contains */stt[i + 1].trim().indexOf('if') === 0
+          || /* contains */stt[i + 1].trim().indexOf('for') === 0
+          || /* contains */stt[i + 1].trim().indexOf('while') === 0
+          || /* contains */stt[i + 1].trim().indexOf('switch') === 0
+          || /* contains */stt[i + 1].trim().indexOf('else') === 0) {
+            funcx.info = '1';
+            funcx.text = 'while';
+            qin = 1 ;
+            continue;
+          }
           if (/* contains */stt[i + 1].indexOf(';') !== -1) {
+            cin++;
             funcx.textq += '\n' + stt[i + 1];
             funcx.fullTextq += '\n' + stt[i + 1];
             i++;
           }
+          funcx.info = cin + '';
+          funcx.fullTextq = /* replaceAll */funcx.fullTextq.replace(new
+          RegExp('for([ ]*)\\(([^,:]*)(,)([^,]*)(,)([^\\)]*)\\)', 'g'), ' for$1($2;$4;$6) ');
+          if ( qin === 1 ) {
+            funcx.info = cin + '';
+            funcx.ref = this.build(funcx.textq).ref;
+          }
           functionx = functionx.add(funcx);
           funcx.textq = '';
+          cin = 0;
           funcx.fullTextq = '';
         } else {
           for (let j: number = i + 1; j < stt.length; j++) {
             if (/* contains */stt[j].indexOf('{') !== -1) {
+              cin++;
               funcx.fullTextq += '\n' + stt[j];
-              if (cq !== 0) {
+              if (cq !== 0 || qin === 1 ) {
                 funcx.textq += '\n' + stt[j];
               }
               cq++;
             } else {
               if (/* contains */stt[j].indexOf('}') !== -1) {
+                cin++;
                 funcx.fullTextq += '\n' + stt[j];
                 cq--;
                 if (cq === 0) {
-                  funcx.info = cin + '';
-                  funcx.text = 'while';
-                  funcx.ref = null;
+                  if ( qin === 1 ) {
+                    funcx.textq += '\n' + stt[j];
+                    funcx.info = cin + '';
+                  } else {
+                    funcx.info = cin + '';
+                    funcx.text = 'while';
+                    funcx.ref = null;
+                  }
                   if (/* contains */funcx.textq.indexOf('{') !== -1 || /* contains */funcx.textq.toLowerCase().trim().indexOf('case') === 0
                   || /* contains */funcx.textq.toLowerCase().trim().indexOf('for') === 0
                   || /* contains */funcx.textq.toLowerCase().trim().indexOf('if') === 0
                   || /* contains */funcx.textq.toLowerCase().trim().indexOf('else') === 0
                   || /* contains */funcx.textq.toLowerCase().trim().indexOf('switch') === 0
                   || /* contains */funcx.textq.toLowerCase().trim().indexOf('while') === 0) { funcx.ref = this.build(funcx.textq).ref; }
+                  funcx.fullTextq = /* replaceAll */funcx.fullTextq.replace(new
+                  RegExp('for([ ]*)\\(([^,:]*)(,)([^,]*)(,)([^\\)]*)\\)', 'g'), ' for$1($2;$4;$6) ');
                   functionx = functionx.add(funcx);
                   cin = 0;
                   cq = 0;
                   i = j;
+                  qin = 0;
                   funcx.textq = '';
                   funcx.fullTextq = '';
                   break;
@@ -262,55 +392,83 @@ export class Ast {
         }
       }
       if (/* contains */(stt[i].toLowerCase()).trim().indexOf('switch') === 0) {
+        cin++;
         funcx.fullTextq += '\n' + stt[i];
         if (count !== 0) {
           funcx.info = count + '';
           funcx.text = 'Variable Deceleration';
           funcx.ref = null;
+          funcx.fullTextq = /* replaceAll */funcx.fullTextq.replace(new
+          RegExp('for([ ]*)\\(([^,:]*)(,)([^,]*)(,)([^\\)]*)\\)', 'g'), ' for$1($2;$4;$6) ');
           functionx = functionx.add(funcx);
           funcx.textq = '';
           count = 0;
           stq = '';
         }
+        if ( qin === 1 ) {
+          funcx.textq += '\n' + stt[i];
+          funcx.info = cin + '';
+        }
         if (/* contains */stt[i + 1].indexOf('{') !== -1 === false) {
-          funcx.info = '1';
-          funcx.text = 'switch';
+          if ( qin === 0 ) {
+            funcx.text = 'switch';
+            funcx.info = '1';
+          }
           funcx.ref = null;
+          funcx.fullTextq = /* replaceAll */funcx.fullTextq.replace(new
+          RegExp('for([ ]*)\\(([^,:]*)(,)([^,]*)(,)([^\\)]*)\\)', 'g'), ' for$1($2;$4;$6) ');
+          if ( qin === 1 ) {
+            funcx.ref = this.build(funcx.textq).ref;
+          }
           functionx = functionx.add(funcx);
+          cin++;
           funcx.fullTextq = '\n' + stt[i + 1];
           funcx.textq = '';
+          cin = 0;
         } else {
           for (let j: number = i + 1; j < stt.length; j++) {
             if (/* contains */stt[j].indexOf('{') !== -1) {
+              cin++;
               funcx.fullTextq += '\n' + stt[j];
-              if (cq !== 0) {
+              if (cq !== 0 || qin === 1 ) {
                 funcx.textq += '\n' + stt[j];
               }
               cq++;
             } else {
               if (/* contains */stt[j].indexOf('}') !== -1) {
                 cq--;
+                cin++;
                 funcx.fullTextq += '\n' + stt[j];
                 if (cq === 0) {
-                  funcx.info = cin + '';
-                  funcx.text = 'switch';
-                  funcx.ref = null;
+                  if ( qin === 1 ) {
+                    funcx.textq += '\n' + stt[j];
+                    funcx.info = cin + '';
+                  } else {
+                    funcx.info = cin + '';
+                    funcx.text = 'switch';
+                    funcx.ref = null;
+                  }
                   if (/* contains */funcx.textq.indexOf('{') !== -1 || /* contains */funcx.textq.toLowerCase().trim().indexOf('case') === 0
                   || /* contains */funcx.textq.toLowerCase().trim().indexOf('for') === 0
                   || /* contains */funcx.textq.toLowerCase().trim().indexOf('if') === 0
                   || /* contains */funcx.textq.toLowerCase().trim().indexOf('else') === 0
                   || /* contains */funcx.textq.toLowerCase().trim().indexOf('switch') === 0
                   || /* contains */funcx.textq.toLowerCase().trim().indexOf('while') === 0) { funcx.ref = this.build(funcx.textq).ref; }
+                  funcx.fullTextq = /* replaceAll */funcx.fullTextq.replace(new
+                  RegExp('for([ ]*)\\(([^,:]*)(,)([^,]*)(,)([^\\)]*)\\)', 'g'), ' for$1($2;$4;$6) ');
                   functionx = functionx.add(funcx);
                   cin = 0;
                   cq = 0;
                   i = j;
+                  qin = 0;
                   funcx.textq = '';
                   funcx.fullTextq = '';
                   break;
                 } else {
+                  cin++;
                   funcx.textq += '\n' + stt[j];
                   funcx.fullTextq += '\n' + stt[j];
+                  funcx.info = cin + '';
                 }
               } else {
                 if (!(/* equals */(<any>((o1: any, o2: any) => {
@@ -320,6 +478,7 @@ export class Ast {
                   cin++;
                   funcx.fullTextq += '\n' + stt[j];
                   funcx.textq += '\n' + stt[j];
+                  funcx.info = cin + '';
                 }
               }
             }
@@ -327,11 +486,14 @@ export class Ast {
         }
       }
       if (/* contains */(stt[i].toLowerCase()).trim().indexOf('case') === 0) {
+        cin++;
         funcx.fullTextq += '\n' + stt[i];
         if (count !== 0) {
           funcx.info = count + '';
           funcx.text = 'Variable Deceleration';
           funcx.ref = null;
+          funcx.fullTextq = /* replaceAll */funcx.fullTextq.replace(new
+          RegExp('for([ ]*)\\(([^,:]*)(,)([^,]*)(,)([^\\)]*)\\)', 'g'), ' for$1($2;$4;$6) ');
           functionx = functionx.add(funcx);
           funcx.textq = '';
           count = 0;
@@ -341,17 +503,22 @@ export class Ast {
           funcx.info = '1';
           funcx.text = 'case';
           funcx.textq = stt[i + 1];
+          cin++;
           funcx.fullTextq += '\n' + stt[i + 1];
           funcx.ref = null;
+          funcx.fullTextq = /* replaceAll */funcx.fullTextq.replace(new
+          RegExp('for([ ]*)\\(([^,:]*)(,)([^,]*)(,)([^\\)]*)\\)', 'g'), ' for$1($2;$4;$6) ');
           functionx = functionx.add(funcx);
           funcx.textq = '';
           funcx.fullTextq = '';
+          cin = 0;
         } else {
           for (let j: number = i + 1; j < stt.length; j++) {
             if (/* contains */(stt[j].toLowerCase()).trim().indexOf('break') === 0) {
               funcx.info = cin + '';
               funcx.text = 'case';
               funcx.textq += stt[j];
+              cin++;
               funcx.fullTextq += '\n' + stt[j];
               funcx.ref = null;
               if (/* contains */funcx.textq.indexOf('{') !== -1 || /* contains */funcx.textq.toLowerCase().trim().indexOf('case') === 0
@@ -360,6 +527,8 @@ export class Ast {
               || /* contains */funcx.textq.toLowerCase().trim().indexOf('else') === 0
               || /* contains */funcx.textq.toLowerCase().trim().indexOf('switch') === 0
               || /* contains */funcx.textq.toLowerCase().trim().indexOf('while') === 0) { funcx.ref = this.build(funcx.textq).ref; }
+              funcx.fullTextq = /* replaceAll */funcx.fullTextq.replace(new
+              RegExp('for([ ]*)\\(([^,:]*)(,)([^,]*)(,)([^\\)]*)\\)', 'g'), ' for$1($2;$4;$6) ');
               functionx = functionx.add(funcx);
               cin = 0;
               cq = 0;
@@ -373,6 +542,7 @@ export class Ast {
                 funcx.info = cin + '';
                 funcx.text = 'case';
                 funcx.textq += stt[j];
+                cin++;
                funcx.fullTextq += '\n' + stt[j];
                 funcx.ref = null;
                 if (/* contains */funcx.textq.indexOf('{') !== -1 || /* contains */funcx.textq.toLowerCase().trim().indexOf('case') === 0
@@ -383,6 +553,8 @@ export class Ast {
                 || /* contains */funcx.textq.toLowerCase().trim().indexOf('while') === 0) {
                   funcx.ref = this.build(funcx.textq).ref;
                 }
+               funcx.fullTextq = /* replaceAll */funcx.fullTextq.replace(new
+               RegExp('for([ ]*)\\(([^,:]*)(,)([^,]*)(,)([^\\)]*)\\)', 'g'), ' for$1($2;$4;$6) ');
                 functionx = functionx.add(funcx);
                 cin = 0;
                 cq = 0;
@@ -414,11 +586,14 @@ export class Ast {
         }
       }
       if (/* contains */stt[i].toLowerCase().trim().indexOf('default') === 0) {
+        cin++;
         funcx.fullTextq += '\n' + stt[i];
         if (count !== 0) {
           funcx.info = count + '';
           funcx.text = 'Variable Deceleration';
           funcx.ref = null;
+          funcx.fullTextq = /* replaceAll */funcx.fullTextq.replace(new
+          RegExp('for([ ]*)\\(([^,:]*)(,)([^,]*)(,)([^\\)]*)\\)', 'g'), ' for$1($2;$4;$6) ');
           functionx = functionx.add(funcx);
           funcx.textq = '';
           count = 0;
@@ -443,6 +618,8 @@ export class Ast {
               || /* contains */funcx.textq.toLowerCase().trim().indexOf('else') === 0
               || /* contains */funcx.textq.toLowerCase().trim().indexOf('switch') === 0
               || /* contains */funcx.textq.toLowerCase().trim().indexOf('while') === 0) { funcx.ref = this.build(funcx.textq).ref; }
+              funcx.fullTextq = /* replaceAll */funcx.fullTextq.replace(new
+              RegExp('for([ ]*)\\(([^,:]*)(,)([^,]*)(,)([^\\)]*)\\)', 'g'), ' for$1($2;$4;$6) ');
               functionx = functionx.add(funcx);
               cin = 0;
               cq = 0;
@@ -463,72 +640,115 @@ export class Ast {
           }
       }
       if (/* contains */(stt[i].toLowerCase()).trim().indexOf('else') === 0) {
+        cin++;
         funcx.fullTextq += '\n' + stt[i];
         if (count !== 0) {
           funcx.info = count + '';
           funcx.text = 'Variable Deceleration';
           funcx.ref = null;
+          funcx.fullTextq = /* replaceAll */funcx.fullTextq.replace(new
+          RegExp('for([ ]*)\\(([^,:]*)(,)([^,]*)(,)([^\\)]*)\\)', 'g'), ' for$1($2;$4;$6) ');
           functionx = functionx.add(funcx);
           funcx.textq = '';
           count = 0;
           stq = '';
         }
         if (/* contains */stt[i + 1].indexOf('{') !== -1 === false) {
-          funcx.info = '1';
-          funcx.text = 'else';
+         //
+          if ( qin === 0) {
+           funcx.info = '1';
+           funcx.text = 'else';
+         }
+         //
           funcx.ref = null;
+          if (/* contains */stt[i + 1].trim().indexOf('if') === 0
+          || /* contains */stt[i + 1].trim().indexOf('for') === 0
+          || /* contains */stt[i + 1].trim().indexOf('while') === 0
+          || /* contains */stt[i + 1].trim().indexOf('switch') === 0
+          || /* contains */stt[i + 1].trim().indexOf('else') === 0) {
+            if (qin === 0 ) {
+              funcx.info = '1';
+              funcx.text = 'else';
+            }
+            //
+            if (qin === 1){
+              funcx.textq += '\n' + stt[i];
+            }
+            //
+              qin = 1 ;
+            continue;
+          }
           if (/* contains */stt[i + 1].indexOf(';') !== -1) {
+            cin++;
             funcx.textq += '\n' + stt[i + 1];
             funcx.fullTextq += '\n' + stt[i + 1];
             i++;
           }
+          funcx.fullTextq = /* replaceAll */funcx.fullTextq.replace(new
+          RegExp('for([ ]*)\\(([^,:]*)(,)([^,]*)(,)([^\\)]*)\\)', 'g'), ' for$1($2;$4;$6) ');
           functionx = functionx.add(funcx);
           funcx.textq = '';
           funcx.fullTextq = '';
+          cin = 0;
         } else {
-          for (let j: number = i + 1; j < stt.length; j++) {
-            if (/* contains */stt[j].indexOf('{') !== -1) {
-              funcx.fullTextq += '\n' + stt[j];
-              if (cq !== 0) {
-                funcx.textq += '\n' + stt[j];
-              }
-              cq++;
-            } else {
-              if (/* contains */stt[j].indexOf('}') !== -1) {
+            for (let j: number = i + 1; j < stt.length; j++) {
+              if (/* contains */stt[j].indexOf('{') !== -1) {
+               cin++;
                 funcx.fullTextq += '\n' + stt[j];
-                cq--;
-                if (cq === 0) {
-                  funcx.info = cin + '';
-                  funcx.text = 'else';
-                  funcx.ref = null;
-                  if (/* contains */funcx.textq.indexOf('{') !== -1 || /* contains */funcx.textq.toLowerCase().trim().indexOf('case') === 0
-                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('for') === 0
-                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('if') === 0
-                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('else') === 0
-                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('switch') === 0
-                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('while') === 0) { funcx.ref = this.build(funcx.textq).ref; }
-                  functionx = functionx.add(funcx);
-                  cin = 0;
-                  cq = 0;
-                  i = j;
-                  funcx.textq = '';
-                  funcx.fullTextq = '';
-                  break;
-                } else {
+                if (cq !== 0) {
                   funcx.textq += '\n' + stt[j];
                 }
+                cq++;
               } else {
-                if (!(/* equals */(<any>((o1: any, o2: any) => {
-                    if (o1 && o1.equals) { return o1.equals(o2); } else {
-                      return o1 === o2; } })(stt[j], '')) || /* equals */(<any>((o1: any, o2: any) => { if (o1 && o1.equals) {
-                    return o1.equals(o2); } else { return o1 === o2; } })(stt[j], ' ')))) {
+                if (/* contains */stt[j].indexOf('}') !== -1) {
                   cin++;
-                  funcx.textq += '\n' +  stt[j];
                   funcx.fullTextq += '\n' + stt[j];
+                  cq--;
+                  if (cq === 0) {
+                    funcx.info = cin + '';
+                    funcx.text = 'else';
+                    funcx.ref = null;
+                    if (/* contains */funcx.textq.indexOf('{') !== -1 || /* contains */funcx.textq.toLowerCase().trim().indexOf('case') === 0
+                    || /* contains */funcx.textq.toLowerCase().trim().indexOf('for') === 0
+                    || /* contains */funcx.textq.toLowerCase().trim().indexOf('if') === 0
+                    || /* contains */funcx.textq.toLowerCase().trim().indexOf('else') === 0
+                    || /* contains */funcx.textq.toLowerCase().trim().indexOf('switch') === 0
+                    || /* contains */funcx.textq.toLowerCase().trim().indexOf('while') === 0) {
+                      funcx.ref = this.build(funcx.textq).ref;
+                    }
+                    funcx.fullTextq = /* replaceAll */funcx.fullTextq.replace(new
+                    RegExp('for([ ]*)\\(([^,:]*)(,)([^,]*)(,)([^\\)]*)\\)', 'g'), ' for$1($2;$4;$6) ');
+                    functionx = functionx.add(funcx);
+                    cin = 0;
+                    cq = 0;
+                    i = j;
+                    funcx.textq = '';
+                    funcx.fullTextq = '';
+                    break;
+                  } else {
+                    funcx.textq += '\n' + stt[j];
+                  }
+                } else {
+                  if (!(/* equals */(<any>((o1: any, o2: any) => {
+                      if (o1 && o1.equals) {
+                        return o1.equals(o2);
+                      } else {
+                        return o1 === o2;
+                      }
+                    })(stt[j], '')) || /* equals */(<any>((o1: any, o2: any) => {
+                      if (o1 && o1.equals) {
+                        return o1.equals(o2);
+                      } else {
+                        return o1 === o2;
+                      }
+                    })(stt[j], ' ')))) {
+                    cin++;
+                    funcx.textq += '\n' + stt[j];
+                    funcx.fullTextq += '\n' + stt[j];
+                  }
                 }
               }
             }
-          }
         }
       }
     }
@@ -536,6 +756,8 @@ export class Ast {
       funcx.info = count + '';
       funcx.text = 'Variable Deceleration';
       funcx.ref = null;
+      funcx.fullTextq = /* replaceAll */funcx.fullTextq.replace(new
+      RegExp('for([ ]*)\\(([^,:]*)(,)([^,]*)(,)([^\\)]*)\\)', 'g'), ' for$1($2;$4;$6) ');
       functionx = functionx.add(funcx);
       funcx.textq = '';
       count = 0;

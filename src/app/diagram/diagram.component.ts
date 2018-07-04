@@ -12,11 +12,11 @@ let dialogNumber = 1;
 const cellDialog = [];
 let paper;
 let graphScale = 1;
-let maxWindows=4;
+let maxWindows = 4;
 
-let bigDialog = [];
-let bigDialogCounter= 0 ;
-let ctrlCodeArray = [];
+const bigDialog = [];
+let bigDialogCounter = 0 ;
+const ctrlCodeArray = [];
 
 @Component({
   selector: 'app-diagram',
@@ -61,8 +61,8 @@ ngOnInit() {
       '    \t\t\t\t\t  int[][] resultArrays)\n' +
       '    \t\t{\n' +
       '    \t\t\tif (fillRawSizes && (resultArrays.length < 6))\n' +
-      '    \t\t\t{\n' + '    \t\t\t\tthrow new IllegalArgumentException("If fillRawSizes is true,' +
-      ' resultArrays.length must be >= 6 (" + resultArrays.length + \')\');\n' +
+      '    \t\t\t{\n' +
+      '    \t\t\t\tthrow new IllegalArgumentException("If fillRawSizes is true, resultArrays.length must be >= 6 (" + resultArrays.length + \')\');\n' +
       '   \t\t\t}\n' +
       '   \t\t\tint[] minimumColWidths = new int[gridSize.width];\n' +
       '   \t\t\tint[] minimumRowHeights = new int[gridSize.height];\n' +
@@ -120,16 +120,14 @@ ngOnInit() {
       '   \t\t\t\t\tmaximumColWidths[col] = minimumColWidths[col];\n' +
       '   \t\t\t\t\tpreferredColWidths[col] = minimumColWidths[col];\n' +
       '   \t\t\t\t}\n' +
-      '   \t\t\t\telse{ if (preferredColWidths[col] < minimumColWidths[col])\n' +
+      '   \t\t\t\telse if (preferredColWidths[col] < minimumColWidths[col])\n' +
       '   \t\t\t\t{\n' +
       '   \t\t\t\t\tpreferredColWidths[col] = minimumColWidths[col];\n' +
       '  \t\t\t\t}\n' +
-      '   \t\t\t\telse {if (preferredColWidths[col] > maximumColWidths[col])\n' +
+      '   \t\t\t\telse if (preferredColWidths[col] > maximumColWidths[col])\n' +
       '   \t\t\t\t{\n' +
       '   \t\t\t\t\tpreferredColWidths[col] = maximumColWidths[col];\n' +
       '   \t\t\t\t}\n' +
-      '}\n' +
-      '}\n' +
       '   \t\t\t}\n' +
       '   \t\n' +
       '   \t\t\t// plug in the colspans and correct the minimum, preferred and\n' +
@@ -215,15 +213,15 @@ ngOnInit() {
       '  \t\t\t\t\tmaximumColWidths[col] = minimumColWidths[col];\n' +
       '  \t\t\t\t\tpreferredColWidths[col] = minimumColWidths[col];\n' +
       ' \t\t\t\t}\n' +
-      '  \t\t\t\telse {if (preferredColWidths[col] < minimumColWidths[col])\n' +
+      '  \t\t\t\telse if (preferredColWidths[col] < minimumColWidths[col])\n' +
       ' \t\t\t\t{\n' +
       '  \t\t\t\t\tpreferredColWidths[col] = minimumColWidths[col];\n' +
       '  \t\t\t\t}\n' +
-      '  \t\t\t\telse{ if (preferredColWidths[col] > maximumColWidths[col])\n' +
+      '  \t\t\t\telse if (preferredColWidths[col] > maximumColWidths[col])\n' +
       ' \t\t\t\t{\n' +
       '  \t\t\t\t\tpreferredColWidths[col] = maximumColWidths[col];\n' +
-      '  \t\t\t\t}}\n' +
-      '\t\t\t}}\n' +
+      '  \t\t\t\t}\n' +
+      '\t\t\t}\n' +
       '  \t\n' +
       '  \t\t\t// correct cases where\n' +
       '  \t\t\t// minimumRowHeights[row] <= preferredRowHeights[row] <= maximumRowHeights[row]\n' +
@@ -235,15 +233,15 @@ ngOnInit() {
       '  \t\t\t\t\tmaximumRowHeights[row] = minimumRowHeights[row];\n' +
       '  \t\t\t\t\tpreferredRowHeights[row] = minimumRowHeights[row];\n' +
       '  \t\t\t\t}\n' +
-      '  \t\t\t\telse{ if (preferredRowHeights[row] < minimumRowHeights[row])\n' +
+      '  \t\t\t\telse if (preferredRowHeights[row] < minimumRowHeights[row])\n' +
       '  \t\t\t\t{\n' +
       '  \t\t\t\t\tpreferredRowHeights[row] = minimumRowHeights[row];\n' +
       '  \t\t\t\t}\n' +
-      '  \t\t\t\telse {if (preferredRowHeights[row] > maximumRowHeights[row])\n' +
+      '  \t\t\t\telse if (preferredRowHeights[row] > maximumRowHeights[row])\n' +
       ' \t\t\t\t{\n' +
       '  \t\t\t\t\tpreferredRowHeights[row] = maximumRowHeights[row];\n' +
       '  \t\t\t\t}\n' +
-      '  \t\t\t}}}\n' +
+      '  \t\t\t}\n' +
       '  \t\n' +
       '  \t\t\t// plug in the rowspans and correct the minimum, preferred and\n' +
       '  \t\t\t// maximum row heights the rowspans are part of\n' +
@@ -328,15 +326,15 @@ ngOnInit() {
       '  \t\t\t\t\tmaximumRowHeights[row] = minimumRowHeights[row];\n' +
       '  \t\t\t\t\tpreferredRowHeights[row] = minimumRowHeights[row];\n' +
       '  \t\t\t\t}\n' +
-      '  \t\t\t\telse {if (preferredRowHeights[row] < minimumRowHeights[row])\n' +
+      '  \t\t\t\telse if (preferredRowHeights[row] < minimumRowHeights[row])\n' +
       '  \t\t\t\t{\n' +
       '  \t\t\t\t\tpreferredRowHeights[row] = minimumRowHeights[row];\n' +
       '  \t\t\t\t}\n' +
-      '  \t\t\t\telse {if (preferredRowHeights[row] > maximumRowHeights[row])\n' +
+      '  \t\t\t\telse if (preferredRowHeights[row] > maximumRowHeights[row])\n' +
       '  \t\t\t\t{\n' +
       '  \t\t\t\t\tpreferredRowHeights[row] = maximumRowHeights[row];\n' +
       '  \t\t\t\t}\n' +
-      '  \t\t\t}}}\n' +
+      '  \t\t\t}\n' +
       '  \t\n' +
       '  \t\t\t// copies the computed sizes to the result arrays\n' +
       '  \t\t\tif (fillRawSizes)\n' +
@@ -386,9 +384,10 @@ ngOnInit() {
       '  \t\t\t// add space between components or between\n' +
       '  \t\t\t// componetns and the borders of the parent container\n' +
       '  \t\t\tif (!fillRawSizes)\n' +
-      '  \t\t\t{\n' + '  \t\t\t\tInsets insets = parent.getInsets();\n' + '  \t\t\t\ttotalWidth += insets.left + insets.right' +
-      ' + ((gridSize.width - 1) * hgap) + distanceToBorders.left + distanceToBorders.right;\n' + '  \t\t\t\ttotalHeight += insets.top ' +
-      '+ insets.bottom + ((gridSize.height - 1) * vgap) + distanceToBorders.top + distanceToBorders.bottom;\n' +
+      '  \t\t\t{\n' +
+      '  \t\t\t\tInsets insets = parent.getInsets();\n' +
+      '  \t\t\t\ttotalWidth += insets.left + insets.right + ((gridSize.width - 1) * hgap) + distanceToBorders.left + distanceToBorders.right;\n' +
+      '  \t\t\t\ttotalHeight += insets.top + insets.bottom + ((gridSize.height - 1) * vgap) + distanceToBorders.top + distanceToBorders.bottom;\n' +
       '  \t\t\t}\n' +
       '  \t\n' +
       '  \t\t\t// clip the size to Integer.MAX_VALUE if too big\n' +
@@ -402,7 +401,8 @@ ngOnInit() {
       '  \t\t\t}\n' +
       '  \t\n' +
       '  \t\t\treturn new Dimension((int)totalWidth,(int)totalHeight);\n' +
-      '  \t\t}';
+      '  \t\t}' ;
+
 this.funcTextEvent.emit('private Dimension getSize(Container parent, LayoutSize layoutSize, boolean fillRawSizes,\n' +
   '    \t\t\t\t\t  Dimension gridSize, List<List<ExtendedGridLayoutConstraints>> gridRows,\n' +
   '    \t\t\t\t\t  Set<ExtendedGridLayoutConstraints> colspans,\n' +
@@ -410,8 +410,8 @@ this.funcTextEvent.emit('private Dimension getSize(Container parent, LayoutSize 
   '    \t\t\t\t\t  int[][] resultArrays)\n' +
   '    \t\t{\n' +
   '    \t\t\tif (fillRawSizes && (resultArrays.length < 6))\n' +
-  '    \t\t\t{\n' + '    \t\t\t\tthrow new IllegalArgumentException("If fillRawSizes is true,' +
-  ' resultArrays.length must be >= 6 (" + resultArrays.length + \')\');\n' +
+  '    \t\t\t{\n' +
+  '    \t\t\t\tthrow new IllegalArgumentException("If fillRawSizes is true, resultArrays.length must be >= 6 (" + resultArrays.length + \')\');\n' +
   '   \t\t\t}\n' +
   '   \t\t\tint[] minimumColWidths = new int[gridSize.width];\n' +
   '   \t\t\tint[] minimumRowHeights = new int[gridSize.height];\n' +
@@ -469,16 +469,14 @@ this.funcTextEvent.emit('private Dimension getSize(Container parent, LayoutSize 
   '   \t\t\t\t\tmaximumColWidths[col] = minimumColWidths[col];\n' +
   '   \t\t\t\t\tpreferredColWidths[col] = minimumColWidths[col];\n' +
   '   \t\t\t\t}\n' +
-  '   \t\t\t\telse{ if (preferredColWidths[col] < minimumColWidths[col])\n' +
+  '   \t\t\t\telse if (preferredColWidths[col] < minimumColWidths[col])\n' +
   '   \t\t\t\t{\n' +
   '   \t\t\t\t\tpreferredColWidths[col] = minimumColWidths[col];\n' +
   '  \t\t\t\t}\n' +
-  '   \t\t\t\telse {if (preferredColWidths[col] > maximumColWidths[col])\n' +
+  '   \t\t\t\telse if (preferredColWidths[col] > maximumColWidths[col])\n' +
   '   \t\t\t\t{\n' +
   '   \t\t\t\t\tpreferredColWidths[col] = maximumColWidths[col];\n' +
   '   \t\t\t\t}\n' +
-  '}\n' +
-  '}\n' +
   '   \t\t\t}\n' +
   '   \t\n' +
   '   \t\t\t// plug in the colspans and correct the minimum, preferred and\n' +
@@ -564,15 +562,15 @@ this.funcTextEvent.emit('private Dimension getSize(Container parent, LayoutSize 
   '  \t\t\t\t\tmaximumColWidths[col] = minimumColWidths[col];\n' +
   '  \t\t\t\t\tpreferredColWidths[col] = minimumColWidths[col];\n' +
   ' \t\t\t\t}\n' +
-  '  \t\t\t\telse {if (preferredColWidths[col] < minimumColWidths[col])\n' +
+  '  \t\t\t\telse if (preferredColWidths[col] < minimumColWidths[col])\n' +
   ' \t\t\t\t{\n' +
   '  \t\t\t\t\tpreferredColWidths[col] = minimumColWidths[col];\n' +
   '  \t\t\t\t}\n' +
-  '  \t\t\t\telse{ if (preferredColWidths[col] > maximumColWidths[col])\n' +
+  '  \t\t\t\telse if (preferredColWidths[col] > maximumColWidths[col])\n' +
   ' \t\t\t\t{\n' +
   '  \t\t\t\t\tpreferredColWidths[col] = maximumColWidths[col];\n' +
-  '  \t\t\t\t}}\n' +
-  '\t\t\t}}\n' +
+  '  \t\t\t\t}\n' +
+  '\t\t\t}\n' +
   '  \t\n' +
   '  \t\t\t// correct cases where\n' +
   '  \t\t\t// minimumRowHeights[row] <= preferredRowHeights[row] <= maximumRowHeights[row]\n' +
@@ -584,15 +582,15 @@ this.funcTextEvent.emit('private Dimension getSize(Container parent, LayoutSize 
   '  \t\t\t\t\tmaximumRowHeights[row] = minimumRowHeights[row];\n' +
   '  \t\t\t\t\tpreferredRowHeights[row] = minimumRowHeights[row];\n' +
   '  \t\t\t\t}\n' +
-  '  \t\t\t\telse{ if (preferredRowHeights[row] < minimumRowHeights[row])\n' +
+  '  \t\t\t\telse if (preferredRowHeights[row] < minimumRowHeights[row])\n' +
   '  \t\t\t\t{\n' +
   '  \t\t\t\t\tpreferredRowHeights[row] = minimumRowHeights[row];\n' +
   '  \t\t\t\t}\n' +
-  '  \t\t\t\telse {if (preferredRowHeights[row] > maximumRowHeights[row])\n' +
+  '  \t\t\t\telse if (preferredRowHeights[row] > maximumRowHeights[row])\n' +
   ' \t\t\t\t{\n' +
   '  \t\t\t\t\tpreferredRowHeights[row] = maximumRowHeights[row];\n' +
   '  \t\t\t\t}\n' +
-  '  \t\t\t}}}\n' +
+  '  \t\t\t}\n' +
   '  \t\n' +
   '  \t\t\t// plug in the rowspans and correct the minimum, preferred and\n' +
   '  \t\t\t// maximum row heights the rowspans are part of\n' +
@@ -677,15 +675,15 @@ this.funcTextEvent.emit('private Dimension getSize(Container parent, LayoutSize 
   '  \t\t\t\t\tmaximumRowHeights[row] = minimumRowHeights[row];\n' +
   '  \t\t\t\t\tpreferredRowHeights[row] = minimumRowHeights[row];\n' +
   '  \t\t\t\t}\n' +
-  '  \t\t\t\telse {if (preferredRowHeights[row] < minimumRowHeights[row])\n' +
+  '  \t\t\t\telse if (preferredRowHeights[row] < minimumRowHeights[row])\n' +
   '  \t\t\t\t{\n' +
   '  \t\t\t\t\tpreferredRowHeights[row] = minimumRowHeights[row];\n' +
   '  \t\t\t\t}\n' +
-  '  \t\t\t\telse {if (preferredRowHeights[row] > maximumRowHeights[row])\n' +
+  '  \t\t\t\telse if (preferredRowHeights[row] > maximumRowHeights[row])\n' +
   '  \t\t\t\t{\n' +
   '  \t\t\t\t\tpreferredRowHeights[row] = maximumRowHeights[row];\n' +
   '  \t\t\t\t}\n' +
-  '  \t\t\t}}}\n' +
+  '  \t\t\t}\n' +
   '  \t\n' +
   '  \t\t\t// copies the computed sizes to the result arrays\n' +
   '  \t\t\tif (fillRawSizes)\n' +
@@ -735,9 +733,10 @@ this.funcTextEvent.emit('private Dimension getSize(Container parent, LayoutSize 
   '  \t\t\t// add space between components or between\n' +
   '  \t\t\t// componetns and the borders of the parent container\n' +
   '  \t\t\tif (!fillRawSizes)\n' +
-  '  \t\t\t{\n' + '  \t\t\t\tInsets insets = parent.getInsets();\n' + '  \t\t\t\ttotalWidth += insets.left + insets.right' +
-  ' + ((gridSize.width - 1) * hgap) + distanceToBorders.left + distanceToBorders.right;\n' + '  \t\t\t\ttotalHeight += insets.top ' +
-  '+ insets.bottom + ((gridSize.height - 1) * vgap) + distanceToBorders.top + distanceToBorders.bottom;\n' +
+  '  \t\t\t{\n' +
+  '  \t\t\t\tInsets insets = parent.getInsets();\n' +
+  '  \t\t\t\ttotalWidth += insets.left + insets.right + ((gridSize.width - 1) * hgap) + distanceToBorders.left + distanceToBorders.right;\n' +
+  '  \t\t\t\ttotalHeight += insets.top + insets.bottom + ((gridSize.height - 1) * vgap) + distanceToBorders.top + distanceToBorders.bottom;\n' +
   '  \t\t\t}\n' +
   '  \t\n' +
   '  \t\t\t// clip the size to Integer.MAX_VALUE if too big\n' +
@@ -759,7 +758,7 @@ this.funcTextEvent.emit('private Dimension getSize(Container parent, LayoutSize 
 
   function closeDialogEvent(cellv, n) {
      if (isNaN(parseInt(cellv.model.attr('text/text'))) === false) {
-       cellv.model.attr('text/text','');
+       cellv.model.attr('text/text', '' );
     }
 
     cellDialog[n - 1] = undefined;
@@ -770,7 +769,7 @@ this.funcTextEvent.emit('private Dimension getSize(Container parent, LayoutSize 
       if (cellDialog[x] === undefined) { y = 1; }
       x++;
     }
-    if (y == 0) { dialogNumber = n; }
+    if (y === 0) { dialogNumber = n; }
 
     $('#convert').focus();
     originalColor(cellv);
@@ -818,14 +817,14 @@ this.funcTextEvent.emit('private Dimension getSize(Container parent, LayoutSize 
       width: 800});
     $('#dialog1').dialog({
       close: function() {
-        closeDialogEvent($('#dialog1').data('p1'),1);
+        closeDialogEvent($('#dialog1').data('p1'),1 );
       },
       autoOpen: false,
       height: 580,
       width: 580});
     $('#dialog2').dialog({
       close: function() {
-        closeDialogEvent($('#dialog2').data('p1'),2);
+        closeDialogEvent($('#dialog2').data('p1'),2 );
       },
       position: { my: 'left top', at: 'left bottom' },
       autoOpen: false,
@@ -833,7 +832,7 @@ this.funcTextEvent.emit('private Dimension getSize(Container parent, LayoutSize 
       width: 580});
     $('#dialog3').dialog({
       close: function() {
-        closeDialogEvent($('#dialog3').data('p1'),3);
+        closeDialogEvent($('#dialog3').data('p1'),3 );
       },
       position: { my: 'right top', at: 'right bottom' },
       autoOpen: false,
@@ -841,7 +840,7 @@ this.funcTextEvent.emit('private Dimension getSize(Container parent, LayoutSize 
       width: 580});
     $('#dialog4').dialog({
       close: function() {
-        closeDialogEvent($('#dialog4').data('p1'),4);
+        closeDialogEvent($('#dialog4').data('p1'),4 );
       },
       autoOpen: false,
       height: 580,
@@ -1549,12 +1548,12 @@ this.funcTextEvent.emit('private Dimension getSize(Container parent, LayoutSize 
       let funcName2 = '';
       let funcName3 = '';
      funcName = this.functionText.substring( 0 , this.functionText.indexOf('('));
-     const a = funcName.split(' ');
+     const a = funcName.trim().split(' ');
      funcName = a[a.length - 1 ];
       let qq: Ast;
       qq = null;
       funcName3 = this.functionText.substring(this.functionText.indexOf('{') + 1, this.functionText.lastIndexOf('}'));
-      funcName2 = /* replaceAll */funcName3.replace(new RegExp('for([ ])*\\(([^;:])*(;)([^;])*(;)([^\\)])*\\)', 'g'), ' for() ');
+      funcName2 = /* replaceAll */funcName3.replace(new RegExp('for([ ]*)\\(([^;:]*)(;)([^;]*)(;)([^\\)]*)\\)', 'g'), ' for$1($2,$4,$6) ');
       qq = Ast.build(funcName2);
       const rect = new joint.shapes.basic.Rect({
         position: {x: 3, y: 3},
@@ -1568,206 +1567,212 @@ this.funcTextEvent.emit('private Dimension getSize(Container parent, LayoutSize 
       this.fieldA = fieldArray;
 
 
-      paper.on('cell:pointerdown',
-        function(cellView, evt, x, y) {
+      /*paper.on('cell:pointerdown', function(cellView, evt, x, y) {
+        alert(cellView.model.attr('text/textF'));
+      });*/
 
-        var cntrlIsPressed = false;
+       paper.on('cell:pointerdown',
+         function(cellView, evt, x, y) {
 
-        if (evt.ctrlKey) {
-          cntrlIsPressed = true;
-        }
-        else {
-          cntrlIsPressed = false;
-        }
+         var cntrlIsPressed = false;
 
-
-        if (!cntrlIsPressed) {
-
-          if (cellDialog[dialogNumber - 1] !== undefined) {
-            $('#dialog' + dialogNumber).dialog('close');
-          }
-          $('#dialog' + dialogNumber).data('p1', cellView).dialog('open');
+         if (evt.ctrlKey) {
+           cntrlIsPressed = true;
+         }
+         else {
+           cntrlIsPressed = false;
+         }
 
 
-          let n = 0;
-          while (n < maxWindows) {
-            if (cellDialog[n] === undefined) {
-              break;
-            }
-            n++;
-          }
-          let nn = n + 1;
+         if (!cntrlIsPressed) {
 
-          //  alert(cellDialog[0] + ' ' + cellDialog[1] + ' ' + cellDialog[2] + ' ' + cellDialog[3]);
-
-          $('#dialog' + dialogNumber).dialog('option', 'title', 'Code ' + nn);
-          const text = cellView.model.attr('text/textF');
-          const text2 = text.replace(/\n/g, '<br>');
-          const text3 = text2.replace(/\t/g, '&nbsp;');
-
-          let y = 0; let y2 = 0;
-          while (y < maxWindows) {
-            if (cellDialog[y] !== undefined) {
-              y2++;
-            }
-            y++;
-          }
-
-          fieldArray.push(cellView.model.attr('text/textF'));
-
-          //cellDialog.splice(dialogNumber-1, 0, cellView);
-
-          cellDialog[dialogNumber - 1] = cellView;
-
-          let table = '';
-          if (y2 > 0) {
-
-            table  += '<table style="width:50%; border: 1px solid #f1f1f1; font-size:12px; padding:0px; line-height: 14px; margin:auto; "><tr><th>Code A</th><th>Code B</th><th>Similarity</th></tr>';
-
-            for (let z = 0; z < maxWindows; z++) {
-              if (cellDialog[z] !== undefined) {
-                for (let zz = 0; zz < maxWindows; zz++) {
-                  if (z === zz) { continue; }
-                  if (z < zz) { continue; }
-                  if (cellDialog[zz] !== undefined) {
-                    let z2 = z+1; let zz2 = zz+1;
-                    table += '<tr><td>Code ' + z2 + '</td><td>Code ' + zz2 + '</td><td>';
+           if (cellDialog[dialogNumber - 1] !== undefined) {
+             $('#dialog' + dialogNumber).dialog('close');
+           }
+           $('#dialog' + dialogNumber).data('p1', cellView).dialog('open');
 
 
+           let n = 0;
+           while (n < maxWindows) {
+             if (cellDialog[n] === undefined) {
+               break;
+             }
+             n++;
+           }
+           let nn = n + 1;
 
-                    var a = $('#dialog' + z2).data('p1').model.attr('text/textF');
-                    var b = $('#dialog' + zz2).data('p1').model.attr('text/textF');
+           //  alert(cellDialog[0] + ' ' + cellDialog[1] + ' ' + cellDialog[2] + ' ' + cellDialog[3]);
 
-                     a = a.replace(/\n/g, '');
-                    a = a.replace(/\t/g, '');
-                    a = a.replace(/ /g, '');
+           $('#dialog' + dialogNumber).dialog('option', 'title', 'Code ' + nn);
+           let text = cellView.model.attr('text/textF');
+           text = text.replace(/</g, '&lt;' );
+           text = text.replace(/>/g, '&gt;' );
+           const text2 = text.replace(/\n/g, '<br>');
+           const text3 = text2.replace(/\t/g, '&nbsp;');
 
-                    var regex = /(int)(\w+)/g;
+           let y = 0; let y2 = 0;
+           while (y < maxWindows) {
+             if (cellDialog[y] !== undefined) {
+               y2++;
+             }
+             y++;
+           }
 
-                    let matches = [];
-                    a.replace(regex, function(s, x, m)  { matches.push(m); });
+           fieldArray.push(cellView.model.attr('text/textF'));
 
-                    for (let x = 0; x < matches.length; x++){
-                      var re = new RegExp(matches[x],"g");
-                      a = a.replace(re,'x');
-                    }
+           //cellDialog.splice(dialogNumber-1, 0, cellView);
 
+           cellDialog[dialogNumber - 1] = cellView;
 
-                   // a = a.replace(regex, "$1");
-          //          var regex2 = /(if)(\u0028\w+\W\w+\u0029)/g;
-              //      a = a.replace(regex2, "$1()");
+           let table = '';
+           if (y2 > 0) {
 
+             table  += '<table style="width:50%; border: 1px solid #f1f1f1; font-size:12px; padding:0px; line-height: 14px; margin:auto; "><tr><th>Code A</th><th>Code B</th><th>Similarity</th></tr>';
 
-                    b = b.replace(/\n/g, '');
-                    b = b.replace(/\t/g, '');
-                    b = b.replace(/ /g, '');
-
-                     matches = [];
-                    b.replace(regex, function(s, x, m)  { matches.push(m); });
-
-                    for (let x = 0; x < matches.length; x++){
-                      var re = new RegExp(matches[x],"g");
-                      b = b.replace(re,'x');
-                    }
+             for (let z = 0; z < maxWindows; z++) {
+               if (cellDialog[z] !== undefined) {
+                 for (let zz = 0; zz < maxWindows; zz++) {
+                   if (z === zz) { continue; }
+                   if (z < zz) { continue; }
+                   if (cellDialog[zz] !== undefined) {
+                     let z2 = z+1 ; let zz2 = zz+1 ;
+                     table += '<tr><td>Code ' + z2 + '</td><td>Code ' + zz2 + '</td><td>';
 
 
 
-                    var l2 = a.length;
-                    var l2 = b.length;
-                    var grade = 0;
-                    var minLength = 0;
-                    var maxLength = 0;
+                     var a = $('#dialog' + z2).data('p1').model.attr('text/textF');
+                     var b = $('#dialog' + zz2).data('p1').model.attr('text/textF');
 
-                    if (a.length > b.length) {
-                      minLength = b.length;
-                      maxLength = a.length;
-                    } else {
-                      minLength = a.length;
-                      maxLength = b.length;
-                    }
+                      a = a.replace(/\n/g, '');
+                     a = a.replace(/\t/g, '');
+                     a = a.replace(/ /g, '');
 
-                    for (let i = 0; i < minLength; i++) {
-                      if (a[i] === b[i]) {
-                        grade++;
-                      }
-                    }
+                     var regex = /(int)(\w+)/g;
 
-                    let weight = grade / maxLength;
-                    let result = (weight * 100);
+                     let matches = [];
+                     a.replace(regex, function(s, x, m)  { matches.push(m); });
 
-                    table += Math.round(result) + '%</td></tr>';
-                  }
-                }
-              }
-            }
-            table += '</table>';
-          }
-          document.getElementById('dialogText' + dialogNumber).innerHTML = '<code>' + text3 + '</code>';
-
-          document.getElementById('ratio' + dialogNumber).innerHTML = table;
-
-          for (let x = 1; x < maxWindows+1; x++) {
-            if (x === dialogNumber) {continue;}
-            document.getElementById('ratio' + x).innerHTML = '';
-            document.getElementById('ratio' + x).innerHTML = '';
-            document.getElementById('ratio' + x).innerHTML = '';
-          }
-
-        }
-        else {
-           bigDialog[bigDialogCounter] = cellView;
-
-          ctrlCodeArray[bigDialogCounter]=cellView.model.attr('text/textF');
-          bigDialogCounter++;
-
-          if (bigDialogCounter == 2) {
-            $('#dialogBig').dialog('open');
-            const text = ctrlCodeArray[0];
-            const text2 = text.replace(/\n/g, '<br>');
-            const text3 = text2.replace(/\t/g, '&nbsp;');
-
-            const tex = ctrlCodeArray[1];
-            const tex2 = tex.replace(/\n/g, '<br>');
-            const tex3 = tex2.replace(/\t/g, '&nbsp;');
+                     for (let x = 0; x < matches.length; x++){
+                       var re = new RegExp(matches[x],"g");
+                       a = a.replace(re,'x');
+                     }
 
 
-            document.getElementById('dialogTextBig').innerHTML = '<table><tr><td style="width:50%; vertical-align:top;"><code>' + text3 + '</code><td style="width:1%; background:#f1f1f1;"></td></td><td style="width:49%; vertical-align:top;"><code>' + tex3 + '</code></td></tr>';
-          }
-        }
+                    // a = a.replace(regex, "$1");
+           //          var regex2 = /(if)(\u0028\w+\W\w+\u0029)/g;
+               //      a = a.replace(regex2, "$1()");
 
-          if (cellView.model.attr('text/type') === 'ELSE') {
-            cellView.model.attr('polygon/fill', '#ea6c0d');
-          } else if ( cellView.model.attr('text/type') === 'IF') {
-            cellView.model.attr('polygon/fill', '#ffdb03');
-          } else if ( cellView.model.attr('text/type') === 'CASE') {
-            cellView.model.attr('polygon/fill', '#6C0E9E');
 
-          } else if ( cellView.model.attr('text/type') === 'SWITCH') {
-            cellView.model.attr('polygon/fill', '#AD1F12');
+                     b = b.replace(/\n/g, '');
+                     b = b.replace(/\t/g, '');
+                     b = b.replace(/ /g, '');
 
-          } else if ( cellView.model.attr('text/type') === 'FOR') {
-            cellView.model.attr('circle/fill', '#247ED6');
-          } else if ( cellView.model.attr('text/type') === 'WHILE') {
-            cellView.model.attr('circle/fill', '#29d646' );
-          }
+                      matches = [];
+                     b.replace(regex, function(s, x, m)  { matches.push(m); });
 
-          if (cntrlIsPressed) { return; }
+                     for (let x = 0; x < matches.length; x++){
+                       var re = new RegExp(matches[x],"g");
+                       b = b.replace(re,'x');
+                     }
 
-          let t = $('#dialog' + dialogNumber).dialog('option', 'title');
-          let t2 = t.replace('Code ', '');
 
-          if (cellView.model.attr('text/text') === '') {
-            cellView.model.attr('text/text', t2);
-          }
-           // cellView.model.attr('text/fill', 'red');
 
-          dialogNumber++;
-          if (dialogNumber === maxWindows + 1) {
-            dialogNumber = 1;
+                     var l2 = a.length;
+                     var l2 = b.length;
+                     var grade = 0;
+                     var minLength = 0;
+                     var maxLength = 0;
 
-          }
-        }
-      );
+                     if (a.length > b.length) {
+                       minLength = b.length;
+                       maxLength = a.length;
+                     } else {
+                       minLength = a.length;
+                       maxLength = b.length;
+                     }
+
+                     for (let i = 0; i < minLength; i++) {
+                       if (a[i] === b[i]) {
+                         grade++;
+                       }
+                     }
+
+                     let weight = grade / maxLength;
+                     let result = (weight * 100);
+
+                     table += Math.round(result) + '%</td></tr>';
+                   }
+                 }
+               }
+             }
+             table += '</table>';
+           }
+           document.getElementById('dialogText' + dialogNumber).innerHTML = '<code>' + text3 + '</code>';
+
+           document.getElementById('ratio' + dialogNumber).innerHTML = table;
+
+           for (let x = 1; x < maxWindows+1; x++) {
+             if (x === dialogNumber) {continue;}
+             document.getElementById('ratio' + x).innerHTML = '';
+             document.getElementById('ratio' + x).innerHTML = '';
+             document.getElementById('ratio' + x).innerHTML = '';
+           }
+
+         }
+         else {
+            bigDialog[bigDialogCounter] = cellView;
+
+           ctrlCodeArray[bigDialogCounter]=cellView.model.attr('text/textF');
+           bigDialogCounter++;
+
+           if (bigDialogCounter == 2) {
+             $('#dialogBig').dialog('open');
+             const text = ctrlCodeArray[0];
+             const text2 = text.replace(/\n/g, '<br>');
+             const text3 = text2.replace(/\t/g, '&nbsp;');
+
+             const tex = ctrlCodeArray[1];
+             const tex2 = tex.replace(/\n/g, '<br>');
+             const tex3 = tex2.replace(/\t/g, '&nbsp;');
+
+
+             document.getElementById('dialogTextBig').innerHTML = '<table><tr><td style="width:50%; vertical-align:top;"><code>' + text3 + '</code><td style="width:1%; background:#f1f1f1;"></td></td><td style="width:49%; vertical-align:top;"><code>' + tex3 + '</code></td></tr>';
+           }
+         }
+
+           if (cellView.model.attr('text/type') === 'ELSE') {
+             cellView.model.attr('polygon/fill', '#ea6c0d');
+           } else if ( cellView.model.attr('text/type') === 'IF') {
+             cellView.model.attr('polygon/fill', '#ffdb03');
+           } else if ( cellView.model.attr('text/type') === 'CASE') {
+             cellView.model.attr('polygon/fill', '#6C0E9E');
+
+           } else if ( cellView.model.attr('text/type') === 'SWITCH') {
+             cellView.model.attr('polygon/fill', '#AD1F12');
+
+           } else if ( cellView.model.attr('text/type') === 'FOR') {
+             cellView.model.attr('circle/fill', '#247ED6');
+           } else if ( cellView.model.attr('text/type') === 'WHILE') {
+             cellView.model.attr('circle/fill', '#29d646' );
+           }
+
+           if (cntrlIsPressed) { return; }
+
+           let t = $('#dialog' + dialogNumber).dialog('option', 'title');
+           let t2 = t.replace('Code ', '');
+
+           if (cellView.model.attr('text/text') === '') {
+             cellView.model.attr('text/text', t2);
+           }
+            // cellView.model.attr('text/fill', 'red');
+
+           dialogNumber++;
+           if (dialogNumber === maxWindows + 1) {
+             dialogNumber = 1;
+
+           }
+         }
+       );
     }
   }
   killY() {
