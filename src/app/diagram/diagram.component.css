@@ -58,13 +58,12 @@ body {
 /* Style the input field */
 input[type=text] {
   width: 100%;
-  border-radius: 3px;
-  border: none;
-  background-color: white;
-  margin-top: -8px;
-  height: 25px;
-  color: #666;
-  padding: 5px;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #bbb;
+  border-radius: 4px;
+  box-sizing: border-box;
 }
 
 /* Three bars (hamburger menu) */

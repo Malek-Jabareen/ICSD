@@ -3,15 +3,18 @@
 <h1>Interactive Control Structure Diagram</h1>
   <div id="header" style="margin: auto"></div>
   <table align="center">
-  <tr><td><button id="hideButton" class="clear" (click)="hideDiagram()" onclick="hideAndShow()" title="hide or show the function code">Hide/Show</button>&nbsp;
-    <button id="popup" class="clear" onclick="$('#dialogFunc').dialog('open');" title="open the function code in a big window">Pop up</button>&nbsp;
+  <tr><td><button id="hideButton" class="clear" (click)="hideDiagram()" onclick="hideAndShow()" title="hide or show the function code">Hide</button>&nbsp;
+    <button id="popup" class="clear" onclick="$('#dialogFunc').dialog('open');" title="open the function code in a big window">Popup</button>&nbsp;
+    <button id="save" class="clear" onclick="$('#dialogSave').dialog('open');" title="save the function">Save</button>&nbsp;
     <button id="help" class="clear" (click)="help()">Help</button>&nbsp;
     <button id="convert" class="clear" (click)="build()" onclick=" conv()">Convert</button>&nbsp;
     <button id="zoomin2" class="clear"  (click)="zoomin()" title="expand the diagram">Zoom in</button>&nbsp;
     <button id="zoomout2" class="clear"  (click)="zoomout()" title="minimze the diagram">Zoom out</button>
+
   </td><td>
     <button id="zoomin" class="clear"  (click)="zoomin()" title="expand the diagram">Zoom in</button>&nbsp;
-    <button id="zoomout" class="clear"  (click)="zoomout()" title="minimze the diagram">Zoom out</button>&nbsp;</td>
+    <button id="zoomout" class="clear"  (click)="zoomout()" title="minimze the diagram">Zoom out</button>&nbsp;
+  </td>
   </tr>
   <tr>
     <div *ngIf="hide"><td style="width:500px; vertical-align:top;"><app-form (SendEvent)="fT.value=$event" [funcText]="fT2"></app-form></td></div>

@@ -13,7 +13,7 @@ const cellDialog = [];
 let paper;
 let graphScale = 1;
 let maxWindows = 4;
-
+const matches = [];
 const bigDialog = [];
 let bigDialogCounter = 0 ;
 const ctrlCodeArray = [];
@@ -53,6 +53,8 @@ ngOnInit() {
     if(event.which=="17")
       cntrlIsPressed = true;
   }); */
+
+
 
     this.functionText = 'private Dimension getSize(Container parent, LayoutSize layoutSize, boolean fillRawSizes,\n' +
       '    \t\t\t\t\t  Dimension gridSize, List<List<ExtendedGridLayoutConstraints>> gridRows,\n' +
@@ -808,6 +810,21 @@ this.funcTextEvent.emit('private Dimension getSize(Container parent, LayoutSize 
       autoOpen: false,
       height: 400,
       width: 400});
+    $('#dialogSave').dialog({
+      close: function() { $('#convert').focus(); },
+      buttons: {
+        'Close': {
+          text: 'Close',
+          click: function() { $(this).dialog('close'); }
+        },
+        'Save': {
+          text: 'Save',
+          click: function() { $(this).dialog('close'); }
+        }
+        },
+      autoOpen: false,
+      height: 500,
+      width: 500});
 
     $('#dialogFunc').dialog({
      open: function() {  $('#func2').scrollTop(0); },
@@ -1530,6 +1547,8 @@ this.funcTextEvent.emit('private Dimension getSize(Container parent, LayoutSize 
       '\tSystem.out.println(newString.trim());\n' +
       'System.out.println(newString.trim());\n' +
       'System.out.println(newString.trim());';
+
+
     const graph = new joint.dia.Graph;
      paper = new joint.dia.Paper({
       el: jQuery('#diagramXXX'),
@@ -1567,6 +1586,7 @@ this.funcTextEvent.emit('private Dimension getSize(Container parent, LayoutSize 
       this.fieldA = fieldArray;
 
 
+
       /*paper.on('cell:pointerdown', function(cellView, evt, x, y) {
         alert(cellView.model.attr('text/textF'));
       });*/
@@ -1586,10 +1606,23 @@ this.funcTextEvent.emit('private Dimension getSize(Container parent, LayoutSize 
 
          if (!cntrlIsPressed) {
 
+           for (let n = 0; n < maxWindows; n++) {
+             if (cellDialog[n] !== undefined) {
+               if (cellView === cellDialog[n]) {
+                 alert('There is an active window that assinged that shape');
+               //  $('#dialog' + (n+1)).focus();
+                 return;
+               }
+             }
+           }
+
            if (cellDialog[dialogNumber - 1] !== undefined) {
              $('#dialog' + dialogNumber).dialog('close');
            }
            $('#dialog' + dialogNumber).data('p1', cellView).dialog('open');
+
+
+
 
 
            let n = 0;
@@ -1600,6 +1633,8 @@ this.funcTextEvent.emit('private Dimension getSize(Container parent, LayoutSize 
              n++;
            }
            let nn = n + 1;
+
+
 
            //  alert(cellDialog[0] + ' ' + cellDialog[1] + ' ' + cellDialog[2] + ' ' + cellDialog[3]);
 
@@ -1727,11 +1762,15 @@ this.funcTextEvent.emit('private Dimension getSize(Container parent, LayoutSize 
 
            if (bigDialogCounter == 2) {
              $('#dialogBig').dialog('open');
-             const text = ctrlCodeArray[0];
+             let text = ctrlCodeArray[0];
+             text = text.replace(/</g, '&lt;' );
+             text = text.replace(/>/g, '&gt;' );
              const text2 = text.replace(/\n/g, '<br>');
              const text3 = text2.replace(/\t/g, '&nbsp;');
 
-             const tex = ctrlCodeArray[1];
+             let tex = ctrlCodeArray[1];
+             tex = tex.replace(/</g, '&lt;' );
+             tex = tex.replace(/>/g, '&gt;' );
              const tex2 = tex.replace(/\n/g, '<br>');
              const tex3 = tex2.replace(/\t/g, '&nbsp;');
 
@@ -1792,6 +1831,9 @@ this.funcTextEvent.emit('private Dimension getSize(Container parent, LayoutSize 
   }
   help() {
     $('#dialogHelp').dialog('open');
+  }
+  save() {
+    $('#dialogSave').dialog('open');
   }
 
 }

@@ -18,8 +18,11 @@
       document.getElementById('zoomout').style.display='none';
       document.getElementById('zoomin2').style.display='none';
       document.getElementById('zoomout2').style.display='none';
+      document.getElementById('save').style.display='none';
       // move the focus to the top of the page, not the middle
       $('#convert').focus();
+
+      setTimeout(function() { document.getElementById("loader").style.display = "none"; document.getElementById("loader2").style.display = "none"; }, 200);
     }
 function conv(){
       if (document.getElementById('func').value == '') {
@@ -32,7 +35,9 @@ function conv(){
   document.getElementById('popup').style.display='inline-block';
   document.getElementById('zoomin').style.display='inline-block';
   document.getElementById('zoomout').style.display='inline-block';
+  document.getElementById('save').style.display='inline-block';
   document.getElementById('help').style.display='none';
+  $(".ui-dialog-content").dialog("close");
 }
     function hideAndShow(){
 
@@ -51,14 +56,14 @@ function conv(){
         document.getElementById('zoomout').style.display='inline-block';
       }
     }
-
   </script>
   </script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
 <body onload="load()">
-
+    <div id="loader2"></div>
+<div id="loader"></div>
   <app-root></app-root>
 
 
