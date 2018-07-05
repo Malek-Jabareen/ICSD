@@ -1,7 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 body {
   font: 100% Arial;
-  margin: 10px;
+  margin: 0px;
   line-height: 23px;
 }
 button.clear {
@@ -59,3 +59,40 @@ button.clear {
   text-align: center;
 }
 
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  z-index:8;
+  overflow: hidden;
+  background-color: #686868;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 15px 15px;
+  text-decoration: none;
+}
+
+li a:hover:not(.active) {
+  background-color: #333;
+}
+
+.active {
+  display: block;
+  color: white;
+  text-align: center;
+  font-size:22px;
+  padding: 15px 15px;
+  text-decoration: none;
+  background-color: #333;
+}
