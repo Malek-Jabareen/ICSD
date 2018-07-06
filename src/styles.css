@@ -9,11 +9,13 @@ button.clear {
   font-size: large;
   background-color: #eee;
   border: none;
-  padding: 5px 10px;
+  padding: 5px 9px;
   border-radius: 4px;
-  cursor: pointer;
+
   cursor: hand;
 }
+
+
 
 #loader {
   position: absolute;
@@ -60,13 +62,14 @@ button.clear {
 }
 
 ul {
+
   list-style-type: none;
   margin: 0;
   padding: 0;
   z-index:8;
   overflow: hidden;
   background-color: #686868;
-  position: fixed;
+  position: relative;
   top: 0;
   width: 100%;
 }
@@ -79,7 +82,7 @@ li a {
   display: block;
   color: white;
   text-align: center;
-  padding: 15px 15px;
+  padding: 12px 15px;
   text-decoration: none;
 }
 
@@ -87,12 +90,15 @@ li a:hover:not(.active) {
   background-color: #333;
 }
 
-.active {
+#logo {
+  font-family: monospace;
   display: block;
   color: white;
   text-align: center;
-  font-size:22px;
-  padding: 15px 15px;
-  text-decoration: none;
+  font-size:24px;
+  padding: 12px 15px;
   background-color: #333;
+  text-shadow: 0 0 25px #f1f1f1;
 }
+
+

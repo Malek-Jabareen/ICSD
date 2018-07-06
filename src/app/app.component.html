@@ -1,6 +1,6 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <ul>
-  <li class="active">ICSD</li>
+  <li id="logo">ICSD</li>
   <li><a href="">Home</a></li>
   <li><a href="#" onclick="$('#dialogSave').dialog('open');" title="Save the function in our database">Save</a></li>
   <li><a href="#" title="Load a function from our database">Load</a></li>
@@ -9,12 +9,12 @@
 </ul>
 
 <div style="text-align:center; margin: auto">
-<br><br><br>
+<br>
   <div id="header" style="margin: auto"></div>
   <table align="center">
   <tr><td><button id="hideButton" class="clear" (click)="hideDiagram()" onclick="hideAndShow()" title="hide or show the function code">Hide/Show</button>&nbsp;
 
-    <button id="convert" class="clear" (click)="build()" onclick=" conv()">Convert</button>&nbsp;
+    <button id="convert" class="clear" (click)="build()" onclick=" conv()">Convert &raquo;</button>
     <button id="zoomin2" class="clear"  (click)="zoomin()" title="expand the diagram">Zoom in</button>&nbsp;
     <button id="zoomout2" class="clear"  (click)="zoomout()" title="minimze the diagram">Zoom out</button>
 

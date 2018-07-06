@@ -17,6 +17,7 @@ const matches = [];
 const bigDialog = [];
 let bigDialogCounter = 0 ;
 const ctrlCodeArray = [];
+let fieldArray: Array<String>;
 
 @Component({
   selector: 'app-diagram',
@@ -763,6 +764,8 @@ this.funcTextEvent.emit('private Dimension getSize(Container parent, LayoutSize 
        cellv.model.attr('text/text', '' );
     }
 
+
+
     cellDialog[n - 1] = undefined;
 
 // bug fix
@@ -1250,6 +1253,7 @@ this.funcTextEvent.emit('private Dimension getSize(Container parent, LayoutSize 
       firstfor, firstif, secondwhile, secondif, link, link2, link3, link4, link5, link6, link7, link8]);
   }
 
+
   build(Qer: Ast , num: number , graph: joint.dia.Graph , rect: joint.shapes.basic.Generic , c: number ) {
     joint.shapes.basic.trapez = joint.shapes.basic.Generic.extend({
 
@@ -1427,6 +1431,231 @@ this.funcTextEvent.emit('private Dimension getSize(Container parent, LayoutSize 
     }
   }
 
+
+ // test() { alert('hey'); }
+
+
+  shapeClick(cellView, evt, x, y) {
+
+  //  this.test();
+
+    var cntrlIsPressed = false;
+
+    if (evt.ctrlKey) {
+      cntrlIsPressed = true;
+    }
+    else {
+      cntrlIsPressed = false;
+    }
+
+
+    if (!cntrlIsPressed) {
+
+      for (let n = 0; n < maxWindows; n++) {
+        if (cellDialog[n] !== undefined) {
+          if (cellView === cellDialog[n]) {
+            alert('There is an active window that assinged that shape');
+            //  $('#dialog' + (n+1)).focus();
+            return;
+          }
+        }
+      }
+
+      if (cellDialog[dialogNumber - 1] !== undefined) {
+        $('#dialog' + dialogNumber).dialog('close');
+      }
+      $('#dialog' + dialogNumber).data('p1', cellView).dialog('open');
+
+
+
+      let n = 0;
+      while (n < maxWindows) {
+        if (cellDialog[n] === undefined) {
+          break;
+        }
+        n++;
+      }
+      let nn = n + 1;
+
+
+
+      //  alert(cellDialog[0] + ' ' + cellDialog[1] + ' ' + cellDialog[2] + ' ' + cellDialog[3]);
+
+      $('#dialog' + dialogNumber).dialog('option', 'title', 'Code ' + nn);
+      let text = cellView.model.attr('text/textF');
+      text = text.replace(/</g, '&lt;' );
+      text = text.replace(/>/g, '&gt;' );
+      const text2 = text.replace(/\n/g, '<br>');
+      const text3 = text2.replace(/\t/g, '&nbsp;');
+
+      let y = 0; let y2 = 0;
+      while (y < maxWindows) {
+        if (cellDialog[y] !== undefined) {
+          y2++;
+        }
+        y++;
+      }
+
+      fieldArray.push(cellView.model.attr('text/textF'));
+
+      //cellDialog.splice(dialogNumber-1, 0, cellView);
+
+      cellDialog[dialogNumber - 1] = cellView;
+
+      let table = '';
+      if (y2 > 0) {
+
+        table  += '<table style="width:50%; border: 1px solid #f1f1f1; font-size:12px; padding:0px; line-height: 14px; margin:auto; "><tr><th>Code A</th><th>Code B</th><th>Similarity</th></tr>';
+
+        for (let z = 0; z < maxWindows; z++) {
+          if (cellDialog[z] !== undefined) {
+            for (let zz = 0; zz < maxWindows; zz++) {
+              if (z === zz) { continue; }
+              if (z < zz) { continue; }
+              if (cellDialog[zz] !== undefined) {
+                let z2 = z+1 ; let zz2 = zz+1 ;
+                table += '<tr><td>Code ' + z2 + '</td><td>Code ' + zz2 + '</td><td>';
+
+
+
+                var a = $('#dialog' + z2).data('p1').model.attr('text/textF');
+                var b = $('#dialog' + zz2).data('p1').model.attr('text/textF');
+
+                a = a.replace(/\n/g, '');
+                a = a.replace(/\t/g, '');
+                a = a.replace(/ /g, '');
+
+                var regex = /(int)(\w+)/g;
+
+                let matches = [];
+                a.replace(regex, function(s, x, m)  { matches.push(m); });
+
+                for (let x = 0; x < matches.length; x++){
+                  var re = new RegExp(matches[x],"g");
+                  a = a.replace(re,'x');
+                }
+
+
+                // a = a.replace(regex, "$1");
+                //          var regex2 = /(if)(\u0028\w+\W\w+\u0029)/g;
+                //      a = a.replace(regex2, "$1()");
+
+
+                b = b.replace(/\n/g, '');
+                b = b.replace(/\t/g, '');
+                b = b.replace(/ /g, '');
+
+                matches = [];
+                b.replace(regex, function(s, x, m)  { matches.push(m); });
+
+                for (let x = 0; x < matches.length; x++){
+                  var re = new RegExp(matches[x],"g");
+                  b = b.replace(re,'x');
+                }
+
+
+
+                var l2 = a.length;
+                var l2 = b.length;
+                var grade = 0;
+                var minLength = 0;
+                var maxLength = 0;
+
+                if (a.length > b.length) {
+                  minLength = b.length;
+                  maxLength = a.length;
+                } else {
+                  minLength = a.length;
+                  maxLength = b.length;
+                }
+
+                for (let i = 0; i < minLength; i++) {
+                  if (a[i] === b[i]) {
+                    grade++;
+                  }
+                }
+
+                let weight = grade / maxLength;
+                let result = (weight * 100);
+
+                table += Math.round(result) + '%</td></tr>';
+              }
+            }
+          }
+        }
+        table += '</table>';
+      }
+      document.getElementById('dialogText' + dialogNumber).innerHTML = '<code>' + text3 + '</code>';
+
+      document.getElementById('ratio' + dialogNumber).innerHTML = table;
+
+      for (let x = 1; x < maxWindows+1; x++) {
+        if (x === dialogNumber) {continue;}
+        document.getElementById('ratio' + x).innerHTML = '';
+        document.getElementById('ratio' + x).innerHTML = '';
+        document.getElementById('ratio' + x).innerHTML = '';
+      }
+
+    }
+    else {
+      bigDialog[bigDialogCounter] = cellView;
+
+      ctrlCodeArray[bigDialogCounter]=cellView.model.attr('text/textF');
+      bigDialogCounter++;
+
+      if (bigDialogCounter == 2) {
+        $('#dialogBig').dialog('open');
+        let text = ctrlCodeArray[0];
+        text = text.replace(/</g, '&lt;' );
+        text = text.replace(/>/g, '&gt;' );
+        const text2 = text.replace(/\n/g, '<br>');
+        const text3 = text2.replace(/\t/g, '&nbsp;');
+
+        let tex = ctrlCodeArray[1];
+        tex = tex.replace(/</g, '&lt;' );
+        tex = tex.replace(/>/g, '&gt;' );
+        const tex2 = tex.replace(/\n/g, '<br>');
+        const tex3 = tex2.replace(/\t/g, '&nbsp;');
+
+
+        document.getElementById('dialogTextBig').innerHTML = '<table><tr><td style="width:50%; vertical-align:top;"><code>' + text3 + '</code><td style="width:1%; background:#f1f1f1;"></td></td><td style="width:49%; vertical-align:top;"><code>' + tex3 + '</code></td></tr>';
+      }
+    }
+
+    if (cellView.model.attr('text/type') === 'ELSE') {
+      cellView.model.attr('polygon/fill', '#ea6c0d');
+    } else if ( cellView.model.attr('text/type') === 'IF') {
+      cellView.model.attr('polygon/fill', '#ffdb03');
+    } else if ( cellView.model.attr('text/type') === 'CASE') {
+      cellView.model.attr('polygon/fill', '#6C0E9E');
+
+    } else if ( cellView.model.attr('text/type') === 'SWITCH') {
+      cellView.model.attr('polygon/fill', '#AD1F12');
+
+    } else if ( cellView.model.attr('text/type') === 'FOR') {
+      cellView.model.attr('circle/fill', '#247ED6');
+    } else if ( cellView.model.attr('text/type') === 'WHILE') {
+      cellView.model.attr('circle/fill', '#29d646' );
+    }
+
+    if (cntrlIsPressed) { return; }
+
+    let t = $('#dialog' + dialogNumber).dialog('option', 'title');
+    let t2 = t.replace('Code ', '');
+
+    if (cellView.model.attr('text/text') === '') {
+      cellView.model.attr('text/text', t2);
+    }
+    // cellView.model.attr('text/fill', 'red');
+
+    dialogNumber++;
+    if (dialogNumber === maxWindows + 1) {
+      dialogNumber = 1;
+
+    }
+  }
+
+
   alirt() {
     graphScale = 1;
     const strx  = 'ast[] x; if(this.ref!=null){ x=new ast[this.ref.length+1]; }' +
@@ -1581,7 +1810,7 @@ this.funcTextEvent.emit('private Dimension getSize(Container parent, LayoutSize 
       });
       graph.addCells([rect]);
       this.build(qq, 1, graph, rect, 3);
-      let fieldArray: Array<String>;
+
       fieldArray = [ ];
       this.fieldA = fieldArray;
 
@@ -1591,227 +1820,7 @@ this.funcTextEvent.emit('private Dimension getSize(Container parent, LayoutSize 
         alert(cellView.model.attr('text/textF'));
       });*/
 
-       paper.on('cell:pointerdown',
-         function(cellView, evt, x, y) {
-
-         var cntrlIsPressed = false;
-
-         if (evt.ctrlKey) {
-           cntrlIsPressed = true;
-         }
-         else {
-           cntrlIsPressed = false;
-         }
-
-
-         if (!cntrlIsPressed) {
-
-           for (let n = 0; n < maxWindows; n++) {
-             if (cellDialog[n] !== undefined) {
-               if (cellView === cellDialog[n]) {
-                 alert('There is an active window that assinged that shape');
-               //  $('#dialog' + (n+1)).focus();
-                 return;
-               }
-             }
-           }
-
-           if (cellDialog[dialogNumber - 1] !== undefined) {
-             $('#dialog' + dialogNumber).dialog('close');
-           }
-           $('#dialog' + dialogNumber).data('p1', cellView).dialog('open');
-
-
-
-
-
-           let n = 0;
-           while (n < maxWindows) {
-             if (cellDialog[n] === undefined) {
-               break;
-             }
-             n++;
-           }
-           let nn = n + 1;
-
-
-
-           //  alert(cellDialog[0] + ' ' + cellDialog[1] + ' ' + cellDialog[2] + ' ' + cellDialog[3]);
-
-           $('#dialog' + dialogNumber).dialog('option', 'title', 'Code ' + nn);
-           let text = cellView.model.attr('text/textF');
-           text = text.replace(/</g, '&lt;' );
-           text = text.replace(/>/g, '&gt;' );
-           const text2 = text.replace(/\n/g, '<br>');
-           const text3 = text2.replace(/\t/g, '&nbsp;');
-
-           let y = 0; let y2 = 0;
-           while (y < maxWindows) {
-             if (cellDialog[y] !== undefined) {
-               y2++;
-             }
-             y++;
-           }
-
-           fieldArray.push(cellView.model.attr('text/textF'));
-
-           //cellDialog.splice(dialogNumber-1, 0, cellView);
-
-           cellDialog[dialogNumber - 1] = cellView;
-
-           let table = '';
-           if (y2 > 0) {
-
-             table  += '<table style="width:50%; border: 1px solid #f1f1f1; font-size:12px; padding:0px; line-height: 14px; margin:auto; "><tr><th>Code A</th><th>Code B</th><th>Similarity</th></tr>';
-
-             for (let z = 0; z < maxWindows; z++) {
-               if (cellDialog[z] !== undefined) {
-                 for (let zz = 0; zz < maxWindows; zz++) {
-                   if (z === zz) { continue; }
-                   if (z < zz) { continue; }
-                   if (cellDialog[zz] !== undefined) {
-                     let z2 = z+1 ; let zz2 = zz+1 ;
-                     table += '<tr><td>Code ' + z2 + '</td><td>Code ' + zz2 + '</td><td>';
-
-
-
-                     var a = $('#dialog' + z2).data('p1').model.attr('text/textF');
-                     var b = $('#dialog' + zz2).data('p1').model.attr('text/textF');
-
-                      a = a.replace(/\n/g, '');
-                     a = a.replace(/\t/g, '');
-                     a = a.replace(/ /g, '');
-
-                     var regex = /(int)(\w+)/g;
-
-                     let matches = [];
-                     a.replace(regex, function(s, x, m)  { matches.push(m); });
-
-                     for (let x = 0; x < matches.length; x++){
-                       var re = new RegExp(matches[x],"g");
-                       a = a.replace(re,'x');
-                     }
-
-
-                    // a = a.replace(regex, "$1");
-           //          var regex2 = /(if)(\u0028\w+\W\w+\u0029)/g;
-               //      a = a.replace(regex2, "$1()");
-
-
-                     b = b.replace(/\n/g, '');
-                     b = b.replace(/\t/g, '');
-                     b = b.replace(/ /g, '');
-
-                      matches = [];
-                     b.replace(regex, function(s, x, m)  { matches.push(m); });
-
-                     for (let x = 0; x < matches.length; x++){
-                       var re = new RegExp(matches[x],"g");
-                       b = b.replace(re,'x');
-                     }
-
-
-
-                     var l2 = a.length;
-                     var l2 = b.length;
-                     var grade = 0;
-                     var minLength = 0;
-                     var maxLength = 0;
-
-                     if (a.length > b.length) {
-                       minLength = b.length;
-                       maxLength = a.length;
-                     } else {
-                       minLength = a.length;
-                       maxLength = b.length;
-                     }
-
-                     for (let i = 0; i < minLength; i++) {
-                       if (a[i] === b[i]) {
-                         grade++;
-                       }
-                     }
-
-                     let weight = grade / maxLength;
-                     let result = (weight * 100);
-
-                     table += Math.round(result) + '%</td></tr>';
-                   }
-                 }
-               }
-             }
-             table += '</table>';
-           }
-           document.getElementById('dialogText' + dialogNumber).innerHTML = '<code>' + text3 + '</code>';
-
-           document.getElementById('ratio' + dialogNumber).innerHTML = table;
-
-           for (let x = 1; x < maxWindows+1; x++) {
-             if (x === dialogNumber) {continue;}
-             document.getElementById('ratio' + x).innerHTML = '';
-             document.getElementById('ratio' + x).innerHTML = '';
-             document.getElementById('ratio' + x).innerHTML = '';
-           }
-
-         }
-         else {
-            bigDialog[bigDialogCounter] = cellView;
-
-           ctrlCodeArray[bigDialogCounter]=cellView.model.attr('text/textF');
-           bigDialogCounter++;
-
-           if (bigDialogCounter == 2) {
-             $('#dialogBig').dialog('open');
-             let text = ctrlCodeArray[0];
-             text = text.replace(/</g, '&lt;' );
-             text = text.replace(/>/g, '&gt;' );
-             const text2 = text.replace(/\n/g, '<br>');
-             const text3 = text2.replace(/\t/g, '&nbsp;');
-
-             let tex = ctrlCodeArray[1];
-             tex = tex.replace(/</g, '&lt;' );
-             tex = tex.replace(/>/g, '&gt;' );
-             const tex2 = tex.replace(/\n/g, '<br>');
-             const tex3 = tex2.replace(/\t/g, '&nbsp;');
-
-
-             document.getElementById('dialogTextBig').innerHTML = '<table><tr><td style="width:50%; vertical-align:top;"><code>' + text3 + '</code><td style="width:1%; background:#f1f1f1;"></td></td><td style="width:49%; vertical-align:top;"><code>' + tex3 + '</code></td></tr>';
-           }
-         }
-
-           if (cellView.model.attr('text/type') === 'ELSE') {
-             cellView.model.attr('polygon/fill', '#ea6c0d');
-           } else if ( cellView.model.attr('text/type') === 'IF') {
-             cellView.model.attr('polygon/fill', '#ffdb03');
-           } else if ( cellView.model.attr('text/type') === 'CASE') {
-             cellView.model.attr('polygon/fill', '#6C0E9E');
-
-           } else if ( cellView.model.attr('text/type') === 'SWITCH') {
-             cellView.model.attr('polygon/fill', '#AD1F12');
-
-           } else if ( cellView.model.attr('text/type') === 'FOR') {
-             cellView.model.attr('circle/fill', '#247ED6');
-           } else if ( cellView.model.attr('text/type') === 'WHILE') {
-             cellView.model.attr('circle/fill', '#29d646' );
-           }
-
-           if (cntrlIsPressed) { return; }
-
-           let t = $('#dialog' + dialogNumber).dialog('option', 'title');
-           let t2 = t.replace('Code ', '');
-
-           if (cellView.model.attr('text/text') === '') {
-             cellView.model.attr('text/text', t2);
-           }
-            // cellView.model.attr('text/fill', 'red');
-
-           dialogNumber++;
-           if (dialogNumber === maxWindows + 1) {
-             dialogNumber = 1;
-
-           }
-         }
-       );
+       paper.on('cell:pointerdown',this.shapeClick);
     }
   }
   killY() {
@@ -1819,6 +1828,7 @@ this.funcTextEvent.emit('private Dimension getSize(Container parent, LayoutSize 
       alert(this.fieldA[i]);
     }
   }
+
   zoomin() {
     graphScale += 0.1;
     paper.setDimensions(920 + (graphScale - 1) * 1000, 800);

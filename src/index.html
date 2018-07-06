@@ -13,7 +13,7 @@
       document.getElementById('func').cols = 120;
       document.getElementById('func').rows = 60;
       document.getElementById('hideButton').style.display='none';
-
+      document.getElementById('convert').style.padding = '12px 17px';
       document.getElementById('zoomin').style.display='none';
       document.getElementById('zoomout').style.display='none';
       document.getElementById('zoomin2').style.display='none';
@@ -29,6 +29,7 @@ function conv(){
         alert('please enter a function');
         return;
       }
+  document.getElementById('convert').style.padding = '5px 9px';
   document.getElementById('func').cols = 40;
   document.getElementById('func').rows = 25;
   document.getElementById('hideButton').style.display='inline-block';
