@@ -8,65 +8,45 @@
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <script>
-    // expand the textarea only at the first time the web starts and hide the button
+
     function load() {
+      // expand the textarea only at the first time the web starts and hide the button
       document.getElementById('func').cols = 120;
       document.getElementById('func').rows = 60;
-      document.getElementById('hideButton').style.display='none';
       document.getElementById('convert').style.padding = '12px 17px';
-      document.getElementById('zoomin').style.display='none';
-      document.getElementById('zoomout').style.display='none';
-      document.getElementById('zoomin2').style.display='none';
-      document.getElementById('zoomout2').style.display='none';
 
       // move the focus to the top of the page, not the middle
       $('#convert').focus();
 
+      // do loader a little more time to let the table to show correctly
       setTimeout(function() { document.getElementById("loader").style.display = "none"; document.getElementById("loader2").style.display = "none"; }, 200);
     }
-function conv(){
+    function conv(){
       if (document.getElementById('func').value == '') {
         alert('please enter a function');
         return;
       }
-  document.getElementById('convert').style.padding = '5px 9px';
-  document.getElementById('func').cols = 40;
-  document.getElementById('func').rows = 25;
-  document.getElementById('hideButton').style.display='inline-block';
+      var y = document.getElementsByClassName("liHide");
+      for (var i = 0; i < y.length; i++) {
+        y[i].style.display = "inline-block";
+      }
+    document.getElementById('convert').style.padding = '5px 9px';
+    document.getElementById('func').cols = 40;
+    document.getElementById('func').rows = 25;
 
-  document.getElementById('zoomin').style.display='inline-block';
-  document.getElementById('zoomout').style.display='inline-block';
-
-  $(".ui-dialog-content").dialog("close");
+   $(".ui-dialog-content").dialog("close");
 }
-    function hideAndShow(){
 
-      if (document.getElementById('zoomin2').style.display=='none') {
-        document.getElementById('zoomin2').style.display='inline-block';
-        document.getElementById('zoomout2').style.display='inline-block';
-
-        document.getElementById('zoomin').style.display='none';
-        document.getElementById('zoomout').style.display='none';
-      }
-      else {
-        document.getElementById('zoomin2').style.display='none';
-        document.getElementById('zoomout2').style.display='none';
-
-        document.getElementById('zoomin').style.display='inline-block';
-        document.getElementById('zoomout').style.display='inline-block';
-      }
-    }
-  </script>
   </script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
 <body onload="load()">
-    <div id="loader2"></div>
+<div id="loader2"></div>
 <div id="loader"></div>
 
 
-  <app-root></app-root>
+<app-root></app-root>
 
 
 </body>

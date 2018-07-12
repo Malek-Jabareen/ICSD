@@ -22,7 +22,6 @@ export class AppComponent implements OnInit {
 
   hideDiagram() {
     this.hide = !this.hide;
-
   }
 
 
@@ -32,7 +31,7 @@ export class AppComponent implements OnInit {
     const paper = new joint.dia.Paper({
       el: jQuery('#header'),
       width: 920,
-      height: 70,
+      height: 58,
       model: graph,
       gridSize: 1,
       interactive: false

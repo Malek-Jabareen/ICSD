@@ -1,33 +1,39 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <ul>
   <li id="logo">ICSD</li>
-  <li><a href="">Home</a></li>
+  <li><a href="" id="home">Home</a></li>
   <li><a href="#" onclick="$('#dialogSave').dialog('open');" title="Save the function in our database">Save</a></li>
-  <li><a href="#" title="Load a function from our database">Load</a></li>
-  <li><a href="#" onclick="$('#dialogFunc').dialog('open');" title="Open the function code in a big window">Popup</a></li>
-  <li><a href="#" onclick="$('#dialogSim').dialog('open');" title="Show similarity ratios between the codes">Similarity</a></li>
+  <li><a href="#" onclick="$('#dialogLoad').dialog('open');" title="Load a function from our database">Load</a></li>
+  <li class="liHide"><a href="#" onclick="$('#dialogFunc').dialog('open');" title="Open the function code in a big window">Popup</a></li>
+  <li class="liHide"><a href="#" onclick="$('#dialogSim').dialog('open');" title="Show similarity ratios between the codes">Similarity</a></li>
+  <li class="liHide"><a href="#" (click)="hideDiagram()"  title="Hide or show the function code">Hide func</a></li>
+  <li class="liHide"><a href="#" (click)="zoomin()" title="Expand diagram's size">Zoom+</a></li>
+  <li class="liHide"><a href="#" (click)="zoomout()" title="Decrease diagram's size">Zoom-</a></li>
+  <li class="liHide"><a href="#" onclick="$('.ui-dialog-content').dialog('close');" title="Close all open windows">Clean</a></li>
   <li><a href="#" onclick="$('#dialogHelp').dialog('open');" title="What is this app?">Help</a></li>
 </ul>
 
 <div style="text-align:center; margin: auto">
-<br>
+<hr>
   <div id="header" style="margin: auto"></div>
-  <table align="center">
-  <tr><td><button id="hideButton" class="clear" (click)="hideDiagram()" onclick="hideAndShow()" title="hide or show the function code">Hide/Show</button>&nbsp;
+<hr>
 
-    <button id="convert" class="clear" (click)="build()" onclick=" conv()">Convert &raquo;</button>
-    <button id="zoomin2" class="clear"  (click)="zoomin()" title="expand the diagram">Zoom in</button>&nbsp;
-    <button id="zoomout2" class="clear"  (click)="zoomout()" title="minimze the diagram">Zoom out</button>
+  <table style="margin:auto;">
+    <tr>
 
-  </td><td>
-    <button id="zoomin" class="clear"  (click)="zoomin()" title="expand the diagram">Zoom in</button>&nbsp;
-    <button id="zoomout" class="clear"  (click)="zoomout()" title="minimze the diagram">Zoom out</button>&nbsp;
-  </td>
-  </tr>
-  <tr>
-    <div *ngIf="hide"><td style="width:500px; vertical-align:top;"><app-form (SendEvent)="fT.value=$event" [funcText]="fT2"></app-form></td></div>
-    <td><input type="hidden" #fT (keyup)="0"><app-diagram #component1 [functionText]="fT.value" (funcTextEvent)="fT2=$event"></app-diagram></td>
-  </tr>
-</table>
+      <td *ngIf="hide" style="width:500px; vertical-align:top;">
+
+        <table><tr><td>
+          <button id="convert" class="clear" (click)="build()" onclick=" conv()">Convert &raquo;</button>
+        </td></tr><tr><td>
+          <app-form (SendEvent)="fT.value=$event" [funcText]="fT2"></app-form>
+        </td></tr></table>
+
+      </td>
+      <td colspan="2">
+        <input type="hidden" #fT (keyup)="0"><app-diagram #component1 [functionText]="fT.value" (funcTextEvent)="fT2=$event"></app-diagram>
+      </td>
+    </tr>
+  </table>
 </div>
 

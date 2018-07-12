@@ -90,6 +90,10 @@ li a:hover:not(.active) {
   background-color: #333;
 }
 
+.liHide {
+  display: none;
+}
+
 #logo {
   font-family: monospace;
   display: block;
@@ -102,3 +106,12 @@ li a:hover:not(.active) {
 }
 
 
+hr {
+  border: 0;
+  height: 1px;
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0));
+}
+
+*:focus {
+  outline: none;
+}
