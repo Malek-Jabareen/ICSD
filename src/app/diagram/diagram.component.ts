@@ -13,7 +13,7 @@ const cellDialog = [];
 let paper;
 let graphScale = 1;
 let maxWindows = 4;
-const matches = [];
+let matches = [];
 
 let ctrlArrayCounter = 0 ;
 let ctrlArrayCounter2 = 0 ;
@@ -811,10 +811,10 @@ function simRatios() {
             a = a.replace(/\t/g, '');
             a = a.replace(/ /g, '');
 
-            var regex = /(int)(\w+)/g;
+           // var regex = /(int)(\w+)/g;
 
-            let matches = [];
-            a.replace(regex, function(s, x, m)  { matches.push(m); });
+
+           // a.replace(regex, function(s, x, m)  { matches.push(m); });
 
             for (let x = 0; x < matches.length; x++){
               var re = new RegExp(matches[x],"g");
@@ -831,14 +831,16 @@ function simRatios() {
             b = b.replace(/\t/g, '');
             b = b.replace(/ /g, '');
 
-            matches = [];
-            b.replace(regex, function(s, x, m)  { matches.push(m); });
+           // matches = [];
+           // b.replace(regex, function(s, x, m)  { matches.push(m); });
 
             for (let x = 0; x < matches.length; x++){
               var re = new RegExp(matches[x],"g");
               b = b.replace(re,'x');
             }
 
+          //  alert(a);
+         //   alert(b);
 
 
             var l2 = a.length;
@@ -898,9 +900,9 @@ function simRatios() {
       let k = 0;
       while (ctrlCodeArray[k][ctrlWin] !== undefined) {
           originalColor(ctrlCodeArray[k][ctrlWin]);
-       // if (isNaN(parseInt(ctrlCodeArray[k][ctrlWin].attr('text/text'))) === false) {
+        if (isNaN(parseInt(ctrlCodeArray[k][ctrlWin].model.attr('text/text'))) === false) {
           ctrlCodeArray[k][ctrlWin].model.attr('text/text', '' );
-       // }
+        }
         k++;
       }
     }else {
@@ -980,9 +982,15 @@ function simRatios() {
     $('#dialogFunc').dialog({
      open: function() {  $('#func2').scrollTop(0); },
       close: function() { $('#convert').focus(); },
+      resize: function() {
+       let w = $('#dialogFunc').width();
+        let h = $('#dialogFunc').height();
+       $('#func2').css('width', w - 10);
+        $('#func2').css('height', h - 10);
+      },
       autoOpen: false,
-      height: 580,
-      width: 800});
+      height: 590,
+      width: 1000});
     $('#dialog1').dialog({
       close: function() {
         closeDialogEvent($('#dialog1').data('p1'),1 ,$('#dialog1').data('p2'));
@@ -1592,9 +1600,12 @@ let cntrlIsPressed = false;
       for (let n = 0; n < maxWindows; n++) {
         if (cellDialog[n] !== undefined) {
           if (cellView === cellDialog[n]) {
-            alert('There is an active window that assinged that shape');
-            //  $('#dialog' + (n+1)).focus();
-            return;
+         //   alert($('#dialog' + (n+1)).data('p2'));
+            if ($('#dialog' + (n+1)).data('p2') === -1) {
+              alert('There is an active window that assinged that shape');
+              //  $('#dialog' + (n+1)).focus();
+              return;
+            }
           }
         }
       }
@@ -1648,7 +1659,7 @@ let cntrlIsPressed = false;
       let msg = '';
 
       if (y2 > 0) {
-        msg = '<a href="#" onclick="$(\'#dialogSim\').dialog(\'open\');">Click Here to show similarity ratios</a>';
+        msg = '<a href="#" onclick="$(\'#dialogSim\').dialog(\'open\');">Click here to show similarity ratios</a>';
         if (firstTimeShape) {
           document.getElementById('dialogText1').innerHTML = msg + document.getElementById('dialogText1').innerHTML;
           firstTimeShape = false;
@@ -1658,6 +1669,7 @@ let cntrlIsPressed = false;
 
       if (evt == null) {
         text = '';
+        originalText = '';
         for (let x = 0; x < ctrlArrayCounter ; x++) {
 
           let text2 = '';
@@ -1701,7 +1713,9 @@ let cntrlIsPressed = false;
 
     if (evt == null) {
       for (let x = 0; x < ctrlArrayCounter ; x++) {
-         ctrlCodeArray[x][ctrlArrayCounter2].model.attr('text/text', t2);
+        if (ctrlCodeArray[x][ctrlArrayCounter2].model.attr('text/text') === '') {
+          ctrlCodeArray[x][ctrlArrayCounter2].model.attr('text/text', t2);
+        }
       }
       ctrlArrayCounter = 0;
     } else {
@@ -1710,7 +1724,6 @@ let cntrlIsPressed = false;
       }
     }
     // cellView.model.attr('text/fill', 'red');
-
 
     dialogNumber++;
     if (dialogNumber === maxWindows + 1) {
@@ -1722,6 +1735,21 @@ let cntrlIsPressed = false;
     }
   }
 
+  proccessSimRatio(s: String) {
+  let funtext = s;
+  funtext = funtext.replace(/\n/g, '');
+  funtext = funtext.replace(/\t/g, '');
+  funtext = funtext.replace(/ /g, '');
+  var regex = /(int)(\w+)/g;
+
+
+  funtext.replace(regex, function(s, x, m)  { if (m.length > 2) { matches.push(m); } return s; });
+
+  matches.sort(function(a, b) {
+    return b.length - a.length;
+  });
+
+}
 
   alirt() {
     graphScale = 1;
@@ -1858,6 +1886,8 @@ let cntrlIsPressed = false;
     paper.setInteractivity({elementMove: false});
     if (this.functionText !== '') {
     //  document.getElementById('func2').innerHTML=this.functionText;
+
+      self.proccessSimRatio(this.functionText);
 
      let funcName = '';
       let funcName2 = '';
