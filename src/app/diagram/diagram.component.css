@@ -66,16 +66,4 @@ input[type=text] {
   box-sizing: border-box;
 }
 
-/* Three bars (hamburger menu) */
-.bar {
-  width: 17px;
-  height: 3px;
-  background-color: #aaa;
-  margin: 3px 0;
-  display: block;
-}
 
-/* Page content */
-.content {
-  padding: 10px;
-}
