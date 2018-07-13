@@ -775,10 +775,14 @@ function CtrlUnpress() {
   ctrlArrayCounter2++;
 }
 
+
 function preprocess(str: string) {
   str = str.toLowerCase();
+  str = str.replace(new RegExp('//(.*)\n', 'g'), '');
+  str = str.replace(new RegExp('\\/\\*(.|\n)*\\*\\/', 'g'), '');
+
   str = str.replace(new RegExp('for([ ]*)\\(([^\\()]*)(\\(.*\\))*([^\\(]*)\\)', 'g'), function(s) { var c = (s.match(/;/g) || []).length; var res = 'F'; for (var z=0;z<c;z++) { res = res + 'L'; } return res; });
-  str = str.replace(new RegExp('if([ ]*)\\(([^\\()]*)(\\(.*\\))*([^\\(]*)\\)', 'g'), 'I');
+  str = str.replace(new RegExp('if([ ]*)\\(([^\\()]*)(\\(.*\\))*([^\\(]*)\\)', 'g'), function(s) {  var c = (s.match(new RegExp('\\([^\\(]*\\)','g')) || []).length; var res = 'I'; if (c>1) { for (var z=0;z<c;z++) { res = res + 'O'; } } return res; });
   str = str.replace(new RegExp('while([ ]*)\\(([^\\()]*)(\\(.*\\))*([^\\(]*)\\)', 'g'), 'W');
   str = str.replace(new RegExp('switch([ ]*)\\(([^\\()]*)(\\(.*\\))*([^\\(]*)\\)', 'g'), 'S');
   str = str.replace(new RegExp('else', 'g'), 'E');
@@ -833,8 +837,6 @@ function simRatios() {
           a = preprocess(a);
           b = preprocess(b);
 
-//alert(a);
-//alert(b);
 
             var l2 = a.length;
             var l2 = b.length;
