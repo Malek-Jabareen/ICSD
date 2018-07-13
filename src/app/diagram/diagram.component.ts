@@ -775,6 +775,31 @@ function CtrlUnpress() {
   ctrlArrayCounter2++;
 }
 
+function preprocess(str: string) {
+  str = str.toLowerCase();
+  str = str.replace(new RegExp('for([ ]*)\\(([^\\()]*)(\\(.*\\))*([^\\(]*)\\)', 'g'), function(s) { var c = (s.match(/;/g) || []).length; var res = 'F'; for (var z=0;z<c;z++) { res = res + 'L'; } return res; });
+  str = str.replace(new RegExp('if([ ]*)\\(([^\\()]*)(\\(.*\\))*([^\\(]*)\\)', 'g'), 'I');
+  str = str.replace(new RegExp('while([ ]*)\\(([^\\()]*)(\\(.*\\))*([^\\(]*)\\)', 'g'), 'W');
+  str = str.replace(new RegExp('switch([ ]*)\\(([^\\()]*)(\\(.*\\))*([^\\(]*)\\)', 'g'), 'S');
+  str = str.replace(new RegExp('else', 'g'), 'E');
+  str = str.replace(new RegExp('case', 'g'), 'C');
+
+  /*for (let x = 0; x < matches.length; x++){
+    var re = new RegExp(matches[x],"g");
+    str = str.replace(re,'x');
+  } */
+
+  str = str.replace(new RegExp('(\[a-zA-Z]+.+)([ ]*)\\(([^\\(]*)\\)', 'g'), '');
+   str = str.replace(new RegExp('([^A-Z{};]+);', 'g'), 'L');
+
+  str = str.replace(/\n/g, '');
+  str = str.replace(/\t/g, '');
+  str = str.replace(/ /g, '');
+
+
+  return str;
+}
+
 function simRatios() {
   let y = 0; let y2 = 0;
   while (y < maxWindows) {
@@ -805,43 +830,11 @@ function simRatios() {
             var a = $('#dialog' + z2).data('p3');
                var b = $('#dialog' + zz2).data('p3');
 
+          a = preprocess(a);
+          b = preprocess(b);
 
-
-            a = a.replace(/\n/g, '');
-            a = a.replace(/\t/g, '');
-            a = a.replace(/ /g, '');
-
-           // var regex = /(int)(\w+)/g;
-
-
-           // a.replace(regex, function(s, x, m)  { matches.push(m); });
-
-            for (let x = 0; x < matches.length; x++){
-              var re = new RegExp(matches[x],"g");
-              a = a.replace(re,'x');
-            }
-
-
-            // a = a.replace(regex, "$1");
-            //          var regex2 = /(if)(\u0028\w+\W\w+\u0029)/g;
-            //      a = a.replace(regex2, "$1()");
-
-
-            b = b.replace(/\n/g, '');
-            b = b.replace(/\t/g, '');
-            b = b.replace(/ /g, '');
-
-           // matches = [];
-           // b.replace(regex, function(s, x, m)  { matches.push(m); });
-
-            for (let x = 0; x < matches.length; x++){
-              var re = new RegExp(matches[x],"g");
-              b = b.replace(re,'x');
-            }
-
-          //  alert(a);
-         //   alert(b);
-
+//alert(a);
+//alert(b);
 
             var l2 = a.length;
             var l2 = b.length;
@@ -1737,7 +1730,7 @@ let cntrlIsPressed = false;
     }
   }
 
-  proccessSimRatio(s: String) {
+ /* proccessSimRatio(s: String) {
   let funtext = s;
   funtext = funtext.replace(/\n/g, '');
   funtext = funtext.replace(/\t/g, '');
@@ -1751,7 +1744,7 @@ let cntrlIsPressed = false;
     return b.length - a.length;
   });
 
-}
+} */
 
   alirt() {
     graphScale = 1;
@@ -1889,7 +1882,7 @@ let cntrlIsPressed = false;
     if (this.functionText !== '') {
     //  document.getElementById('func2').innerHTML=this.functionText;
 
-      self.proccessSimRatio(this.functionText);
+     // self.proccessSimRatio(this.functionText);
 
      let funcName = '';
       let funcName2 = '';
