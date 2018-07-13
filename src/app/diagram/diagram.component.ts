@@ -14,7 +14,6 @@ let paper;
 let graphScale = 1;
 let maxWindows = 4;
 let matches = [];
-
 let ctrlArrayCounter = 0 ;
 let ctrlArrayCounter2 = 0 ;
 const ctrlCodeArray = [[,],[,],[,],[,],[,],[,],[,],[,],[,],[,],[,],[,],[,],[,],[,],[,],[,],[,]];
@@ -22,6 +21,7 @@ let fieldArray: Array<String>;
 let firstTimeShape = true;
 let ctrlListening = false;
 let self = null;
+
 
 @Component({
   selector: 'app-diagram',
@@ -894,7 +894,7 @@ function simRatios() {
     }
     if (y === 0) { dialogNumber = n; }
 
-    $('#convert').focus();
+   // $('#convert').focus();
 
     if (ctrlWin != -1) {
       let k = 0;
@@ -937,9 +937,11 @@ function simRatios() {
 
   $( function() {
     $.noConflict();
-    $( document ).tooltip();
+    $(document).tooltip({
+      items: ":hover"
+    });
     $('#dialogHelp').dialog({
-      close: function() { $('#convert').focus(); },
+    //  close: function() { $('#convert').focus(); },
       buttons: {
         'Close': {
           text: 'Close',
@@ -949,7 +951,7 @@ function simRatios() {
       height: 400,
       width: 400});
     $('#dialogSave').dialog({
-      close: function() { $('#convert').focus(); },
+   //   close: function() { $('#convert').focus(); },
       buttons: {
         'Close': {
           text: 'Close',
@@ -963,25 +965,34 @@ function simRatios() {
       autoOpen: false,
       height: 500,
       width: 500});
-    $('#dialogSim').dialog({
-      open: function() {
-        let table = simRatios(); $('#dialogTextSim').html(table);
-        },
-      close: function() { $('#convert').focus(); },
-      autoOpen: false,
-      height: 300,
-      width: 300,
+    $('#dialogLoad').dialog({
+    //  close: function() { $('#convert').focus(); },
       buttons: {
         'Close': {
           text: 'Close',
           click: function() { $(this).dialog('close'); }
+        },
+        'Save': {
+          text: 'Save',
+          click: function() { $(this).dialog('close'); }
         }
       },
+      autoOpen: false,
+      height: 500,
+      width: 500});
+    $('#dialogSim').dialog({
+      open: function() {
+        let table = simRatios(); $('#dialogTextSim').html(table);
+        },
+     // close: function() { $('#convert').focus(); },
+      autoOpen: false,
+      height: 230,
+      width: 300,
     }).on("refreshEvent",function() { let table = simRatios(); $('#dialogTextSim').html(table); });
 
     $('#dialogFunc').dialog({
      open: function() {  $('#func2').scrollTop(0); },
-      close: function() { $('#convert').focus(); },
+     // close: function() { $('#convert').focus(); },
       resize: function() {
        let w = $('#dialogFunc').width();
         let h = $('#dialogFunc').height();
@@ -1656,15 +1667,6 @@ let cntrlIsPressed = false;
 
       cellDialog[dialogNumber - 1] = cellView;
 
-      let msg = '';
-
-      if (y2 > 0) {
-        msg = '<a href="#" onclick="$(\'#dialogSim\').dialog(\'open\');">Click here to show similarity ratios</a>';
-        if (firstTimeShape) {
-          document.getElementById('dialogText1').innerHTML = msg + document.getElementById('dialogText1').innerHTML;
-          firstTimeShape = false;
-        }
-      }
 
 
       if (evt == null) {
@@ -1684,8 +1686,8 @@ let cntrlIsPressed = false;
        // ctrlArrayCounter = 0;
       }
       $('#dialog' + dialogNumber).data('p3', originalText);
+      let msg = '<a href="#" onclick="$(\'#dialogSim\').dialog(\'open\');">Click here to show similarity ratios</a>';
       document.getElementById('dialogText' + dialogNumber).innerHTML = msg + '<code>' + text + '</code>';
-
 
     }
 
