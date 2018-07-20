@@ -22,6 +22,13 @@ export class AppComponent implements OnInit {
 
   hideDiagram() {
     this.hide = !this.hide;
+    if (this.hide == false) {
+      this.zoomin();
+      this.zoomin();
+    } else {
+      this.zoomout();
+      this.zoomout();
+    }
   }
 
 
