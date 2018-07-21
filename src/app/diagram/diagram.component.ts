@@ -1009,7 +1009,7 @@ function simRatios() {
       close: function() {
         closeDialogEvent($('#dialog2').data('p1'),2 ,$('#dialog2').data('p2'));
       },
-      position: { my: 'left top', at: 'left bottom' },
+      position: { my: 'left center', at: 'left center' },
       autoOpen: false,
       height: 580,
       width: 580});
@@ -1017,8 +1017,8 @@ function simRatios() {
       close: function() {
         closeDialogEvent($('#dialog3').data('p1'),3 ,$('#dialog3').data('p2'));
       },
-      position: { my: 'right top', at: 'right bottom' },
       autoOpen: false,
+      position: { my: 'right center', at: 'right center' },
       height: 580,
       width: 580});
     $('#dialog4').dialog({
@@ -1026,6 +1026,7 @@ function simRatios() {
         closeDialogEvent($('#dialog4').data('p1'),4,$('#dialog4').data('p2') );
       },
       autoOpen: false,
+      position: { my: 'right bottom', at: 'right bottom' },
       height: 580,
       width: 580});
 
