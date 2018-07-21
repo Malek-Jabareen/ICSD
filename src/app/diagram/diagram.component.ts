@@ -942,6 +942,7 @@ function simRatios() {
       open: function() { $( '#accordion' ).accordion({
         heightStyle: "content"
       }); },
+
       autoOpen: false,
       height: 600,
       width: 1000});
