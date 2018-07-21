@@ -38,7 +38,7 @@ export class AppComponent implements OnInit {
     const paper = new joint.dia.Paper({
       el: jQuery('#header'),
       width: 920,
-      height: 58,
+      height: 50,
       model: graph,
       gridSize: 1,
       interactive: false
@@ -96,7 +96,7 @@ export class AppComponent implements OnInit {
 
     const trp =  new joint.shapes.basic.trapez({
       position: { x: 20, y: 1 },
-      size: { width: 110, height: 50 },
+      size: { width: 110, height: 48 },
 // attrs: { 'polygon': { transform: 'rotate(180)'}}
     });
     trp.attr({
@@ -110,7 +110,7 @@ export class AppComponent implements OnInit {
 
     const trp2 =  new joint.shapes.basic.trapezR({
       position: { x: 170, y: 1 },
-      size: { width: 110 , height: 50 },
+      size: { width: 110 , height: 48 },
     });
     trp2.attr({
       polygon: { fill: '#FFA533', 'stroke-width': 1, stroke: 'black' },
@@ -120,14 +120,14 @@ export class AppComponent implements OnInit {
     });
     const s = new joint.shapes.basic.Circle({
       position: { x: 320, y: 1 },
-      size: { width: 110, height: 50 },
+      size: { width: 110, height: 48 },
       attrs: { circle: { fill: '#33B0FF' }, text: { text: 'FOR', fill: 'white' } }
     });
 
 
     const s2 = new joint.shapes.basic.Circle({
       position: { x: 470, y: 1 },
-      size: { width: 110, height: 50 },
+      size: { width: 110, height: 48 },
       attrs: { circle: { fill: '#33FF51' }, text: { text: 'WHILE', fill: 'white' } }
     });
 
@@ -135,7 +135,7 @@ export class AppComponent implements OnInit {
 
     const si =  new joint.shapes.basic.six({
       position: { x: 620, y: 1 },
-      size: { width: 110, height: 50 },
+      size: { width: 110, height: 48 },
     });
     si.attr({
 
@@ -147,7 +147,7 @@ export class AppComponent implements OnInit {
 
     const trp3 =  new joint.shapes.basic.trapez({
       position: { x: 770, y: 1 },
-      size: { width: 100, height: 50 },
+      size: { width: 100, height: 48 },
 // attrs: { 'polygon': { transform: 'rotate(180)'}}
     });
     trp3.attr({
