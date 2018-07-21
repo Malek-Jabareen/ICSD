@@ -37,7 +37,7 @@ button.clear {
 #loader2 {
   background: rgba(0, 0, 0, 0.5);
   content: "";
-  z-index: 10;
+  z-index: 999;
   display: block;
   position: absolute;
   height: 100%;
@@ -62,17 +62,17 @@ button.clear {
 }
 
 ul {
-
   list-style-type: none;
   margin: 0;
   padding: 0;
   z-index:8;
   overflow: hidden;
   background-color: #686868;
-  position: relative;
+  position:relative;
   top: 0;
   width: 100%;
 }
+
 
 li {
   float: left;
@@ -90,9 +90,7 @@ li a:hover:not(.active) {
   background-color: #333;
 }
 
-.liHide {
-  display: none;
-}
+
 
 #logo {
   font-family: monospace;
@@ -116,3 +114,9 @@ hr {
 *:focus {
   outline: none;
 }
+
+
+li.liHide {
+  display: none;
+}
+

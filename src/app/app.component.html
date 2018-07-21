@@ -1,23 +1,27 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <ul>
   <li id="logo">ICSD</li>
-  <li><a href="" id="home">Home</a></li>
-  <li><a href="#" onclick="$('#dialogSave').dialog('open');" title="Save the function in our database">Save</a></li>
+  <li><a href="">Home</a></li>
+  <li class="liHide"><a href="#" onclick="$('#dialogSave').dialog('open');" title="Save the function in our database">Save</a></li>
   <li><a href="#" onclick="$('#dialogLoad').dialog('open');" title="Load a function from our database">Load</a></li>
-  <li class="liHide"><a href="#" onclick="$('#dialogFunc').dialog('open');" title="Open the function code in a big window">Popup</a></li>
-  <li class="liHide"><a href="#" onclick="$('#dialogSim').dialog('open');" title="Show similarity ratios between the codes">Similarity</a></li>
-  <li class="liHide"><a href="#" (click)="hideDiagram()"  title="Hide or show the function code">Hide func</a></li>
-  <li class="liHide"><a href="#" (click)="zoomin()" title="Expand diagram's size">Zoom+</a></li>
-  <li class="liHide"><a href="#" (click)="zoomout()" title="Decrease diagram's size">Zoom-</a></li>
+  <li class="liHide"><a href="#" onclick="$('#dialogFunc').dialog('open');" title="Open the function code in a big window">Edit</a></li>
+  <li class="liHide"><a href="#" (click)="hideDiagram()"  title="Hide or show the function code">Hide</a></li>
+  <li class="liHide"><a href="#" onclick="$('#dialogSim').dialog('open');" title="Show similarity ratios between the codes">Ratios</a></li>
   <li class="liHide"><a href="#" onclick="$('.ui-dialog-content').dialog('close');" title="Close all open windows">Clean</a></li>
   <li><a href="#" onclick="$('#dialogHelp').dialog('open');" title="What is this app?">Help</a></li>
 </ul>
 
-<div style="text-align:center; margin: auto">
+<div style="text-align:center; margin: auto;">
   <hr style="height: 1px; visibility: hidden;"> <!-- this is a short <br> -->
-  <div id="header" style="margin: auto"></div>
+  <div id="header" style="margin: auto;"></div>
 <hr>
-
+  <div id="welcome">
+  <h1>Welcome to ICSD!</h1>
+  <p style="text-align:left;width:900px; margin:auto;">
+    ICSD is a web program that reads a programming code function and draws a diagram, which allows to learn about the function's structure and to detect duplicate / clone code visually.
+    <a href="#" onclick="$('#dialogHelp').dialog('open');" class="niceLink">Click here to learn more</a>
+  <hr>
+  </div>
   <table style="margin:auto;">
     <tr>
       <td *ngIf="hide" style="width:500px; vertical-align:top;">

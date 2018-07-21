@@ -819,6 +819,7 @@ function simRatios() {
   }
     table  += '<table style="width:100%; border: 1px solid #f1f1f1; padding:0px; line-height: 14px; margin:auto; "><tr><th>Code A</th><th>Code B</th><th>Similarity</th></tr>';
 
+
     for (let z = 0; z < maxWindows; z++) {
       if (cellDialog[z] !== undefined) {
         for (let zz = 0; zz < maxWindows; zz++) {
@@ -836,6 +837,7 @@ function simRatios() {
 
           a = preprocess(a);
           b = preprocess(b);
+
 
 
             var l2 = a.length;
@@ -937,14 +939,13 @@ function simRatios() {
     });
     $('#dialogHelp').dialog({
     //  close: function() { $('#convert').focus(); },
-      buttons: {
-        'Close': {
-          text: 'Close',
-          click: function() { $(this).dialog('close'); }
-        }},
+      open: function() { $( '#accordion' ).accordion({
+        heightStyle: "content"
+      }); },
+
       autoOpen: false,
-      height: 400,
-      width: 400});
+      height: 600,
+      width: 1000});
     $('#dialogSave').dialog({
    //   close: function() { $('#convert').focus(); },
       buttons: {
@@ -987,7 +988,7 @@ function simRatios() {
 
     $('#dialogFunc').dialog({
      open: function() {  $('#func2').scrollTop(0); },
-     // close: function() { $('#convert').focus(); },
+     // close: function() { self.alirt(); },
       resize: function() {
        let w = $('#dialogFunc').width();
         let h = $('#dialogFunc').height();

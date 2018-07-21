@@ -16,7 +16,8 @@
       document.getElementById('convert').style.padding = '12px 17px';
 
       // move the focus to the top of the page, not the middle
-      $('#convert').focus();
+     // $('#convert').focus();
+      $(window).scrollTop(0);
 
       // do loader a little more time to let the table to show correctly
       setTimeout(function() { document.getElementById("loader").style.display = "none"; document.getElementById("loader2").style.display = "none"; }, 200);
@@ -33,9 +34,10 @@
     document.getElementById('convert').style.padding = '5px 9px';
     document.getElementById('func').cols = 40;
     document.getElementById('func').rows = 25;
-
+    document.getElementById('welcome').style.display='none';
    $(".ui-dialog-content").dialog("close");
 }
+
 
   </script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
