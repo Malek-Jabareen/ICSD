@@ -1,15 +1,4 @@
   <div id="diagramXXX" *ngIf="functionText"></div>
-  <div>
-  <table id="functionBerAst" width="100%">
-    <tr>
-
-      <!--   <td *ngFor="let field of fieldA" align="center" width="100%">
-           <textarea rows="25" align="center">{{field}}</textarea>
-         </td> -->
-       </tr>
-     </table>
-     </div>
-
 
 
    <div id="dialog1" title="Code">
@@ -28,58 +17,14 @@
 
   <div id="dialogSim" title="Similarity ratios">
     <p id="dialogTextSim"></p>
+    <p id="serverstatus" style="font-size:10px; color:#ff5100;"></p>
   </div>
-
 
 
 
   <div id="dialogFunc" title="Function">
     <textarea autofocus id="func2" style="width:950px; height:500px;" [(ngModel)]="functionText" #functionTextSend (keyup)="onchange(functionTextSend.value)"></textarea>
   </div>
-<div id="dialogHelp" title="Help">
-  <div id="accordion">
-    <h3 style="font-weight: bold;">How to use the app and what does the diagram represent?</h3>
-    <div>
-      <p>
-        ICSD is a web program that reads a programming code function and draws a diagram, which allows to learn about the function's structure and to detect duplicate / clone code visually.
-        <br>
-        Please insert a function in the homepage, or you can try the test function for first impression, and then click the convert button.
-      </p>
-      <p>
-        As you can see at the top of the page (legend), each control statement is represented by a unique shape. for example, a for loop is represented by a blue circle, a if statement is represented by a yellow trapezoid.
-      </p>
-      <p>
-        Please read the diagram from left to right and from top to bottom. If there is a shape under a shape connected with a line, that means that there is a nesting. for example, If there is a one blue circle, and below another blue circle, it means there is a for loop inside a for loop.
-        The size of a shape indicates how big the control statement relative to the shape that above.
-        <br>
-        The space between shapes indicates how much lines there is between the two control statements.
-      </p>
-
-<p>
-  <b>If you see two or more similar patterns of shapes, that may indicate about a duplicate code.</b><br>
-  You can click on each shape in the diagram and the app will show you what code that shape represents.
-  You can open up to 4 windows in parallel. You can merge shapes into a one code window by holding CTRL and click on the shapes.
-  When there is more than 2 windows code open, you can click on the ratios link and see how similar the codes are.
-</p>
-
-    </div>
-    <h3>What is ICSD?</h3>
-    <div>
-      <p>
-        ICSD is an acronyms of Interactive Control Structure Diagram. ICSD is a web program that reads a programming code function, identifies the structure of the function and draws a diagram that describes the function's structure. The diagram allows to learn about the function's structure and to detect duplicate/clone code visually.
-      </p>
-    </div>
-    <h3>What is duplicate code?</h3>
-    <div>
-      <p>
-        Duplicate code / clone code is a code that occurs many times within a program. If the programmer wants to do any change to the code, he will need to remember all the places the code occurs, and then change the code every place that the code occurs. Avoiding duplicate code makes it easier to the programmer to make changes when needed.
-      </p>
-    </div>
-
-  </div>
-
-
-</div>
   <div id="dialogSave" title="Save">
     <b>This feature is not available right now.</b><br><br>
 
