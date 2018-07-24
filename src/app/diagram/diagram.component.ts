@@ -857,7 +857,7 @@ function simAlgo(a,b,z,zz) {
   $.ajax({
     type: "GET",
     crossDomain: true,
-    url: "http://alon1992.pythonanywhere.com/",
+    url: "https://alon1992.pythonanywhere.com/",
     data: {"string":a, "string2":b},
     cache: true,
     error: function() {
