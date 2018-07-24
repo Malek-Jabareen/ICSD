@@ -796,6 +796,9 @@ function preprocess(str: string) {
   str = str.replace(new RegExp('(\[a-zA-Z]+.+)([ ]*)\\(([^\\(]*)\\)', 'g'), '');
    str = str.replace(new RegExp('([^A-Z{};]+);', 'g'), 'L');
 
+  str = str.replace(/{/g, 'P');
+  str = str.replace(/}/g, 'P');
+
   str = str.replace(/\n/g, '');
   str = str.replace(/\t/g, '');
   str = str.replace(/ /g, '');
@@ -819,7 +822,6 @@ function simRatios() {
   }
     table  += '<table style="width:100%; border: 1px solid #f1f1f1; padding:0px; line-height: 14px; margin:auto; "><tr><th>Code A</th><th>Code B</th><th>Similarity</th></tr>';
 
-
     for (let z = 0; z < maxWindows; z++) {
       if (cellDialog[z] !== undefined) {
         for (let zz = 0; zz < maxWindows; zz++) {
@@ -827,7 +829,7 @@ function simRatios() {
           if (z < zz) { continue; }
           if (cellDialog[zz] !== undefined) {
             let z2 = z+1 ; let zz2 = zz+1 ;
-            table += '<tr><td>Code ' + z2 + '</td><td>Code ' + zz2 + '</td><td>';
+            table += '<tr><td>Code ' + z2 + '</td><td>Code ' + zz2 + '</td><td id="resulttd' + z + '' + zz + '">';
 
           //  var a = $('#dialog' + z2).data('p1').model.attr('text/textF');
          //   var b = $('#dialog' + zz2).data('p1').model.attr('text/textF');
@@ -839,31 +841,9 @@ function simRatios() {
           b = preprocess(b);
 
 
+          simAlgo(a,b,z,zz);
 
-            var l2 = a.length;
-            var l2 = b.length;
-            var grade = 0;
-            var minLength = 0;
-            var maxLength = 0;
-
-            if (a.length > b.length) {
-              minLength = b.length;
-              maxLength = a.length;
-            } else {
-              minLength = a.length;
-              maxLength = b.length;
-            }
-
-            for (let i = 0; i < minLength; i++) {
-              if (a[i] === b[i]) {
-                grade++;
-              }
-            }
-
-            let weight = grade / maxLength;
-            let result = (weight * 100);
-
-            table += Math.round(result) + '%</td></tr>';
+            table += 'loading</td></tr>';
           }
         }
       }
@@ -873,7 +853,54 @@ function simRatios() {
 
 }
 
+function simAlgo(a,b,z,zz) {
+  $.ajax({
+    type: "GET",
+    crossDomain: true,
+    url: "http://alon1992.pythonanywhere.com/",
+    data: {"string":a, "string2":b},
+    cache: true,
+    error: function() {
+      let simple = simpleSimAlgo(a,b);
+      document.getElementById('resulttd' + z + '' + zz).innerHTML = simple + '%';
+      document.getElementById('serverstatus').innerHTML = 'Remote server is unavailable ,results are not accurate';
+    },
+    success: function(data) {
+      let ajaxresult1 = data.r;
+      let ajaxresult2 = data.l;
+    // alert('?string=' + a + '&string2=' +b);
+      document.getElementById('resulttd' + z + '' + zz).innerHTML = ajaxresult1 + ' | ' + ajaxresult2 + '%';
+      document.getElementById('serverstatus').innerHTML = '';
+    }
+  });
+}
 
+
+function simpleSimAlgo(a,b) {
+  var l2 = a.length;
+  var l2 = b.length;
+  var grade = 0;
+  var minLength = 0;
+  var maxLength = 0;
+
+  if (a.length > b.length) {
+    minLength = b.length;
+    maxLength = a.length;
+  } else {
+    minLength = a.length;
+    maxLength = b.length;
+  }
+
+  for (let i = 0; i < minLength; i++) {
+    if (a[i] === b[i]) {
+      grade++;
+    }
+  }
+
+  let weight = grade / maxLength;
+  let result = (weight * 100);
+  return Math.round(result);
+}
 
   function closeDialogEvent(cellv, n,ctrlWin) {
 
