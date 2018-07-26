@@ -19,6 +19,7 @@ export class AppComponent implements OnInit {
   hide = true;
   ccc: string;
   fT2 = '';
+  firstPage = true;
 
   hideDiagram() {
     this.hide = !this.hide;
@@ -163,6 +164,7 @@ export class AppComponent implements OnInit {
     graph.addCells([trp, si, trp2, s, s2, trp3]);
   }
   build() {
+    this.firstPage = false;
     this.component1.alirt();
   }
   zoomin() {
@@ -171,8 +173,7 @@ export class AppComponent implements OnInit {
   zoomout() {
     this.component1.zoomout();
   }
-  help() {
-    this.component1.help();
+  autofit() {
+    this.component1.autofit();
   }
-
 }
