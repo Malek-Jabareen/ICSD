@@ -20,17 +20,30 @@
     <p id="serverstatus" style="font-size:10px; color:#ff5100;"></p>
   </div>
 
-
-
   <div id="dialogFunc" title="Function">
     <textarea autofocus id="func2" style="width:950px; height:500px;" [(ngModel)]="functionText" #functionTextSend (keyup)="onchange(functionTextSend.value)"></textarea>
   </div>
   <div id="dialogSave" title="Save">
-    <b>This feature is not available right now.</b><br><br>
+    <b>Here is a new feature, now you can save you function into our database and load it anytime you want.</b><br><br>
 
-    Please enter a few keywords that describe the structure of the function and separate by a " , "<br><br>
-    <input id="keywords" type="text">
-    Recommended keywords:
+    Function name:
+    <input id="keywords" type="text" style="width: 200px; height: 10px">
+    <br>
+    Keywords:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <select name="keywords" size="1" style="width: 200px; height: 25px">
+      <option *ngFor="let item of keyarr[0]">
+        {{ item }}</option>
+    </select>
+    <br>
+    Add keyword:&nbsp;&nbsp;&nbsp;
+    <input type="text" name="keyword" id="keyword" style="width: 200px; height: 5px" >
+    <input type="submit" value="Add" (click)="addKeyword()">
+    <br><br>
+    <p style="text-align: center">
+      Example:<br>
+      Function name => username_funcname <br>
+      Keyword => Flat
+    </p>
   </div>
   <div id="dialogLoad" title="Load">
   <b>This feature is not available right now.</b><br><br>

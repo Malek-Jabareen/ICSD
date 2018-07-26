@@ -82,7 +82,7 @@ li a {
   display: block;
   color: white;
   text-align: center;
-  padding: 12px 15px;
+  padding: 12px 13px;
   text-decoration: none;
 }
 
@@ -119,4 +119,9 @@ hr {
 li.liHide {
   display: none;
 }
+li.liHide2 {
+  display: none;
+  float:right;
+}
+
 
