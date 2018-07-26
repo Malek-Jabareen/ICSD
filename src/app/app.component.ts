@@ -5,12 +5,6 @@ import * as _ from 'lodash';
  import * as $$ from 'backbone';
 import {getExpressionScope} from '@angular/compiler-cli';
 import {build$} from 'protractor/built/element';
-import { AngularFireDatabase } from 'angularfire2/database';
-import { FirebaseListObservable } from 'angularfire2/database-deprecated';
-import { AngularFirestore } from 'angularfire2/firestore';
-import { AngularFireList } from 'angularfire2/database';
-import { Observable } from 'rxjs/observable';
-
 const joint = require('./../../node_modules/jointjs/dist/joint.js');
 /* declare var $: any; */
 
@@ -26,15 +20,10 @@ export class AppComponent implements OnInit {
   ccc: string;
   fT2 = '';
   firstPage = true;
-  keywords: Observable<any[]>;
-  keywordsRef: AngularFireList<any[]>;
-  constructor(db: AngularFireDatabase) {
-    this.keywordsRef = db.list('/Keywords');
-    this.keywords = this.keywordsRef.valueChanges();
-  }
+
   hideDiagram() {
     this.hide = !this.hide;
-    if (this.hide === false) {
+    if (this.hide == false) {
       this.zoomin();
       this.zoomin();
     } else {
@@ -45,7 +34,7 @@ export class AppComponent implements OnInit {
 
 
   ngOnInit() {
-    this.sendKeywords();
+
     const graph = new joint.dia.Graph;
     const paper = new joint.dia.Paper({
       el: jQuery('#header'),
@@ -186,8 +175,5 @@ export class AppComponent implements OnInit {
   }
   autofit() {
     this.component1.autofit();
-  }
-  sendKeywords() {
-    this.component1.getKeywords(this.keywordsRef, this.keywords);
   }
 }
