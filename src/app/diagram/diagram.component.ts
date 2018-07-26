@@ -6,6 +6,10 @@ import * as $$ from 'backbone';
 import {getExpressionScope} from '@angular/compiler-cli';
 import {V} from 'jointjs';
 import {build$} from 'protractor/built/element';
+import {Observable} from 'rxjs/Observable';
+import { AngularFireList } from 'angularfire2/database';
+
+
 const joint = require('../../../node_modules/jointjs/dist/joint.js');
 declare var $: any;
 let dialogNumber = 1;
@@ -32,7 +36,9 @@ let autoWin = true;
 
 export class DiagramComponent implements OnInit {
   @Output() funcTextEvent = new EventEmitter<string>();
-
+  keywordsRef: AngularFireList<any[]>;
+  keywords: Observable<any[]>;
+  keyarr: any[];
   onchange(value: string) {
     this.funcTextEvent.emit(value);
     /* alert('hello'); */
@@ -2080,5 +2086,15 @@ export class DiagramComponent implements OnInit {
     } else {
       alert('Auto window fit turned off');
     }
+  }
+  getKeywords(keywordsRef, keywords) {
+    this.keywordsRef = keywordsRef;
+    this.keywords = keywords;
+    let arr2: any[] = new Array();
+    this.keywords.subscribe(res => arr2.push(res));
+    this.keyarr = arr2;
+  }
+  addKeyword() {
+    //document.getElementById('keyword');
   }
 }
