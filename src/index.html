@@ -5,11 +5,44 @@
   <meta name="viewport" content="width=1200" />
   <title>Icsd</title>
   <base href="/">
+  <!-- Firebase App is always required and must be first -->
+  <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-app.js"></script>
+
+  <!-- Add additional services that you want to use -->
+  <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-messaging.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-functions.js"></script>
+
+  <!-- Comment out (or don't include) services that you don't want to use -->
+  <!-- <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-storage.js"></script> -->
+  <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase.js"></script>
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyCzCeAL99M7BRKyIbv0-NX0qg-FgeIH0XY",
+      authDomain: "icsd-app.firebaseapp.com",
+      databaseURL: "https://icsd-app.firebaseio.com",
+      projectId: "icsd-app",
+      storageBucket: "icsd-app.appspot.com",
+      messagingSenderId: "843528895145"
+    };
+    firebase.initializeApp(config);
+    var arr = [];
+    var database = firebase.database();
+    database.ref('/Keywords').once('value')
+    .then(function (snap) {
+      arr.push(snap.val());
+    });
+
+  </script>
+
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <script>
-
+  var KeyowrdsCounter = 3;
     function load() {
       // expand the textarea only at the first time the web starts and hide the button
       document.getElementById('func').cols = 120;
@@ -40,7 +73,31 @@
     document.getElementById('welcome').style.display='none';
    $(".ui-dialog-content").dialog("close");
 }
+    var database = firebase.database();
+    var keywordsRef = firebase.database().ref('/Keywords');
+    keywordsRef.on('value', function (snapshot) {
+      snapshot.forEach(function (childSnapshot) {
+        var opt = document.createElement('option');
+        opt.value = childSnapshot.val();
+        opt.innerHTML = childSnapshot.val();
+        document.getElementById('keywords').appendChild(opt);
+      });
+    });
 
+    function addKeyword() {
+      var newvalue = document.getElementById('newkeyword').value;
+      var select = document.getElementById('keywords');
+      var counter = select.children.length+1;
+      for(var i=0;i<counter-1;i++){
+        if(select.children[i].value == newvalue){
+          alert('Keyword exists!');
+          return;
+        }
+      }
+      select.innerHTML = '';
+      document.getElementById('newkeyword').value = '';
+      firebase.database().ref('/Keywords/'+counter).set(newvalue);
+    }
   </script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
