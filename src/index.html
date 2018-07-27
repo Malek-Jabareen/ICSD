@@ -69,13 +69,10 @@
     var keywordsRef = firebase.database().ref('/Keywords');
     keywordsRef.on('value', function (snapshot) {
       snapshot.forEach(function (childSnapshot) {
-        var arr = [];
         var opt = document.createElement('option');
         opt.value = childSnapshot.val();
         opt.innerHTML = childSnapshot.val();
-        arr.push(childSnapshot.val());
         document.getElementById('keywords').appendChild(opt);
-        document.getElementById('')
       });
     });
 
