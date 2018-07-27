@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=1200" />
   <title>Icsd</title>
   <base href="/">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <!-- Firebase App is always required and must be first -->
   <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-app.js"></script>
 
@@ -29,18 +32,7 @@
       messagingSenderId: "843528895145"
     };
     firebase.initializeApp(config);
-    var arr = [];
-    var database = firebase.database();
-    database.ref('/Keywords').once('value')
-    .then(function (snap) {
-      arr.push(snap.val());
-    });
-
   </script>
-
-  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <script>
   var KeyowrdsCounter = 3;
     function load() {
@@ -77,15 +69,21 @@
     var keywordsRef = firebase.database().ref('/Keywords');
     keywordsRef.on('value', function (snapshot) {
       snapshot.forEach(function (childSnapshot) {
+        var arr = [];
         var opt = document.createElement('option');
         opt.value = childSnapshot.val();
         opt.innerHTML = childSnapshot.val();
+        arr.push(childSnapshot.val());
         document.getElementById('keywords').appendChild(opt);
+        document.getElementById('')
       });
     });
 
     function addKeyword() {
       var newvalue = document.getElementById('newkeyword').value;
+      if(newvalue == ''){
+        return;
+      }
       var select = document.getElementById('keywords');
       var counter = select.children.length+1;
       for(var i=0;i<counter-1;i++){
@@ -94,10 +92,15 @@
           return;
         }
       }
-      select.innerHTML = '';
+      select.innerHTML = ''
       document.getElementById('newkeyword').value = '';
       firebase.database().ref('/Keywords/'+counter).set(newvalue);
     }
+    function add_keyword_to_list() {
+      if(document.getElementById('chosen').value.search(document.getElementById('keywords').value+', ') == -1) {
+        document.getElementById('chosen').value += document.getElementById('keywords').value + ', ';
+      }
+  }
   </script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
