@@ -42,7 +42,7 @@
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <script>
-
+  var KeyowrdsCounter = 3;
     function load() {
       // expand the textarea only at the first time the web starts and hide the button
       document.getElementById('func').cols = 120;
@@ -75,7 +75,7 @@
 }
     var database = firebase.database();
     var keywordsRef = firebase.database().ref('/Keywords');
-    keywordsRef.once('value', function (snapshot) {
+    keywordsRef.on('value', function (snapshot) {
       snapshot.forEach(function (childSnapshot) {
         var opt = document.createElement('option');
         opt.value = childSnapshot.val();
@@ -83,6 +83,21 @@
         document.getElementById('keywords').appendChild(opt);
       });
     });
+
+    function addKeyword() {
+      var newvalue = document.getElementById('newkeyword').value;
+      var select = document.getElementById('keywords');
+      var counter = select.children.length+1;
+      for(var i=0;i<counter-1;i++){
+        if(select.children[i].value == newvalue){
+          alert('Keyword exists!');
+          return;
+        }
+      }
+      select.innerHTML = '';
+      document.getElementById('newkeyword').value = '';
+      firebase.database().ref('/Keywords/'+counter).set(newvalue);
+    }
   </script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
