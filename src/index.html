@@ -71,6 +71,7 @@
       snapshot.forEach(function (childSnapshot) {
         var opt = document.createElement('option');
         opt.value = childSnapshot.val();
+        opt.text = childSnapshot.val();
         opt.innerHTML = childSnapshot.val();
         document.getElementById('keywords').appendChild(opt);
       });
@@ -89,7 +90,7 @@
           return;
         }
       }
-      select.innerHTML = ''
+      select.innerHTML = '';
       document.getElementById('newkeyword').value = '';
       firebase.database().ref('/Keywords/'+counter).set(newvalue);
     }
