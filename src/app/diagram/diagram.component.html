@@ -26,15 +26,14 @@
     <textarea autofocus id="func2" style="width:950px; height:500px;" [(ngModel)]="functionText" #functionTextSend (keyup)="onchange(functionTextSend.value)"></textarea>
   </div>
   <div id="dialogSave" title="Save">
-    <b>This feature is not available right now.</b><br><br>
-
-    You can save you function to our database, please fill this mandatory fields: " , "<br><br>
+    You can save you function to our database, please fill this mandatory fields: <br><br>
     Function name: &nbsp;&nbsp;&nbsp;<input id="funcname" type="text" style="width:300px; height: 30px"><br>
     Choose keyword: <select id="keywords" type="text" style="width:200px" onchange="add_keyword_to_list()">
     </select><br>
     <input id="chosen" type="text" disabled="disabled">
     Add keyword: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="newkeyword" type="text" style="width:200px; height: 30px">
     <input id="addk" type="button" value="Add keyword" style="margin:auto" onclick="addKeyword()">
+    <p id="howtosave" hidden>0</p>
   </div>
   <div id="dialogLoad" title="Load">
   <b>This feature is not available right now.</b><br><br>
