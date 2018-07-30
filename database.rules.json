@@ -3,4 +3,8 @@
     ".read": "auth != null",
     ".write": "auth != null"
   }
+<<<<<<< Updated upstream
 }
+=======
+}
+>>>>>>> Stashed changes
