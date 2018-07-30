@@ -4,10 +4,11 @@ import { AppComponent } from './app.component';
 import { DiagramComponent } from './diagram/diagram.component';
 import { FormComponent } from './form/form.component';
 import { FormsModule } from '@angular/forms';
+import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [AppComponent, DiagramComponent, FormComponent],
-  imports: [BrowserModule,FormsModule],
+  imports: [BrowserModule,FormsModule, ChartsModule],
   providers: [],
   bootstrap: [AppComponent]
 })

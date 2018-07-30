@@ -7,6 +7,8 @@ export class Ast {
 
   public fullTextq: string;
 
+  public deepth: number;
+
   public ref: Ast[];
 
   static are(): Ast {
@@ -21,12 +23,24 @@ export class Ast {
     let functionx: Ast = new Ast();
     let str = __function;
     const txtq = '';
-    str = /* replace */str.split('else').join('else#');
-     str = /* replace */str.split('\n').join('#');
-    str = /* replace */str.split(';').join(';#');
-    str = /* replace */str.split('{').join('#{#');
-    str = /* replace */str.split('}').join('#}#');
-    let stt: string[] = str.split('#');
+    funcx.deepth = 1;
+    str = /* replaceAll */str.replace(new RegExp('#([^\\n]*)', 'g'), '');
+    str = /* replaceAll */str.replace(new RegExp('//([^\\n]*)', 'g'), '');
+    str = /* replace */str.split('\n').join(' ');
+    str = /* replaceAll */str.replace(new RegExp('\\\\/\\\\*([^\\\\*][^\\\\/])*\\\\*\\\\/', 'g'), '');
+    str = /* replaceAll */str.replace(new
+    RegExp('if([ ]*)\\(((?:[^)(]+|\\((?:[^)(]+|\\([^)(]*\\))*\\))*)\\)', 'g'), 'if$1($2)###');
+    str = /* replaceAll */str.replace(new
+    RegExp('for([ ]*)\\(((?:[^)(]+|\\((?:[^)(]+|\\([^)(]*\\))*\\))*)\\)', 'g'), 'for$1($2)###');
+    str = /* replaceAll */str.replace(new
+    RegExp('while([ ]*)\\(((?:[^)(]+|\\((?:[^)(]+|\\([^)(]*\\))*\\))*)\\)', 'g'), 'while$1($2)###');
+    str = /* replaceAll */str.replace(new RegExp('else', 'g'), 'else###');
+    str = /* replaceAll */str.replace(new RegExp('default:', 'g'), 'default:###');
+    str = /* replaceAll */str.replace(new RegExp('case([ ]*)([^ ]*)([ ]*):', 'g'), 'case$1$2$3:###');
+    str = /* replaceAll */str.replace(new RegExp(';', 'g'), ';###');
+    str = /* replaceAll */str.replace(new RegExp('{', 'g'), '###{###');
+    str = /* replaceAll */str.replace(new RegExp('}', 'g'), '###}###');
+    let stt: string[] = str.split('###');
      let c = 0;
     for (let i = 0; i < stt.length; i++) {
       if (!/* equals */(<any>((o1: any, o2: any) => { if (o1 && o1.equals) {
@@ -66,6 +80,7 @@ export class Ast {
           RegExp('for([ ]*)\\(([^,:]*)(,)([^,]*)(,)([^\\)]*)\\)', 'g'), ' for$1($2;$4;$6) ');
           functionx = functionx.add(funcx);
           funcx.textq = '';
+          funcx.deepth = 1;
           count = 0;
           stq = '';
         }
@@ -100,10 +115,12 @@ export class Ast {
           RegExp('for([ ]*)\\(([^,:]*)(,)([^,]*)(,)([^\\)]*)\\)', 'g'), ' for$1($2;$4;$6) ');
          funcx.info = cin + '';
           if ( qin === 1) {
+            funcx.deepth = Math.max(this.build(funcx.textq).deepth + 1 , funcx.deepth);
             funcx.ref = this.build(funcx.textq).ref;
           }
           functionx = functionx.add(funcx);
           funcx.textq = '';
+          funcx.deepth = 1;
           funcx.fullTextq = '';
           cin = 0;
         } else {
@@ -135,7 +152,9 @@ export class Ast {
                   || /* contains */funcx.textq.toLowerCase().trim().indexOf('if') === 0
                   || /* contains */funcx.textq.toLowerCase().trim().indexOf('else') === 0
                   || /* contains */funcx.textq.toLowerCase().trim().indexOf('switch') === 0
-                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('while') === 0) { funcx.ref = this.build(funcx.textq).ref; }
+                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('while') === 0) {
+                    funcx.deepth = Math.max(this.build(funcx.textq).deepth + 1 , funcx.deepth);
+                    funcx.ref = this.build(funcx.textq).ref; }
                   funcx.fullTextq = /* replaceAll */funcx.fullTextq.replace(new
                   RegExp('for([ ]*)\\(([^,:]*)(,)([^,]*)(,)([^\\)]*)\\)', 'g'), ' for$1($2;$4;$6) ');
                   functionx = functionx.add(funcx);
@@ -144,6 +163,7 @@ export class Ast {
                   i = j;
                   qin = 0;
                   funcx.textq = '';
+                  funcx.deepth = 1;
                   funcx.fullTextq = '';
                   break;
                 } else {
@@ -174,6 +194,7 @@ export class Ast {
           RegExp('for([ ]*)\\(([^,:]*)(,)([^,]*)(,)([^\\)]*)\\)', 'g'), ' for$1($2;$4;$6) ');
           functionx = functionx.add(funcx);
           funcx.textq = '';
+          funcx.deepth = 1;
           count = 0;
           stq = '';
         }
@@ -181,6 +202,7 @@ export class Ast {
           funcx.textq += '\n' + stt[i];
           funcx.info = '1';
         }
+
         if (/* contains */stt[i + 1].indexOf('{') !== -1 === false) {
           if ( qin === 0 ) {
             funcx.info = '1';
@@ -215,11 +237,13 @@ export class Ast {
           funcx.info = cin + '';
           if ( qin === 1) {
             funcx.info = cin + '';
+            funcx.deepth = Math.max(this.build(funcx.textq).deepth + 1 , funcx.deepth);
             funcx.ref = this.build(funcx.textq).ref;
           }
           functionx = functionx.add(funcx);
           funcx.textq = '';
           cin = 0;
+          funcx.deepth = 1;
           funcx.fullTextq = '';
         } else {
           for (let j: number = i + 1; j < stt.length; j++) {
@@ -256,7 +280,9 @@ export class Ast {
                   || /* contains */funcx.textq.toLowerCase().trim().indexOf('if') === 0
                   || /* contains */funcx.textq.toLowerCase().trim().indexOf('else') === 0
                   || /* contains */funcx.textq.toLowerCase().trim().indexOf('switch') === 0
-                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('while') === 0) { funcx.ref = this.build(funcx.textq).ref; }
+                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('while') === 0) {
+                    funcx.deepth = Math.max(this.build(funcx.textq).deepth + 1 , funcx.deepth);
+                    funcx.ref = this.build(funcx.textq).ref; }
                   funcx.fullTextq = /* replaceAll */funcx.fullTextq.replace(new
                   RegExp('for([ ]*)\\(([^,:]*)(,)([^,]*)(,)([^\\)]*)\\)', 'g'), ' for$1($2;$4;$6) ');
                   functionx = functionx.add(funcx);
@@ -265,6 +291,7 @@ export class Ast {
                   i = j;
                   qin = 0;
                   funcx.textq = '';
+                  funcx.deepth = 1;
                   funcx.fullTextq = '';
                   break;
                 } else {
@@ -295,6 +322,7 @@ export class Ast {
           RegExp('for([ ]*)\\(([^,:]*)(,)([^,]*)(,)([^\\)]*)\\)', 'g'), ' for$1($2;$4;$6) ');
           functionx = functionx.add(funcx);
           funcx.textq = '';
+          funcx.deepth = 1;
           count = 0;
           stq = '';
         }
@@ -329,10 +357,12 @@ export class Ast {
           RegExp('for([ ]*)\\(([^,:]*)(,)([^,]*)(,)([^\\)]*)\\)', 'g'), ' for$1($2;$4;$6) ');
           if ( qin === 1 ) {
             funcx.info = cin + '';
+            funcx.deepth = Math.max(this.build(funcx.textq).deepth + 1 , funcx.deepth);
             funcx.ref = this.build(funcx.textq).ref;
           }
           functionx = functionx.add(funcx);
           funcx.textq = '';
+          funcx.deepth = 1;
           cin = 0;
           funcx.fullTextq = '';
         } else {
@@ -363,7 +393,9 @@ export class Ast {
                   || /* contains */funcx.textq.toLowerCase().trim().indexOf('if') === 0
                   || /* contains */funcx.textq.toLowerCase().trim().indexOf('else') === 0
                   || /* contains */funcx.textq.toLowerCase().trim().indexOf('switch') === 0
-                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('while') === 0) { funcx.ref = this.build(funcx.textq).ref; }
+                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('while') === 0) {
+                    funcx.deepth = Math.max(this.build(funcx.textq).deepth + 1 , funcx.deepth);
+                    funcx.ref = this.build(funcx.textq).ref; }
                   funcx.fullTextq = /* replaceAll */funcx.fullTextq.replace(new
                   RegExp('for([ ]*)\\(([^,:]*)(,)([^,]*)(,)([^\\)]*)\\)', 'g'), ' for$1($2;$4;$6) ');
                   functionx = functionx.add(funcx);
@@ -372,6 +404,7 @@ export class Ast {
                   i = j;
                   qin = 0;
                   funcx.textq = '';
+                  funcx.deepth = 1;
                   funcx.fullTextq = '';
                   break;
                 } else {
@@ -402,6 +435,7 @@ export class Ast {
           RegExp('for([ ]*)\\(([^,:]*)(,)([^,]*)(,)([^\\)]*)\\)', 'g'), ' for$1($2;$4;$6) ');
           functionx = functionx.add(funcx);
           funcx.textq = '';
+          funcx.deepth = 1;
           count = 0;
           stq = '';
         }
@@ -418,12 +452,14 @@ export class Ast {
           funcx.fullTextq = /* replaceAll */funcx.fullTextq.replace(new
           RegExp('for([ ]*)\\(([^,:]*)(,)([^,]*)(,)([^\\)]*)\\)', 'g'), ' for$1($2;$4;$6) ');
           if ( qin === 1 ) {
+            funcx.deepth = Math.max(this.build(funcx.textq).deepth + 1 , funcx.deepth);
             funcx.ref = this.build(funcx.textq).ref;
           }
           functionx = functionx.add(funcx);
           cin++;
           funcx.fullTextq = '\n' + stt[i + 1];
           funcx.textq = '';
+          funcx.deepth = 1;
           cin = 0;
         } else {
           for (let j: number = i + 1; j < stt.length; j++) {
@@ -453,7 +489,9 @@ export class Ast {
                   || /* contains */funcx.textq.toLowerCase().trim().indexOf('if') === 0
                   || /* contains */funcx.textq.toLowerCase().trim().indexOf('else') === 0
                   || /* contains */funcx.textq.toLowerCase().trim().indexOf('switch') === 0
-                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('while') === 0) { funcx.ref = this.build(funcx.textq).ref; }
+                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('while') === 0) {
+                    funcx.deepth = Math.max(this.build(funcx.textq).deepth + 1 , funcx.deepth);
+                    funcx.ref = this.build(funcx.textq).ref; }
                   funcx.fullTextq = /* replaceAll */funcx.fullTextq.replace(new
                   RegExp('for([ ]*)\\(([^,:]*)(,)([^,]*)(,)([^\\)]*)\\)', 'g'), ' for$1($2;$4;$6) ');
                   functionx = functionx.add(funcx);
@@ -462,6 +500,7 @@ export class Ast {
                   i = j;
                   qin = 0;
                   funcx.textq = '';
+                  funcx.deepth = 1;
                   funcx.fullTextq = '';
                   break;
                 } else {
@@ -496,6 +535,7 @@ export class Ast {
           RegExp('for([ ]*)\\(([^,:]*)(,)([^,]*)(,)([^\\)]*)\\)', 'g'), ' for$1($2;$4;$6) ');
           functionx = functionx.add(funcx);
           funcx.textq = '';
+          funcx.deepth = 1;
           count = 0;
           stq = '';
         }
@@ -510,6 +550,7 @@ export class Ast {
           RegExp('for([ ]*)\\(([^,:]*)(,)([^,]*)(,)([^\\)]*)\\)', 'g'), ' for$1($2;$4;$6) ');
           functionx = functionx.add(funcx);
           funcx.textq = '';
+          funcx.deepth = 1;
           funcx.fullTextq = '';
           cin = 0;
         } else {
@@ -526,7 +567,9 @@ export class Ast {
               || /* contains */funcx.textq.toLowerCase().trim().indexOf('if') === 0
               || /* contains */funcx.textq.toLowerCase().trim().indexOf('else') === 0
               || /* contains */funcx.textq.toLowerCase().trim().indexOf('switch') === 0
-              || /* contains */funcx.textq.toLowerCase().trim().indexOf('while') === 0) { funcx.ref = this.build(funcx.textq).ref; }
+              || /* contains */funcx.textq.toLowerCase().trim().indexOf('while') === 0) {
+                funcx.deepth = Math.max(this.build(funcx.textq).deepth + 1 , funcx.deepth);
+                funcx.ref = this.build(funcx.textq).ref; }
               funcx.fullTextq = /* replaceAll */funcx.fullTextq.replace(new
               RegExp('for([ ]*)\\(([^,:]*)(,)([^,]*)(,)([^\\)]*)\\)', 'g'), ' for$1($2;$4;$6) ');
               functionx = functionx.add(funcx);
@@ -534,6 +577,7 @@ export class Ast {
               cq = 0;
               i = j;
               funcx.textq = '';
+              funcx.deepth = 1;
               funcx.fullTextq = '';
               break;
             } else {
@@ -551,6 +595,7 @@ export class Ast {
                 || /* contains */funcx.textq.toLowerCase().trim().indexOf('else') === 0
                 || /* contains */funcx.textq.toLowerCase().trim().indexOf('switch') === 0
                 || /* contains */funcx.textq.toLowerCase().trim().indexOf('while') === 0) {
+                  funcx.deepth = Math.max(this.build(funcx.textq).deepth + 1 , funcx.deepth);
                   funcx.ref = this.build(funcx.textq).ref;
                 }
                funcx.fullTextq = /* replaceAll */funcx.fullTextq.replace(new
@@ -560,6 +605,7 @@ export class Ast {
                 cq = 0;
                 i = j;
                 funcx.textq = '';
+               funcx.deepth = 1;
                funcx.fullTextq = '';
                 break;
               } else {
@@ -596,6 +642,7 @@ export class Ast {
           RegExp('for([ ]*)\\(([^,:]*)(,)([^,]*)(,)([^\\)]*)\\)', 'g'), ' for$1($2;$4;$6) ');
           functionx = functionx.add(funcx);
           funcx.textq = '';
+          funcx.deepth = 1;
           count = 0;
           stq = '';
         }
@@ -617,7 +664,9 @@ export class Ast {
               || /* contains */funcx.textq.toLowerCase().trim().indexOf('if') === 0
               || /* contains */funcx.textq.toLowerCase().trim().indexOf('else') === 0
               || /* contains */funcx.textq.toLowerCase().trim().indexOf('switch') === 0
-              || /* contains */funcx.textq.toLowerCase().trim().indexOf('while') === 0) { funcx.ref = this.build(funcx.textq).ref; }
+              || /* contains */funcx.textq.toLowerCase().trim().indexOf('while') === 0) {
+                funcx.deepth = Math.max(this.build(funcx.textq).deepth + 1 , funcx.deepth);
+                funcx.ref = this.build(funcx.textq).ref; }
               funcx.fullTextq = /* replaceAll */funcx.fullTextq.replace(new
               RegExp('for([ ]*)\\(([^,:]*)(,)([^,]*)(,)([^\\)]*)\\)', 'g'), ' for$1($2;$4;$6) ');
               functionx = functionx.add(funcx);
@@ -625,6 +674,7 @@ export class Ast {
               cq = 0;
               i = j;
               funcx.textq = '';
+              funcx.deepth = 1;
               funcx.fullTextq = '';
               break;
             } else {
@@ -650,6 +700,7 @@ export class Ast {
           RegExp('for([ ]*)\\(([^,:]*)(,)([^,]*)(,)([^\\)]*)\\)', 'g'), ' for$1($2;$4;$6) ');
           functionx = functionx.add(funcx);
           funcx.textq = '';
+          funcx.deepth = 1;
           count = 0;
           stq = '';
         }
@@ -680,22 +731,34 @@ export class Ast {
           }
           if (/* contains */stt[i + 1].indexOf(';') !== -1) {
             cin++;
+            funcx.textq += '\n' + stt[i ];
+            funcx.fullTextq += '\n' + stt[i ];
             funcx.textq += '\n' + stt[i + 1];
             funcx.fullTextq += '\n' + stt[i + 1];
             i++;
           }
           funcx.fullTextq = /* replaceAll */funcx.fullTextq.replace(new
           RegExp('for([ ]*)\\(([^,:]*)(,)([^,]*)(,)([^\\)]*)\\)', 'g'), ' for$1($2;$4;$6) ');
+          funcx.info = cin + '';
+          if ( qin === 1) {
+            funcx.info = cin + '';
+            funcx.deepth = Math.max(this.build(funcx.textq).deepth + 1 , funcx.deepth);
+            funcx.ref = this.build(funcx.textq).ref;
+          }
           functionx = functionx.add(funcx);
           funcx.textq = '';
+          funcx.deepth = 1;
           funcx.fullTextq = '';
           cin = 0;
         } else {
+          if (qin === 1){
+            funcx.textq += '\n' + stt[i];
+          }
             for (let j: number = i + 1; j < stt.length; j++) {
               if (/* contains */stt[j].indexOf('{') !== -1) {
                cin++;
                 funcx.fullTextq += '\n' + stt[j];
-                if (cq !== 0) {
+                if (cq !== 0 || qin === 1) {
                   funcx.textq += '\n' + stt[j];
                 }
                 cq++;
@@ -705,6 +768,9 @@ export class Ast {
                   funcx.fullTextq += '\n' + stt[j];
                   cq--;
                   if (cq === 0) {
+                    if (qin === 1){
+                      funcx.textq += '\n' + stt[j];
+                    }
                     funcx.info = cin + '';
                     funcx.text = 'else';
                     funcx.ref = null;
@@ -714,7 +780,14 @@ export class Ast {
                     || /* contains */funcx.textq.toLowerCase().trim().indexOf('else') === 0
                     || /* contains */funcx.textq.toLowerCase().trim().indexOf('switch') === 0
                     || /* contains */funcx.textq.toLowerCase().trim().indexOf('while') === 0) {
+                      funcx.deepth = Math.max(this.build(funcx.textq).deepth + 1 , funcx.deepth);
                       funcx.ref = this.build(funcx.textq).ref;
+                    } else {
+                      if ( qin === 1) {
+                        funcx.info = cin + '';
+                        funcx.deepth = Math.max(this.build(funcx.textq).deepth + 1 , funcx.deepth);
+                        funcx.ref = this.build(funcx.textq).ref;
+                      }
                     }
                     funcx.fullTextq = /* replaceAll */funcx.fullTextq.replace(new
                     RegExp('for([ ]*)\\(([^,:]*)(,)([^,]*)(,)([^\\)]*)\\)', 'g'), ' for$1($2;$4;$6) ');
@@ -723,6 +796,7 @@ export class Ast {
                     cq = 0;
                     i = j;
                     funcx.textq = '';
+                    funcx.deepth = 1;
                     funcx.fullTextq = '';
                     break;
                   } else {
@@ -760,6 +834,7 @@ export class Ast {
       RegExp('for([ ]*)\\(([^,:]*)(,)([^,]*)(,)([^\\)]*)\\)', 'g'), ' for$1($2;$4;$6) ');
       functionx = functionx.add(funcx);
       funcx.textq = '';
+      funcx.deepth = 1;
       count = 0;
       stq = null;
     }
@@ -767,6 +842,8 @@ export class Ast {
   }
   public add(__function: Ast): Ast {
     let x: Ast[];
+    let max ;
+    max = 0;
     if (this.ref != null) {
       x = new Array(this.ref.length + 1);
     } else {
@@ -775,6 +852,7 @@ export class Ast {
     let i = 0;
     if (this.ref != null) {
       for (i = 0; i < this.ref.length; i++) {
+        max = Math.max(max , this.ref[i].deepth);
         x[i] = this.ref[i];
       }
     }
@@ -783,12 +861,14 @@ export class Ast {
     x[i].text = __function.text;
     x[i].textq = __function.textq;
     x[i].fullTextq = __function.fullTextq;
+    x[i].deepth = __function.deepth;
     if (__function.ref != null) {
       x[i].ref = new Array(__function.ref.length);
       for (let j = 0; j < __function.ref.length; j++) {
         x[i].ref[j] = __function.ref[j];
       }
     }
+    this.deepth = Math.max(__function.deepth , this.deepth)
     this.ref = x;
     return this;
   }
@@ -801,6 +881,7 @@ constructor() {
     this.text = null;
     this.textq = null;
     this.ref = null;
+    this.deepth = 0;
     this.fullTextq = '';
   }
 }
