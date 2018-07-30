@@ -669,6 +669,7 @@ export class DiagramComponent implements OnInit {
             }
           },
           'Save': {
+            id: 'savebtn12',
             text: 'Save',
             click: function () {
               $(this).dialog('close');
