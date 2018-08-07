@@ -147,12 +147,12 @@ export class Ast {
                     funcx.ref = null;
                   }
                   funcx.info = cin + '';
-                  if (/* contains */funcx.textq.indexOf('{') !== -1 || /* contains */funcx.textq.toLowerCase().trim().indexOf('case') === 0
-                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('for') === 0
-                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('if') === 0
-                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('else') === 0
-                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('switch') === 0
-                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('while') === 0) {
+                  if (/* contains */funcx.textq.indexOf('{') !== -1 || /* contains */funcx.textq.toLowerCase().trim().indexOf('case') !== -1
+                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('for') !== -1
+                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('if') !== -1
+                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('else') !== -1
+                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('switch') !== -1
+                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('while') !== -1 ) {
                     funcx.deepth = Math.max(this.build(funcx.textq).deepth + 1 , funcx.deepth);
                     funcx.ref = this.build(funcx.textq).ref; }
                   funcx.fullTextq = /* replaceAll */funcx.fullTextq.replace(new
@@ -275,12 +275,12 @@ export class Ast {
                     funcx.ref = null;
                   }
                   funcx.info = cin + '';
-                  if (/* contains */funcx.textq.indexOf('{') !== -1 || /* contains */funcx.textq.toLowerCase().trim().indexOf('case') === 0
-                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('for') === 0
-                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('if') === 0
-                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('else') === 0
-                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('switch') === 0
-                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('while') === 0) {
+                  if (/* contains */funcx.textq.indexOf('{') !== -1 || /* contains */funcx.textq.toLowerCase().trim().indexOf('case') !== -1
+                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('for') !== -1
+                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('if') !== -1
+                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('else') !== -1
+                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('switch') !== -1
+                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('while') !== -1 ) {
                     funcx.deepth = Math.max(this.build(funcx.textq).deepth + 1 , funcx.deepth);
                     funcx.ref = this.build(funcx.textq).ref; }
                   funcx.fullTextq = /* replaceAll */funcx.fullTextq.replace(new
@@ -388,12 +388,12 @@ export class Ast {
                     funcx.text = 'while';
                     funcx.ref = null;
                   }
-                  if (/* contains */funcx.textq.indexOf('{') !== -1 || /* contains */funcx.textq.toLowerCase().trim().indexOf('case') === 0
-                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('for') === 0
-                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('if') === 0
-                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('else') === 0
-                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('switch') === 0
-                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('while') === 0) {
+                  if (/* contains */funcx.textq.indexOf('{') !== -1 || /* contains */funcx.textq.toLowerCase().trim().indexOf('case') !== -1
+                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('for') !== -1
+                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('if') !== -1
+                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('else') !== -1
+                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('switch') !== -1
+                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('while') !== -1 ) {
                     funcx.deepth = Math.max(this.build(funcx.textq).deepth + 1 , funcx.deepth);
                     funcx.ref = this.build(funcx.textq).ref; }
                   funcx.fullTextq = /* replaceAll */funcx.fullTextq.replace(new
@@ -484,12 +484,12 @@ export class Ast {
                     funcx.text = 'switch';
                     funcx.ref = null;
                   }
-                  if (/* contains */funcx.textq.indexOf('{') !== -1 || /* contains */funcx.textq.toLowerCase().trim().indexOf('case') === 0
-                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('for') === 0
-                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('if') === 0
-                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('else') === 0
-                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('switch') === 0
-                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('while') === 0) {
+                  if (/* contains */funcx.textq.indexOf('{') !== -1 || /* contains */funcx.textq.toLowerCase().trim().indexOf('case') !== -1
+                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('for') !== -1
+                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('if') !== -1
+                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('else') !== -1
+                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('switch') !== -1
+                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('while') !== -1 ) {
                     funcx.deepth = Math.max(this.build(funcx.textq).deepth + 1 , funcx.deepth);
                     funcx.ref = this.build(funcx.textq).ref; }
                   funcx.fullTextq = /* replaceAll */funcx.fullTextq.replace(new
@@ -562,12 +562,12 @@ export class Ast {
               cin++;
               funcx.fullTextq += '\n' + stt[j];
               funcx.ref = null;
-              if (/* contains */funcx.textq.indexOf('{') !== -1 || /* contains */funcx.textq.toLowerCase().trim().indexOf('case') === 0
-              || /* contains */funcx.textq.toLowerCase().trim().indexOf('for') === 0
-              || /* contains */funcx.textq.toLowerCase().trim().indexOf('if') === 0
-              || /* contains */funcx.textq.toLowerCase().trim().indexOf('else') === 0
-              || /* contains */funcx.textq.toLowerCase().trim().indexOf('switch') === 0
-              || /* contains */funcx.textq.toLowerCase().trim().indexOf('while') === 0) {
+              if (/* contains */funcx.textq.indexOf('{') !== -1 || /* contains */funcx.textq.toLowerCase().trim().indexOf('case') !== -1
+              || /* contains */funcx.textq.toLowerCase().trim().indexOf('for') !== -1
+              || /* contains */funcx.textq.toLowerCase().trim().indexOf('if') !== -1
+              || /* contains */funcx.textq.toLowerCase().trim().indexOf('else') !== -1
+              || /* contains */funcx.textq.toLowerCase().trim().indexOf('switch') !== -1
+              || /* contains */funcx.textq.toLowerCase().trim().indexOf('while') !== -1 ) {
                 funcx.deepth = Math.max(this.build(funcx.textq).deepth + 1 , funcx.deepth);
                 funcx.ref = this.build(funcx.textq).ref; }
               funcx.fullTextq = /* replaceAll */funcx.fullTextq.replace(new
@@ -589,12 +589,12 @@ export class Ast {
                 cin++;
                 funcx.fullTextq += '\n' + stt[j];
                 funcx.ref = null;
-                if (/* contains */funcx.textq.indexOf('{') !== -1 || /* contains */funcx.textq.toLowerCase().trim().indexOf('case') === 0
-                || /* contains */funcx.textq.toLowerCase().trim().indexOf('for') === 0
-                || /* contains */funcx.textq.toLowerCase().trim().indexOf('if') === 0
-                || /* contains */funcx.textq.toLowerCase().trim().indexOf('else') === 0
-                || /* contains */funcx.textq.toLowerCase().trim().indexOf('switch') === 0
-                || /* contains */funcx.textq.toLowerCase().trim().indexOf('while') === 0) {
+                if (/* contains */funcx.textq.indexOf('{') !== -1 || /* contains */funcx.textq.toLowerCase().trim().indexOf('case') !== -1
+                || /* contains */funcx.textq.toLowerCase().trim().indexOf('for') !== -1
+                || /* contains */funcx.textq.toLowerCase().trim().indexOf('if') !== -1
+                || /* contains */funcx.textq.toLowerCase().trim().indexOf('else') !== -1
+                || /* contains */funcx.textq.toLowerCase().trim().indexOf('switch') !== -1
+                || /* contains */funcx.textq.toLowerCase().trim().indexOf('while') !== -1 ) {
                   funcx.deepth = Math.max(this.build(funcx.textq).deepth + 1 , funcx.deepth);
                   funcx.ref = this.build(funcx.textq).ref;
                 }
@@ -659,12 +659,12 @@ export class Ast {
             funcx.info = cin + '';
             funcx.text = 'case';
             funcx.ref = null;
-            if (/* contains */funcx.textq.indexOf('{') !== -1 || /* contains */funcx.textq.toLowerCase().trim().indexOf('case') === 0
-            || /* contains */funcx.textq.toLowerCase().trim().indexOf('for') === 0
-            || /* contains */funcx.textq.toLowerCase().trim().indexOf('if') === 0
-            || /* contains */funcx.textq.toLowerCase().trim().indexOf('else') === 0
-            || /* contains */funcx.textq.toLowerCase().trim().indexOf('switch') === 0
-            || /* contains */funcx.textq.toLowerCase().trim().indexOf('while') === 0) {
+            if (/* contains */funcx.textq.indexOf('{') !== -1 || /* contains */funcx.textq.toLowerCase().trim().indexOf('case') !== -1
+            || /* contains */funcx.textq.toLowerCase().trim().indexOf('for') !== -1
+            || /* contains */funcx.textq.toLowerCase().trim().indexOf('if') !== -1
+            || /* contains */funcx.textq.toLowerCase().trim().indexOf('else') !== -1
+            || /* contains */funcx.textq.toLowerCase().trim().indexOf('switch') !== -1
+            || /* contains */funcx.textq.toLowerCase().trim().indexOf('while') !== -1 ) {
               funcx.deepth = Math.max(this.build(funcx.textq).deepth + 1 , funcx.deepth);
               funcx.ref = this.build(funcx.textq).ref; }
             funcx.fullTextq = /* replaceAll */funcx.fullTextq.replace(new
@@ -774,12 +774,12 @@ export class Ast {
                   funcx.info = cin + '';
                   funcx.text = 'else';
                   funcx.ref = null;
-                  if (/* contains */funcx.textq.indexOf('{') !== -1 || /* contains */funcx.textq.toLowerCase().trim().indexOf('case') === 0
-                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('for') === 0
-                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('if') === 0
-                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('else') === 0
-                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('switch') === 0
-                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('while') === 0) {
+                  if (/* contains */funcx.textq.indexOf('{') !== -1 || /* contains */funcx.textq.toLowerCase().trim().indexOf('case') !== -1
+                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('for') !== -1
+                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('if') !== -1
+                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('else') !== -1
+                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('switch') !== -1
+                  || /* contains */funcx.textq.toLowerCase().trim().indexOf('while') !== -1 ) {
                     funcx.deepth = Math.max(this.build(funcx.textq).deepth + 1 , funcx.deepth);
                     funcx.ref = this.build(funcx.textq).ref;
                   } else {
