@@ -25,9 +25,9 @@ export class Ast {
     const txtq = '';
     funcx.deepth = 1;
     str = /* replaceAll */str.replace(new RegExp('#([^\\n]*)', 'g'), '');
-    str = /* replaceAll */str.replace(new RegExp('//([^\\n]*)', 'g'), '');
+    str = /* replaceAll */str.replace(new RegExp('//([^\\n]*)', 'g'), '//$1###');
     str = /* replace */str.split('\n').join(' ');
-    str = /* replaceAll */str.replace(new RegExp('\\\\/\\\\*([^\\\\*][^\\\\/])*\\\\*\\\\/', 'g'), '');
+    str = /* replaceAll */str.replace(new RegExp('\\/\\*(([^\\*][^\\/])*)\\*\\/', 'g'), '/*$1*/###');
     str = /* replaceAll */str.replace(new
     RegExp('if([ ]*)\\(((?:[^)(]+|\\((?:[^)(]+|\\([^)(]*\\))*\\))*)\\)', 'g'), 'if$1($2)###');
     str = /* replaceAll */str.replace(new
@@ -70,8 +70,18 @@ export class Ast {
         stq += stt[i] + ' ';
       }
       if (/* contains */(stt[i].toLowerCase()).trim().indexOf('for') === 0) {
-        cin++;
         funcx.fullTextq += '\n' + stt[i];
+        if ( qin === 1 ) {
+          funcx.textq += '\n' + stt[i];
+          funcx.info = cin + '';
+        }
+        while (/* contains */stt[i + 1].trim().indexOf('//') === 0 ||
+        /* contains */stt[i + 1].trim().indexOf('/*') === 0 ) {
+          funcx.textq += '\n' + stt[i + 1];
+          funcx.fullTextq += '\n' + stt[i + 1];
+          i++;
+        }
+        cin++;
         if (count !== 0) {
           funcx.info = count + '';
           funcx.text = 'Variable Deceleration';
@@ -83,10 +93,6 @@ export class Ast {
           funcx.deepth = 1;
           count = 0;
           stq = '';
-        }
-        if ( qin === 1 ) {
-          funcx.textq += '\n' + stt[i];
-          funcx.info = cin + '';
         }
         if (/* contains */stt[i + 1].indexOf('{') !== -1 === false) {
           if ( qin === 0 ) {
@@ -184,8 +190,18 @@ export class Ast {
         }
       }
       if (/* contains */(stt[i].toLowerCase()).trim().indexOf('if') === 0) {
-        cin++;
         funcx.fullTextq += '\n' + stt[i];
+        if ( qin === 1 ) {
+          funcx.textq += '\n' + stt[i];
+          funcx.info = '1';
+        }
+        while (/* contains */stt[i + 1].trim().indexOf('//') === 0 ||
+        /* contains */stt[i + 1].trim().indexOf('/*') === 0 ) {
+          funcx.textq += '\n' + stt[i + 1];
+          funcx.fullTextq += '\n' + stt[i + 1];
+          i++;
+        }
+        cin++;
         if (count !== 0) {
           funcx.info = count + '';
           funcx.text = 'Variable Deceleration';
@@ -197,10 +213,6 @@ export class Ast {
           funcx.deepth = 1;
           count = 0;
           stq = '';
-        }
-        if ( qin === 1 ) {
-          funcx.textq += '\n' + stt[i];
-          funcx.info = '1';
         }
 
         if (/* contains */stt[i + 1].indexOf('{') !== -1 === false) {
@@ -312,8 +324,18 @@ export class Ast {
         }
       }
       if (/* contains */(stt[i].toLowerCase()).trim().indexOf('while') === 0) {
-        cin++;
         funcx.fullTextq += '\n' + stt[i];
+        if ( qin === 1 ) {
+          funcx.textq += '\n' + stt[i];
+          funcx.info = cin + '';
+        }
+        while (/* contains */stt[i + 1].trim().indexOf('//') === 0 ||
+        /* contains */stt[i + 1].trim().indexOf('/*') === 0 ) {
+          funcx.textq += '\n' + stt[i + 1];
+          funcx.fullTextq += '\n' + stt[i + 1];
+          i++;
+        }
+        cin++;
         if (count !== 0) {
           funcx.info = count + '';
           funcx.text = 'Variable Deceleration';
@@ -325,10 +347,6 @@ export class Ast {
           funcx.deepth = 1;
           count = 0;
           stq = '';
-        }
-        if ( qin === 1 ) {
-          funcx.textq += '\n' + stt[i];
-          funcx.info = cin + '';
         }
         if (/* contains */stt[i + 1].indexOf('{') !== -1 === false) {
           if ( qin === 0 ) {
@@ -425,8 +443,18 @@ export class Ast {
         }
       }
       if (/* contains */(stt[i].toLowerCase()).trim().indexOf('switch') === 0) {
-        cin++;
         funcx.fullTextq += '\n' + stt[i];
+        if ( qin === 1 ) {
+          funcx.textq += '\n' + stt[i];
+          funcx.info = cin + '';
+        }
+        while (/* contains */stt[i + 1].trim().indexOf('//') === 0 ||
+        /* contains */stt[i + 1].trim().indexOf('/*') === 0 ) {
+          funcx.textq += '\n' + stt[i + 1];
+          funcx.fullTextq += '\n' + stt[i + 1];
+          i++;
+        }
+        cin++;
         if (count !== 0) {
           funcx.info = count + '';
           funcx.text = 'Variable Deceleration';
@@ -438,10 +466,6 @@ export class Ast {
           funcx.deepth = 1;
           count = 0;
           stq = '';
-        }
-        if ( qin === 1 ) {
-          funcx.textq += '\n' + stt[i];
-          funcx.info = cin + '';
         }
         if (/* contains */stt[i + 1].indexOf('{') !== -1 === false) {
           if ( qin === 0 ) {
@@ -525,8 +549,14 @@ export class Ast {
         }
       }
       if (/* contains */(stt[i].toLowerCase()).trim().indexOf('case') === 0) {
-        cin++;
         funcx.fullTextq += '\n' + stt[i];
+        while (/* contains */stt[i + 1].trim().indexOf('//') === 0 ||
+        /* contains */stt[i + 1].trim().indexOf('/*') === 0 ) {
+          funcx.textq += '\n' + stt[i + 1];
+          funcx.fullTextq += '\n' + stt[i + 1];
+          i++;
+        }
+        cin++;
         if (count !== 0) {
           funcx.info = count + '';
           funcx.text = 'Variable Deceleration';
@@ -632,8 +662,14 @@ export class Ast {
         }
       }
       if (/* contains */stt[i].toLowerCase().trim().indexOf('default') === 0) {
-        cin++;
         funcx.fullTextq += '\n' + stt[i];
+        while (/* contains */stt[i + 1].trim().indexOf('//') === 0 ||
+        /* contains */stt[i + 1].trim().indexOf('/*') === 0 ) {
+          funcx.textq += '\n' + stt[i + 1];
+          funcx.fullTextq += '\n' + stt[i + 1];
+          i++;
+        }
+        cin++;
         if (count !== 0) {
           funcx.info = count + '';
           funcx.text = 'Variable Deceleration';
@@ -690,8 +726,14 @@ export class Ast {
         }
       }
       if (/* contains */(stt[i].toLowerCase()).trim().indexOf('else') === 0) {
-        cin++;
         funcx.fullTextq += '\n' + stt[i];
+        while (/* contains */stt[i + 1].trim().indexOf('//') === 0 ||
+        /* contains */stt[i + 1].trim().indexOf('/*') === 0 ) {
+          funcx.textq += '\n' + stt[i + 1];
+          funcx.fullTextq += '\n' + stt[i + 1];
+          i++;
+        }
+        cin++;
         if (count !== 0) {
           funcx.info = count + '';
           funcx.text = 'Variable Deceleration';
@@ -722,7 +764,7 @@ export class Ast {
               funcx.text = 'else';
             }
             //
-            if (qin === 1){
+            if (qin === 1) {
               funcx.textq += '\n' + stt[i];
             }
             //
@@ -731,8 +773,6 @@ export class Ast {
           }
           if (/* contains */stt[i + 1].indexOf(';') !== -1) {
             cin++;
-            funcx.textq += '\n' + stt[i ];
-            funcx.fullTextq += '\n' + stt[i ];
             funcx.textq += '\n' + stt[i + 1];
             funcx.fullTextq += '\n' + stt[i + 1];
             i++;
