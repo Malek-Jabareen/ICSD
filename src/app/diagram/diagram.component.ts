@@ -22,7 +22,6 @@ let firstTimeShape = true;
 let ctrlListening = false;
 let self = null;
 let autoWin = true;
-
 @Component({
   selector: 'app-diagram',
   templateUrl: './diagram.component.html',
@@ -32,7 +31,7 @@ let autoWin = true;
 
 export class DiagramComponent implements OnInit {
   @Output() funcTextEvent = new EventEmitter<string>();
-
+  show = false;
   onchange(value: string) {
     this.funcTextEvent.emit(value);
     /* alert('hello'); */
@@ -1695,11 +1694,29 @@ export class DiagramComponent implements OnInit {
         attrs: {rect: {fill: 'orange'}, text: {text: funcName, fill: 'white', textF: this.functionText}}
       });
       graph.addCells([rect]);
+      let xPoint = [];
+      let yPoint = [];
+      this.lineChartLabels.length = 0;
+      yPoint.push(0);
+      let max = 0;
+      this.lineChartLabels.push(0);
+      let v = 0;
+      for ( let n = 0 ; n < qq.ref.length ; n++ ) {
+        if ( qq.ref[n].deepth > max ) {
+          max = qq.ref[n].deepth;
+        }
+        if (/* contains */qq.ref[n].text.trim().indexOf('Variable Deceleration') === -1) {
+          v++;
+          yPoint.push(qq.ref[n].deepth);
+          this.lineChartLabels.push(v);
+        }
+      }
+
+      yPoint.push(max + 1);
+      this.lineChartData = yPoint;
       this.build(qq, 1, graph, rect, 3);
-
-      fieldArray = [];
+      fieldArray = [ ];
       this.fieldA = fieldArray;
-
 
       /*paper.on('cell:pointerdown', function(cellView, evt, x, y) {
         alert(cellView.model.attr('text/textF'));
@@ -1734,5 +1751,69 @@ export class DiagramComponent implements OnInit {
     } else {
       alert('Auto window fit turned off');
     }
+  }
+  public lineChartData: Array<any> = [
+    {data: [], label: 'Series A'},
+  ];
+  public lineChartLabels: Array<any> = [];
+  public lineChartOptions:any = {
+    responsive: true,
+    scaleBeginAtZero : true
+  };
+  public lineChartColors: Array<any> = [
+    { // grey
+      backgroundColor: 'rgba(148,159,177,0.2)',
+      borderColor: 'rgba(148,159,177,1)',
+      pointBackgroundColor: 'rgba(148,159,177,1)',
+      pointBorderColor: '#fff',
+      pointHoverBackgroundColor: '#fff',
+      pointHoverBorderColor: 'rgba(148,159,177,0.8)'
+    },
+    { // dark grey
+      backgroundColor: 'rgba(77,83,96,0.2)',
+      borderColor: 'rgba(77,83,96,1)',
+      pointBackgroundColor: 'rgba(77,83,96,1)',
+      pointBorderColor: '#fff',
+      pointHoverBackgroundColor: '#fff',
+      pointHoverBorderColor: 'rgba(77,83,96,1)'
+    },
+    { // grey
+      backgroundColor: 'rgba(148,159,177,0.2)',
+      borderColor: 'rgba(148,159,177,1)',
+      pointBackgroundColor: 'rgba(148,159,177,1)',
+      pointBorderColor: '#fff',
+      pointHoverBackgroundColor: '#fff',
+      pointHoverBorderColor: 'rgba(148,159,177,0.8)'
+    }
+  ];
+  public lineChartLegend: boolean = true;
+  public lineChartType: string = 'line';
+
+  public randomize():void {
+    const _lineChartData: Array<any> = new Array(this.lineChartData.length);
+    for (let i = 0; i < this.lineChartData.length; i++) {
+      _lineChartData[i] = {data: new Array(this.lineChartData[i].data.length), label: this.lineChartData[i].label};
+      for (let j = 0; j < this.lineChartData[i].data.length; j++) {
+        _lineChartData[i].data[j] = Math.floor((Math.random() * 100) + 1);
+      }
+    }
+    this.lineChartData = _lineChartData;
+  }
+
+  public showHide(): void {
+    document.getElementById('chartContainer').style.display = 'none' ;
+  }
+  clicked() {
+    alert(this.show);
+    this.show = !this.show;
+    alert(this.show);
+  }
+  // events
+  public chartClicked(e: any): void {
+    console.log(e);
+  }
+
+  public chartHovered(e: any): void {
+    console.log(e);
   }
 }
