@@ -19,6 +19,7 @@ describe('DiagramComponent', () => {
     fixture.detectChanges();
   });
 
+
   it('should create', () => {
     expect(component).toBeTruthy();
   });

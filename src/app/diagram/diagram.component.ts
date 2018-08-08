@@ -12,7 +12,6 @@ let dialogNumber = 1;
 const cellDialog = [];
 let paper;
 let graphScale = 1;
-let maxWindows = 4;
 let matches = [];
 let ctrlArrayCounter = 0 ;
 let ctrlArrayCounter2 = 0 ;
@@ -62,7 +61,7 @@ export class DiagramComponent implements OnInit {
 
     $(document).keyup(function (event) {
       if (event.which == "17" && ctrlListening == true) {
-        CtrlUnpress();
+        self.CtrlUnpress();
         ctrlListening = false;
       }
     });
@@ -420,221 +419,7 @@ export class DiagramComponent implements OnInit {
     this.funcTextEvent.emit(functionTextConvert);
 
 
-    function CtrlUnpress() {
-      self.shapeClick(ctrlCodeArray[ctrlArrayCounter - 1][ctrlArrayCounter2], null, 0, 0);
-      ctrlArrayCounter2++;
-    }
 
-
-    function preprocess(str: string) {
-      str = str.toLowerCase();
-      str = str.replace(new RegExp('//(.*)\n', 'g'), '');
-      str = str.replace(new RegExp('\\/\\*(.|\n)*\\*\\/', 'g'), '');
-
-      str = str.replace(new RegExp('for([ ]*)\\(([^\\()]*)(\\(.*\\))*([^\\(]*)\\)', 'g'), function (s) {
-        var c = (s.match(/;/g) || []).length;
-        var res = 'F';
-        for (var z = 0; z < c; z++) {
-          res = res + 'L';
-        }
-        return res;
-      });
-      str = str.replace(new RegExp('if([ ]*)\\(([^\\()]*)(\\(.*\\))*([^\\(]*)\\)', 'g'), function (s) {
-        var c = (s.match(new RegExp('(\\|\\||\\&\\&)', 'g')) || []).length;
-        var res = 'I';
-        if (c > 1) {
-          for (var z = 0; z < c; z++) {
-            res = res + 'O';
-          }
-        }
-        return res;
-      });
-      str = str.replace(new RegExp('while([ ]*)\\(([^\\()]*)(\\(.*\\))*([^\\(]*)\\)', 'g'), 'W');
-      str = str.replace(new RegExp('switch([ ]*)\\(([^\\()]*)(\\(.*\\))*([^\\(]*)\\)', 'g'), 'S');
-      str = str.replace(new RegExp('else', 'g'), 'E');
-      str = str.replace(new RegExp('case', 'g'), 'C');
-      /*for (let x = 0; x < matches.length; x++){
-        var re = new RegExp(matches[x],"g");
-        str = str.replace(re,'x');
-      } */
-      str = str.replace(new RegExp('(\[a-zA-Z]+.+)([ ]*)\\(([^\\(]*)\\)', 'g'), '');
-      str = str.replace(new RegExp('([^A-Z{};]+);', 'g'), 'L');
-
-      str = str.replace(/{/g, 'P');
-      str = str.replace(/}/g, 'P');
-
-      str = str.replace(/\n/g, '');
-      str = str.replace(/\t/g, '');
-      str = str.replace(/ /g, '');
-
-
-      return str;
-    }
-
-
-    function simRatios() {
-      let y = 0;
-      let y2 = 0;
-      while (y < maxWindows) {
-        if (cellDialog[y] !== undefined) {
-          y2++;
-        }
-        y++;
-      }
-
-      let table = '';
-      if (y2 === 0 || y2 === 1) {
-        return 'Please click on more than one shape in order to show similarity ratios';
-      }
-      table += '<table style="width:100%; border: 1px solid #f1f1f1; padding:0px; line-height: 14px; margin:auto; "><tr><td style="font-weight: bold;">Code A</td><td style="font-weight: bold;">Code B</td><td style="font-weight: bold;">Similarity</td></tr>';
-
-      for (let z = 0; z < maxWindows; z++) {
-        if (cellDialog[z] !== undefined) {
-          for (let zz = 0; zz < maxWindows; zz++) {
-            if (z === zz) {
-              continue;
-            }
-            if (z < zz) {
-              continue;
-            }
-            if (cellDialog[zz] !== undefined) {
-              let z2 = z + 1;
-              let zz2 = zz + 1;
-              table += '<tr><td>Code ' + z2 + '</td><td>Code ' + zz2 + '</td><td id="resulttd' + z + '' + zz + '">';
-
-              //  var a = $('#dialog' + z2).data('p1').model.attr('text/textF');
-              //   var b = $('#dialog' + zz2).data('p1').model.attr('text/textF');
-
-              var a = $('#dialog' + z2).data('p3');
-              var b = $('#dialog' + zz2).data('p3');
-
-              a = preprocess(a);
-              b = preprocess(b);
-
-            //  alert(a);
-            //  alert(b);
-
-              simAlgo(a, b, z, zz);
-
-              table += 'loading</td></tr>';
-            }
-          }
-        }
-      }
-      table += '</table>';
-      return table;
-
-    }
-
-    function simAlgo(a, b, z, zz) {
-      $.ajax({
-        type: "GET",
-        crossDomain: true,
-        url: "https://alon1992.pythonanywhere.com/",
-        data: {"string": a, "string2": b},
-        cache: true,
-        error: function () {
-          let simple = simpleSimAlgo(a, b);
-          document.getElementById('resulttd' + z + '' + zz).innerHTML = simple + '%';
-          document.getElementById('serverstatus').innerHTML = 'Remote server is unavailable ,results are not accurate';
-        },
-        success: function (data) {
-          let ajaxresult1 = data.r;
-          let ajaxresult2 = data.l;
-          // alert('?string=' + a + '&string2=' +b);
-          document.getElementById('resulttd' + z + '' + zz).innerHTML = ajaxresult1 + '% | ' + ajaxresult2 + '%';
-          document.getElementById('serverstatus').innerHTML = '';
-        }
-      });
-    }
-
-
-    function simpleSimAlgo(a, b) {
-      var l2 = a.length;
-      var l2 = b.length;
-      var grade = 0;
-      var minLength = 0;
-      var maxLength = 0;
-
-      if (a.length > b.length) {
-        minLength = b.length;
-        maxLength = a.length;
-      } else {
-        minLength = a.length;
-        maxLength = b.length;
-      }
-
-      for (let i = 0; i < minLength; i++) {
-        if (a[i] === b[i]) {
-          grade++;
-        }
-      }
-
-      let weight = grade / maxLength;
-      let result = (weight * 100);
-      return Math.round(result);
-    }
-
-    function closeDialogEvent(cellv, n, ctrlWin) {
-      document.getElementById('dialog' + n + 'b').style.display = 'none';
-
-      if (isNaN(parseInt(cellv.model.attr('text/text'))) === false) {
-        cellv.model.attr('text/text', '');
-      }
-
-      cellDialog[n - 1] = undefined;
-
-// bug fix
-      let x = 0;
-      let y = 0;
-      while (x < n - 1) {
-        if (cellDialog[x] === undefined) {
-          y = 1;
-        }
-        x++;
-      }
-      if (y === 0) {
-        dialogNumber = n;
-      }
-
-      // $('#convert').focus();
-
-      if (ctrlWin != -1) {
-        let k = 0;
-        while (ctrlCodeArray[k][ctrlWin] !== undefined) {
-          originalColor(ctrlCodeArray[k][ctrlWin]);
-          if (isNaN(parseInt(ctrlCodeArray[k][ctrlWin].model.attr('text/text'))) === false) {
-            ctrlCodeArray[k][ctrlWin].model.attr('text/text', '');
-          }
-          k++;
-        }
-      } else {
-        originalColor(cellv);
-      }
-
-      if ($('#dialogSim').dialog('isOpen')) {
-        $('#dialogSim').trigger('refreshEvent');
-      }
-    }
-
-
-    function originalColor(cellv) {
-      if (cellv.model.attr('text/type') === 'ELSE') {
-        cellv.model.attr('polygon/fill', '#FFA533');
-      } else if (cellv.model.attr('text/type') === 'IF') {
-        cellv.model.attr('polygon/fill', '#fff58c');
-      } else if (cellv.model.attr('text/type') === 'CASE') {
-        cellv.model.attr('polygon/fill', '#792fff');
-
-      } else if (cellv.model.attr('text/type') === 'SWITCH') {
-        cellv.model.attr('polygon/fill', '#FF3333');
-
-      } else if (cellv.model.attr('text/type') === 'FOR') {
-        cellv.model.attr('circle/fill', '#33B0FF');
-      } else if (cellv.model.attr('text/type') === 'WHILE') {
-        cellv.model.attr('circle/fill', '#33FF51');
-      }
-    }
 
     // this is a temp bug fix for jquery ui open bug
     function resizeEvent(event, ui) {
@@ -702,7 +487,7 @@ export class DiagramComponent implements OnInit {
       });
       $('#dialogSim').dialog({
         open: function () {
-          let table = simRatios();
+          let table = self.simRatios();
           $('#dialogTextSim').html(table);
         },
         // close: function() { $('#convert').focus(); },
@@ -710,7 +495,7 @@ export class DiagramComponent implements OnInit {
         height: 230,
         width: 300,
       }).on("refreshEvent", function () {
-        let table = simRatios();
+        let table = self.simRatios();
         $('#dialogTextSim').html(table);
       });
 
@@ -729,44 +514,7 @@ export class DiagramComponent implements OnInit {
         height: 590,
         width: 1000
       });
-      $('#dialog1').dialog({
-        close: function () {
-          closeDialogEvent($('#dialog1').data('p1'), 1, $('#dialog1').data('p2'));
-        },
-        autoOpen: false,
-        resizeStop: resizeEvent,
-        height: 580,
-        width: 580
-      });
-      $('#dialog2').dialog({
-        close: function () {
-          closeDialogEvent($('#dialog2').data('p1'), 2, $('#dialog2').data('p2'));
-        },
-        position: {my: 'left top', at: 'left bottom'},
-        autoOpen: false,
-        resizeStop: resizeEvent,
-        height: 580,
-        width: 580
-      });
-      $('#dialog3').dialog({
-        close: function () {
-          closeDialogEvent($('#dialog3').data('p1'), 3, $('#dialog3').data('p2'));
-        },
-        position: {my: 'right top', at: 'right bottom'},
-        autoOpen: false,
-        resizeStop: resizeEvent,
-        height: 580,
-        width: 580
-      });
-      $('#dialog4').dialog({
-        close: function () {
-          closeDialogEvent($('#dialog4').data('p1'), 4, $('#dialog4').data('p2'));
-        },
-        autoOpen: false,
-        resizeStop: resizeEvent,
-        height: 580,
-        width: 580
-      });
+
 
     });
 
@@ -1151,6 +899,232 @@ export class DiagramComponent implements OnInit {
   }
 
 
+
+   CtrlUnpress() {
+    self.shapeClick(ctrlCodeArray[ctrlArrayCounter - 1][ctrlArrayCounter2], null, 0, 0);
+    ctrlArrayCounter2++;
+  }
+
+
+   preprocess(str: string) {
+    str = str.toLowerCase();
+    str = str.replace(new RegExp('//(.*)\n', 'g'), '');
+    str = str.replace(new RegExp('\\/\\*(.|\n)*\\*\\/', 'g'), '');
+
+    str = str.replace(new RegExp('for([ ]*)\\(([^\\()]*)(\\(.*\\))*([^\\(]*)\\)', 'g'), function (s) {
+      var c = (s.match(/;/g) || []).length;
+      var res = 'F';
+      for (var z = 0; z < c; z++) {
+        res = res + 'L';
+      }
+      return res;
+    });
+    str = str.replace(new RegExp('if([ ]*)\\(([^\\()]*)(\\(.*\\))*([^\\(]*)\\)', 'g'), function (s) {
+      var c = (s.match(new RegExp('(\\|\\||\\&\\&)', 'g')) || []).length;
+      var res = 'I';
+      if (c > 1) {
+        for (var z = 0; z < c; z++) {
+          res = res + 'O';
+        }
+      }
+      return res;
+    });
+    str = str.replace(new RegExp('while([ ]*)\\(([^\\()]*)(\\(.*\\))*([^\\(]*)\\)', 'g'), 'W');
+    str = str.replace(new RegExp('switch([ ]*)\\(([^\\()]*)(\\(.*\\))*([^\\(]*)\\)', 'g'), 'S');
+    str = str.replace(new RegExp('else', 'g'), 'E');
+    str = str.replace(new RegExp('case', 'g'), 'C');
+    /*for (let x = 0; x < matches.length; x++){
+      var re = new RegExp(matches[x],"g");
+      str = str.replace(re,'x');
+    } */
+    str = str.replace(new RegExp('(\[a-zA-Z]+.+)([ ]*)\\(([^\\(]*)\\)', 'g'), '');
+    str = str.replace(new RegExp('([^A-Z{};]+);', 'g'), 'L');
+
+    str = str.replace(/{/g, 'P');
+    str = str.replace(/}/g, 'P');
+
+    str = str.replace(/\n/g, '');
+    str = str.replace(/\t/g, '');
+    str = str.replace(/ /g, '');
+
+
+    return str;
+  }
+
+
+   simRatios() {
+    let y = 0;
+    let y2 = 0;
+    while (y < dialogNumber) {
+      if (cellDialog[y] !== undefined) {
+        y2++;
+      }
+      y++;
+    }
+
+    let table = '';
+    if (y2 === 0 || y2 === 1) {
+      return 'Please click on more than one shape in order to show similarity ratios';
+    }
+    table += '<table style="width:100%; border: 1px solid #f1f1f1; padding:0px; line-height: 14px; margin:auto; "><tr><td style="font-weight: bold;">Code A</td><td style="font-weight: bold;">Code B</td><td style="font-weight: bold;">Similarity</td></tr>';
+
+    for (let z = 0; z < dialogNumber; z++) {
+      if (cellDialog[z] !== undefined) {
+        for (let zz = 0; zz < dialogNumber; zz++) {
+          if (z === zz) {
+            continue;
+          }
+          if (z < zz) {
+            continue;
+          }
+          if (cellDialog[zz] !== undefined) {
+            let z2 = z + 1;
+            let zz2 = zz + 1;
+            table += '<tr><td>Code ' + z2 + '</td><td>Code ' + zz2 + '</td><td id="resulttd' + z + '' + zz + '">';
+
+            //  var a = $('#dialog' + z2).data('p1').model.attr('text/textF');
+            //   var b = $('#dialog' + zz2).data('p1').model.attr('text/textF');
+
+            var a = $('#dialog' + z2).data('p3');
+            var b = $('#dialog' + zz2).data('p3');
+
+            a = this.preprocess(a);
+            b = this.preprocess(b);
+
+            //  alert(a);
+            //  alert(b);
+
+            this.simAlgo(a, b, z, zz);
+
+            table += 'loading</td></tr>';
+          }
+        }
+      }
+    }
+    table += '</table>';
+    return table;
+
+  }
+
+   simAlgo(a, b, z, zz) {
+    $.ajax({
+      type: "GET",
+      crossDomain: true,
+      url: "https://alon1992.pythonanywhere.com/",
+      data: {"string": a, "string2": b},
+      cache: true,
+      error: function () {
+        let simple = this.simpleSimAlgo(a, b);
+        document.getElementById('resulttd' + z + '' + zz).innerHTML = simple + '%';
+        document.getElementById('serverstatus').innerHTML = 'Remote server is unavailable ,results are not accurate';
+      },
+      success: function (data) {
+        let ajaxresult1 = data.r;
+        let ajaxresult2 = data.l;
+        // alert('?string=' + a + '&string2=' +b);
+        document.getElementById('resulttd' + z + '' + zz).innerHTML = ajaxresult1 + '% | ' + ajaxresult2 + '%';
+        document.getElementById('serverstatus').innerHTML = '';
+      }
+    });
+  }
+
+
+   simpleSimAlgo(a, b) {
+    var l2 = a.length;
+    var l2 = b.length;
+    var grade = 0;
+    var minLength = 0;
+    var maxLength = 0;
+
+    if (a.length > b.length) {
+      minLength = b.length;
+      maxLength = a.length;
+    } else {
+      minLength = a.length;
+      maxLength = b.length;
+    }
+
+    for (let i = 0; i < minLength; i++) {
+      if (a[i] === b[i]) {
+        grade++;
+      }
+    }
+
+    let weight = grade / maxLength;
+    let result = (weight * 100);
+    return Math.round(result);
+  }
+
+   closeDialogEvent(cellv, n, ctrlWin) {
+     $("#dialog" + n).dialog("option", "width", 580);
+     $("#dialog" + n).dialog("option", "height", 580);
+
+    // alert(n + " | " + dialogNumber)
+     if ( n < 5) {
+       document.getElementById('dialog' + n + 'b').style.display = 'none';
+     }
+
+    if (isNaN(parseInt(cellv.model.attr('text/text'))) === false) {
+      cellv.model.attr('text/text', '');
+    }
+
+    cellDialog[n - 1] = undefined;
+
+// bug fix
+    let x = 0;
+    let y = 0;
+    while (x < n - 1) {
+      if (cellDialog[x] === undefined) {
+        y = 1;
+      }
+      x++;
+    }
+    if (y === 0) {
+      dialogNumber = n;
+    }
+
+
+
+    // $('#convert').focus();
+
+    if (ctrlWin != -1) {
+      let k = 0;
+      while (ctrlCodeArray[k][ctrlWin] !== undefined) {
+        this.originalColor(ctrlCodeArray[k][ctrlWin]);
+        if (isNaN(parseInt(ctrlCodeArray[k][ctrlWin].model.attr('text/text'))) === false) {
+          ctrlCodeArray[k][ctrlWin].model.attr('text/text', '');
+        }
+        k++;
+      }
+    } else {
+      this.originalColor(cellv);
+    }
+
+    if ($('#dialogSim').dialog('isOpen')) {
+      $('#dialogSim').trigger('refreshEvent');
+    }
+  }
+
+
+   originalColor(cellv) {
+    if (cellv.model.attr('text/type') === 'ELSE') {
+      cellv.model.attr('polygon/fill', '#FFA533');
+    } else if (cellv.model.attr('text/type') === 'IF') {
+      cellv.model.attr('polygon/fill', '#fff58c');
+    } else if (cellv.model.attr('text/type') === 'CASE') {
+      cellv.model.attr('polygon/fill', '#792fff');
+
+    } else if (cellv.model.attr('text/type') === 'SWITCH') {
+      cellv.model.attr('polygon/fill', '#FF3333');
+
+    } else if (cellv.model.attr('text/type') === 'FOR') {
+      cellv.model.attr('circle/fill', '#33B0FF');
+    } else if (cellv.model.attr('text/type') === 'WHILE') {
+      cellv.model.attr('circle/fill', '#33FF51');
+    }
+  }
+
+
   build(Qer: Ast, num: number, graph: joint.dia.Graph, rect: joint.shapes.basic.Generic, c: number) {
     joint.shapes.basic.trapez = joint.shapes.basic.Generic.extend({
 
@@ -1351,16 +1325,52 @@ export class DiagramComponent implements OnInit {
 
     if (!cntrlIsPressed) {
 
+
+
+
+      for (let n = 0; n < dialogNumber; n++) {
+        if (cellDialog[n] !== undefined) {
+          if (cellView === cellDialog[n]) {
+            //   alert($('#dialog' + (n+1)).data('p2'));
+            if ($('#dialog' + (n + 1)).data('p2') === -1) {
+              alert('There is an active window that assinged that shape');
+              $('#dialog' + (n + 1)).parent().show();
+              if (n < 4) {
+                document.getElementById('dialog' + (n + 1) + 'b').style.display = 'none';
+              }
+              return;
+            }
+          }
+        }
+      }
+
+      if (cellDialog[dialogNumber - 1] !== undefined) {
+        $('#dialog' + dialogNumber).dialog('close');
+      }
+
+     // alert(dialogNumber);
+
+      $("<div id='dialog" +  dialogNumber + "'><p id='dialogText" +  dialogNumber + "'></p></div>").dialog({
+     /* close: function () {
+        let d = dialogNumber;
+        self.closeDialogEvent($('#dialog' + d).data('p1'), d, $('#dialog' + d).data('p2'));
+      }, */
+      autoOpen: false,
+        resizeStop: self.resizeEvent,
+         height: 580,
+        width: 580
+    });
+
       if (autoWin) {
         let count = 0;
-        for (let n = 0; n < maxWindows; n++) {
+        for (let n = 0; n < dialogNumber; n++) {
           if (cellDialog[n] !== undefined) {
             count++;
           }
         }
 
         let x = 0;
-        for (let n = 0; n < maxWindows; n++) {
+        for (let n = 0; n < dialogNumber; n++) {
           if (cellDialog[n] !== undefined) {
             // alert('dialog ' + x +' is open' );
             // n+1 is the dialog that currently open
@@ -1390,34 +1400,24 @@ export class DiagramComponent implements OnInit {
       }
 
 
-      for (let n = 0; n < maxWindows; n++) {
-        if (cellDialog[n] !== undefined) {
-          if (cellView === cellDialog[n]) {
-            //   alert($('#dialog' + (n+1)).data('p2'));
-            if ($('#dialog' + (n + 1)).data('p2') === -1) {
-              alert('There is an active window that assinged that shape');
-              $('#dialog' + (n + 1)).parent().show();
-              document.getElementById('dialog' + (n + 1) + 'b').style.display = 'none';
-              return;
-            }
-          }
-        }
-      }
 
-      if (cellDialog[dialogNumber - 1] !== undefined) {
-        $('#dialog' + dialogNumber).dialog('close');
-      }
 
-      $('#dialog' + dialogNumber).data('p1', cellView).dialog('open');
+     $('#dialog' + dialogNumber).dialog('open');
+      $('#dialog' + dialogNumber).data('p1', cellView)
       let ctrlWin = -1;
       if (evt == null) {
         ctrlWin = ctrlArrayCounter2;
       }
       $('#dialog' + dialogNumber).data('p2', ctrlWin);
+      let d = dialogNumber;
+      $( "#dialog" + dialogNumber ).on( "dialogclose", function(  ) {
+       // alert(d);
+        self.closeDialogEvent(cellView, d, ctrlWin);
+      } );
 
 
       let n = 0;
-      while (n < maxWindows) {
+      while (n < dialogNumber) {
         if (cellDialog[n] === undefined) {
           break;
         }
@@ -1439,12 +1439,27 @@ export class DiagramComponent implements OnInit {
 
       let y = 0;
       let y2 = 0;
-      while (y < maxWindows) {
+      while (y < dialogNumber) {
         if (cellDialog[y] !== undefined) {
           y2++;
         }
         y++;
       }
+
+
+      let linesToComp = (text.length / 66);
+      let newHeight = linesToComp * 40 + 115;
+    let brs = (text.match(/<br>/g) || []).length;
+      let calc = brs - linesToComp;
+      if (calc > 0) {
+        newHeight = newHeight + calc * 10;
+      }
+      let currentHeight =  $("#dialog" + dialogNumber).dialog("option", "height");
+
+      if (newHeight < currentHeight) {
+        $("#dialog" + dialogNumber).dialog("option", "height", newHeight);
+      }
+
 
       fieldArray.push(cellView.model.attr('text/textF'));
 
@@ -1470,7 +1485,10 @@ export class DiagramComponent implements OnInit {
         // ctrlArrayCounter = 0;
       }
       $('#dialog' + dialogNumber).data('p3', originalText);
-      const msg = '<a href="#" onclick="$(\'#dialogSim\').dialog(\'open\');">Similarity ratios</a> | <a href="#" onclick="$(\'#dialog' + dialogNumber + '\').parent().hide(); win = document.getElementById(\'dialog' + dialogNumber + 'b\'); win.style.display=\'inline-block\';  inter = setInterval(function() { win.style.backgroundColor = (win.style.backgroundColor == \'\' ? \'#8b0000\' : \'\');}, 100); setTimeout(function() { clearInterval(inter); win.style.backgroundColor = \'\'; },400); ">Minimize window</a>';
+      let msg = '<a href="#" onclick="$(\'#dialogSim\').dialog(\'open\');">Similarity ratios</a> ';
+      if (dialogNumber < 5) {
+        msg = msg + '| <a href="#" onclick="$(\'#dialog' + dialogNumber + '\').parent().hide(); win = document.getElementById(\'dialog' + dialogNumber + 'b\'); win.style.display=\'inline-block\';  inter = setInterval(function() { win.style.backgroundColor = (win.style.backgroundColor == \'\' ? \'#8b0000\' : \'\');}, 100); setTimeout(function() { clearInterval(inter); win.style.backgroundColor = \'\'; },400); ">Minimize window</a>';
+      }
       document.getElementById('dialogText' + dialogNumber).innerHTML = msg + '<code>' + text + '</code>';
 
     }
@@ -1514,10 +1532,10 @@ export class DiagramComponent implements OnInit {
     // cellView.model.attr('text/fill', 'red');
 
     dialogNumber++;
-    if (dialogNumber === maxWindows + 1) {
+   /* if (dialogNumber === maxWindows + 1) {
       dialogNumber = 1;
 
-    }
+    } */
     if ($('#dialogSim').dialog('isOpen')) {
       $('#dialogSim').trigger('refreshEvent');
     }
