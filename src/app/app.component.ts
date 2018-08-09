@@ -173,7 +173,5 @@ export class AppComponent implements OnInit {
   zoomout() {
     this.component1.zoomout();
   }
-  autofit() {
-    this.component1.autofit();
-  }
+
 }

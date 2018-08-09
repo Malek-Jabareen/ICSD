@@ -2,6 +2,16 @@
 
 
 
+  <div id="dialogPref" title="Preferences">
+    <b>User Interface</b><br>
+<input type="checkbox" id="opt" [(ngModel)]="dialogOpacity" (change)="dialogOpacityEvent()">Transparent background for dialogs<br>
+    <input type="checkbox" id="win" [(ngModel)]="autoWin">Set and fit windows size and position automatically<br>
+    <hr>
+    <b>Calculations</b><br>
+    <input type="checkbox" id="ig" [(ngModel)]="ignoreP" (change)="refreshSim()">Ignore curly parenthesis<br>
+    <input type="checkbox" id="ig2" [(ngModel)]="ignoreI" (change)="refreshSim()">Ignore 'AND' and 'OR' inside a IF statement<br>
+
+  </div>
 
   <div id="dialogSim" title="Similarity ratios">
     <p id="dialogTextSim"></p>
