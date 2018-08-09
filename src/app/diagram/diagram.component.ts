@@ -1343,9 +1343,13 @@ export class DiagramComponent implements OnInit {
         }
       }
 
-      if (cellDialog[dialogNumber - 1] !== undefined) {
+   /*   if (cellDialog[dialogNumber - 1] !== undefined) {
         $('#dialog' + dialogNumber).dialog('close');
-      }
+      } */
+
+   while (cellDialog[dialogNumber - 1] !== undefined) {
+     dialogNumber++;
+   }
 
       //   <li class="liHide2" id="dialog4b"><a href="#" onclick="$('#dialog4').parent().show(); document.getElementById('dialog4b').style.display='none';" title="Show dialog">Win 4</a></li>
 if ( document.getElementById('dialog' + dialogNumber + 'b') == undefined) {
