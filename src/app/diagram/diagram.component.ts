@@ -917,8 +917,8 @@ export class DiagramComponent implements OnInit {
    preprocess(str: string) {
     str = str.toLowerCase();
     str = str.replace(new RegExp('//(.*)\n', 'g'), '');
-    str = str.replace(new RegExp('\\/\\*(.|\n)*\\*\\/', 'g'), '');
-
+   // str = str.replace(new RegExp('\\/\\*(.|\n)*\\*\\/', 'g'), '');
+     str = str.replace(new RegExp('\\/\\*[^\\*]*[^\\/]*\\*\\/', 'g'), '');
 
     str = str.replace(new RegExp('for([ ]*)\\(([^\\()]*)(\\(.*\\))*([^\\(]*)\\)', 'g'), function (s) {
       var c = (s.match(/;/g) || []).length;
