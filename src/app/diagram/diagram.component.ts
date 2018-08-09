@@ -21,7 +21,7 @@ let fieldArray: Array<String>;
 let firstTimeShape = true;
 let ctrlListening = false;
 let self = null;
-let autoWin = true;
+
 
 @Component({
   selector: 'app-diagram',
@@ -43,7 +43,10 @@ export class DiagramComponent implements OnInit {
   public number: number = 1;
   newAttribute: any = {};
   title = 'ICSD';
-
+  public autoWin: boolean = true;
+  public dialogOpacity: boolean = false;
+  public ignoreP: boolean = false;
+  public ignoreI: boolean = false;
 
   @Input() functionText = '';
 
@@ -53,7 +56,6 @@ export class DiagramComponent implements OnInit {
 
 
   ngOnInit() {
-
     /* $(document).keydown(function(event) {
        if (event.which == "17") {
          cntrlIsPressed = true;
@@ -495,6 +497,11 @@ export class DiagramComponent implements OnInit {
         let table = self.simRatios();
         $('#dialogTextSim').html(table);
       });
+      $('#dialogPref').dialog({
+        autoOpen: false,
+        height: 400,
+        width: 430,
+      });
 
       $('#dialogFunc').dialog({
         open: function () {
@@ -910,13 +917,14 @@ export class DiagramComponent implements OnInit {
    preprocess(str: string) {
     str = str.toLowerCase();
     str = str.replace(new RegExp('//(.*)\n', 'g'), '');
-    str = str.replace(new RegExp('\\/\\*(.|\n)*\\*\\/', 'g'), '');
+   // str = str.replace(new RegExp('\\/\\*(.|\n)*\\*\\/', 'g'), '');
+     str = str.replace(new RegExp('\\/\\*[^\\*]*[^\\/]*\\*\\/', 'g'), '');
 
     str = str.replace(new RegExp('for([ ]*)\\(([^\\()]*)(\\(.*\\))*([^\\(]*)\\)', 'g'), function (s) {
       var c = (s.match(/;/g) || []).length;
       var res = 'F';
       for (var z = 0; z < c; z++) {
-        res = res + 'L';
+       if (self.ignoreI == false) { res = res + 'L'; }
       }
       return res;
     });
@@ -925,7 +933,7 @@ export class DiagramComponent implements OnInit {
       var res = 'I';
       if (c > 1) {
         for (var z = 0; z < c; z++) {
-          res = res + 'O';
+          if (self.ignoreI == false) {  res = res + 'O'; }
         }
       }
       return res;
@@ -941,8 +949,14 @@ export class DiagramComponent implements OnInit {
     str = str.replace(new RegExp('(\[a-zA-Z]+.+)([ ]*)\\(([^\\(]*)\\)', 'g'), '');
     str = str.replace(new RegExp('([^A-Z{};]+);', 'g'), 'L');
 
-    str = str.replace(/{/g, 'P');
-    str = str.replace(/}/g, 'P');
+    if (this.ignoreP == false) {
+      str = str.replace(/{/g, 'P');
+      str = str.replace(/}/g, 'P');
+    }
+    else {
+      str = str.replace(/{/g, '');
+      str = str.replace(/}/g, '');
+    }
 
     str = str.replace(/\n/g, '');
     str = str.replace(/\t/g, '');
@@ -1377,7 +1391,9 @@ if ( document.getElementById('dialog' + dialogNumber + 'b') == undefined) {
         width: 580
     });
 
-      if (autoWin) {
+
+
+      if (self.autoWin) {
 
         let pageH = $(document).height();
         let pageW = $(document).width();
@@ -1429,9 +1445,12 @@ if ( document.getElementById('dialog' + dialogNumber + 'b') == undefined) {
       }
 
 
-
-
      $('#dialog' + dialogNumber).dialog('open');
+
+      if (self.dialogOpacity) {
+        $(".ui-dialog").css({"backgroundColor": "rgba(255,255,255,0.9)"});
+      }
+
       $('#dialog' + dialogNumber).data('p1', cellView)
       let ctrlWin = -1;
       if (evt == null) {
@@ -1523,9 +1542,8 @@ if ( document.getElementById('dialog' + dialogNumber + 'b') == undefined) {
 
       $('#dialog' + dialogNumber).data('p3', originalText);
       let msg = '<a href="#" onclick="$(\'#dialogSim\').dialog(\'open\');">Similarity ratios</a> ';
-     // if (dialogNumber < 5) {
         msg = msg + '| <a href="#" onclick="$(\'#dialog' + dialogNumber + '\').parent().hide(); win = document.getElementById(\'dialog' + dialogNumber + 'b\'); win.style.display=\'inline-block\';  inter = setInterval(function() { win.style.backgroundColor = (win.style.backgroundColor == \'\' ? \'#8b0000\' : \'\');}, 100); setTimeout(function() { clearInterval(inter); win.style.backgroundColor = \'\'; },400); ">Minimize window</a>';
-     // }
+      //  msg = msg + ' | <a href="#" onclick="$(\'#dialog' + dialogNumber + '\').css({\'backgroundColor\': \'rgba(255,255,255,0.9)\'});">Transparent dialog</a>';
       document.getElementById('dialogText' + dialogNumber).innerHTML = msg + '<code>' + text + '</code>';
 
     }
@@ -1802,14 +1820,15 @@ if ( document.getElementById('dialog' + dialogNumber + 'b') == undefined) {
     paper.scale(graphScale, graphScale);
   }
 
-  autofit() {
+  /*autofit() {
     autoWin = !autoWin;
     if (autoWin) {
       alert('Auto window fit turned on');
     } else {
       alert('Auto window fit turned off');
     }
-  }
+  } */
+
   public lineChartData: Array<any> = [
     {data: [], label: 'Series A'},
   ];
@@ -1873,5 +1892,18 @@ if ( document.getElementById('dialog' + dialogNumber + 'b') == undefined) {
 
   public chartHovered(e: any): void {
     console.log(e);
+  }
+  public dialogOpacityEvent() {
+    if (this.dialogOpacity) {
+      $(".ui-dialog").css({"backgroundColor": "rgba(255,255,255,0.9)"});
+    }
+    else {
+      $(".ui-dialog").css({"backgroundColor": "rgba(255,255,255,1)"});
+    }
+  }
+  public refreshSim() {
+    if ($('#dialogSim').dialog('isOpen')) {
+      $('#dialogSim').trigger('refreshEvent');
+    }
   }
 }
