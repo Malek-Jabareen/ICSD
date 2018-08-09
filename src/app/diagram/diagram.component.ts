@@ -428,6 +428,7 @@ export class DiagramComponent implements OnInit {
       $(this).width($(this).prev('.ui-dialog-titlebar').width());
     }
 
+
     $(function () {
       $.noConflict();
       $(document).tooltip({
@@ -1057,6 +1058,8 @@ export class DiagramComponent implements OnInit {
   }
 
    closeDialogEvent(cellv, n, ctrlWin) {
+//alert(ctrlWin);
+
      $("#dialog" + n).dialog("option", "width", 580);
      $("#dialog" + n).dialog("option", "height", 580);
 
@@ -1435,11 +1438,11 @@ if ( document.getElementById('dialog' + dialogNumber + 'b') == undefined) {
       }
       $('#dialog' + dialogNumber).data('p2', ctrlWin);
       let d = dialogNumber;
+      $( "#dialog" + dialogNumber ).off( "dialogclose");
       $( "#dialog" + dialogNumber ).on( "dialogclose", function(  ) {
        // alert(d);
         self.closeDialogEvent(cellView, d, ctrlWin);
       } );
-
 
       let n = 0;
       while (n < dialogNumber) {
