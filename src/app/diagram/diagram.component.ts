@@ -1017,7 +1017,7 @@ export class DiagramComponent implements OnInit {
       data: {"string": a, "string2": b},
       cache: true,
       error: function () {
-        let simple = this.simpleSimAlgo(a, b);
+        let simple = self.simpleSimAlgo(a, b);
         document.getElementById('resulttd' + z + '' + zz).innerHTML = simple + '%';
         document.getElementById('serverstatus').innerHTML = 'Remote server is unavailable ,results are not accurate';
       },
