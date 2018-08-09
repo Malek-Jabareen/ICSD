@@ -9,6 +9,7 @@ import {build$} from 'protractor/built/element';
 const joint = require('../../../node_modules/jointjs/dist/joint.js');
 declare var $: any;
 let dialogNumber = 1;
+let maxR = 1;
 const cellDialog = [];
 let paper;
 let graphScale = 1;
@@ -955,7 +956,7 @@ export class DiagramComponent implements OnInit {
    simRatios() {
     let y = 0;
     let y2 = 0;
-    while (y < dialogNumber) {
+    while (y < maxR) {
       if (cellDialog[y] !== undefined) {
         y2++;
       }
@@ -968,9 +969,11 @@ export class DiagramComponent implements OnInit {
     }
     table += '<table style="width:100%; border: 1px solid #f1f1f1; padding:0px; line-height: 14px; margin:auto; "><tr><td style="font-weight: bold;">Code A</td><td style="font-weight: bold;">Code B</td><td style="font-weight: bold;">Similarity</td></tr>';
 
-    for (let z = 0; z < dialogNumber; z++) {
+
+
+    for (let z = 0; z < maxR; z++) {
       if (cellDialog[z] !== undefined) {
-        for (let zz = 0; zz < dialogNumber; zz++) {
+        for (let zz = 0; zz < maxR; zz++) {
           if (z === zz) {
             continue;
           }
@@ -1566,6 +1569,9 @@ if ( document.getElementById('dialog' + dialogNumber + 'b') == undefined) {
     // cellView.model.attr('text/fill', 'red');
 
     dialogNumber++;
+    if (dialogNumber > maxR) {
+      maxR = dialogNumber;
+    }
    /* if (dialogNumber === maxWindows + 1) {
       dialogNumber = 1;
 
