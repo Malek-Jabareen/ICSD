@@ -70,6 +70,7 @@ ul {
   background-color: #686868;
   position:relative;
   top: 0;
+  min-width: 1000px;
   width: 100%;
 }
 

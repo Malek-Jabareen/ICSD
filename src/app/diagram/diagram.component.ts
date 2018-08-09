@@ -21,6 +21,7 @@ let firstTimeShape = true;
 let ctrlListening = false;
 let self = null;
 let autoWin = true;
+
 @Component({
   selector: 'app-diagram',
   templateUrl: './diagram.component.html',
@@ -1059,10 +1060,10 @@ export class DiagramComponent implements OnInit {
      $("#dialog" + n).dialog("option", "width", 580);
      $("#dialog" + n).dialog("option", "height", 580);
 
+
     // alert(n + " | " + dialogNumber)
-     if ( n < 5) {
        document.getElementById('dialog' + n + 'b').style.display = 'none';
-     }
+
 
     if (isNaN(parseInt(cellv.model.attr('text/text'))) === false) {
       cellv.model.attr('text/text', '');
@@ -1335,9 +1336,7 @@ export class DiagramComponent implements OnInit {
             if ($('#dialog' + (n + 1)).data('p2') === -1) {
               alert('There is an active window that assinged that shape');
               $('#dialog' + (n + 1)).parent().show();
-              if (n < 4) {
                 document.getElementById('dialog' + (n + 1) + 'b').style.display = 'none';
-              }
               return;
             }
           }
@@ -1348,7 +1347,16 @@ export class DiagramComponent implements OnInit {
         $('#dialog' + dialogNumber).dialog('close');
       }
 
-     // alert(dialogNumber);
+      //   <li class="liHide2" id="dialog4b"><a href="#" onclick="$('#dialog4').parent().show(); document.getElementById('dialog4b').style.display='none';" title="Show dialog">Win 4</a></li>
+if ( document.getElementById('dialog' + dialogNumber + 'b') == undefined) {
+  let ul = document.getElementById("menu");
+  let li = document.createElement("li");
+  li.setAttribute("id", "dialog" + dialogNumber + "b");
+  li.innerHTML = '<a href="#" onclick="$(\'#dialog' + dialogNumber + '\').parent().show(); document.getElementById(\'dialog' + dialogNumber + 'b\').style.display=\'none\';" title="Show dialog">Win ' + dialogNumber + '</a>';
+  li.setAttribute("class", "liHide2");
+  ul.appendChild(li);
+}
+
 
       $("<div id='dialog" +  dialogNumber + "'><p id='dialogText" +  dialogNumber + "'></p></div>").dialog({
      /* close: function () {
@@ -1362,6 +1370,11 @@ export class DiagramComponent implements OnInit {
     });
 
       if (autoWin) {
+
+        let pageH = $(document).height();
+        let pageW = $(document).width();
+
+
         let count = 0;
         for (let n = 0; n < dialogNumber; n++) {
           if (cellDialog[n] !== undefined) {
@@ -1369,30 +1382,38 @@ export class DiagramComponent implements OnInit {
           }
         }
 
+
+        let winWidth = (pageW / (count+1+0.5));
+       // alert(winWidth);
+        if (winWidth > 550) { winWidth = 550; }
+        if (winWidth < 400) { winWidth = 400; }
+
+
         let x = 0;
         for (let n = 0; n < dialogNumber; n++) {
           if (cellDialog[n] !== undefined) {
             // alert('dialog ' + x +' is open' );
             // n+1 is the dialog that currently open
+
             if (count == 1) {
               $("#dialog" + (n + 1)).dialog("option", "position", {my: "left center", at: "left center", of: window});
-              $("#dialog" + (n + 1)).dialog("option", "width", 500);
+              $("#dialog" + (n + 1)).dialog("option", "width", winWidth);
               $("#dialog" + dialogNumber).dialog("option", "position", {my: "right center", at: "right center", of: window});
-              $("#dialog" + dialogNumber).dialog("option", "width", 500);
+              $("#dialog" + dialogNumber).dialog("option", "width", winWidth);
             } else if (count == 2) {
               if (x == 0) {
                 $("#dialog" + (n + 1)).dialog("option", "position", {my: "left center", at: "left center", of: window});
-                $("#dialog" + (n + 1)).dialog("option", "width", 480);
+                $("#dialog" + (n + 1)).dialog("option", "width", winWidth);
               } else {
                 $("#dialog" + (n + 1)).dialog("option", "position", {my: "center center", at: "center center", of: window});
-                $("#dialog" + (n + 1)).dialog("option", "width", 480);
+                $("#dialog" + (n + 1)).dialog("option", "width", winWidth);
               }
               $("#dialog" + dialogNumber).dialog("option", "position", {my: "right center", at: "right center", of: window});
-              $("#dialog" + dialogNumber).dialog("option", "width", 480);
+              $("#dialog" + dialogNumber).dialog("option", "width", winWidth);
               x++;
             }
-            else if (count == 3) {
-              $("#dialog" + dialogNumber).dialog("option", "width", 480);
+            else if (count >= 3) {
+              $("#dialog" + dialogNumber).dialog("option", "width", winWidth);
             }
 
           }
@@ -1447,20 +1468,6 @@ export class DiagramComponent implements OnInit {
       }
 
 
-      let linesToComp = (text.length / 66);
-      let newHeight = linesToComp * 40 + 115;
-    let brs = (text.match(/<br>/g) || []).length;
-      let calc = brs - linesToComp;
-      if (calc > 0) {
-        newHeight = newHeight + calc * 10;
-      }
-      let currentHeight =  $("#dialog" + dialogNumber).dialog("option", "height");
-
-      if (newHeight < currentHeight) {
-        $("#dialog" + dialogNumber).dialog("option", "height", newHeight);
-      }
-
-
       fieldArray.push(cellView.model.attr('text/textF'));
 
       //cellDialog.splice(dialogNumber-1, 0, cellView);
@@ -1484,11 +1491,33 @@ export class DiagramComponent implements OnInit {
         }
         // ctrlArrayCounter = 0;
       }
+
+      let linesToComp = (text.length / 65);
+      let newHeight = linesToComp * 40 + 120;
+      let brs = (text.match(/<br>/g) || []).length;
+      let calc = brs - linesToComp;
+      if (calc > 0) {
+        newHeight = newHeight + calc * 10;
+      }
+      let currentHeight =  $("#dialog" + dialogNumber).dialog("option", "height");
+      let currentWidth =  $("#dialog" + dialogNumber).dialog("option", "width");
+
+      if (currentWidth < 500) {
+        //alert('fixed');
+        newHeight = newHeight + 30;
+      }
+
+      if (newHeight < currentHeight) {
+        $("#dialog" + dialogNumber).dialog("option", "height", newHeight);
+      }
+
+
+
       $('#dialog' + dialogNumber).data('p3', originalText);
       let msg = '<a href="#" onclick="$(\'#dialogSim\').dialog(\'open\');">Similarity ratios</a> ';
-      if (dialogNumber < 5) {
+     // if (dialogNumber < 5) {
         msg = msg + '| <a href="#" onclick="$(\'#dialog' + dialogNumber + '\').parent().hide(); win = document.getElementById(\'dialog' + dialogNumber + 'b\'); win.style.display=\'inline-block\';  inter = setInterval(function() { win.style.backgroundColor = (win.style.backgroundColor == \'\' ? \'#8b0000\' : \'\');}, 100); setTimeout(function() { clearInterval(inter); win.style.backgroundColor = \'\'; },400); ">Minimize window</a>';
-      }
+     // }
       document.getElementById('dialogText' + dialogNumber).innerHTML = msg + '<code>' + text + '</code>';
 
     }
