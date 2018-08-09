@@ -422,12 +422,6 @@ export class DiagramComponent implements OnInit {
 
 
 
-    // this is a temp bug fix for jquery ui open bug
-    function resizeEvent(event, ui) {
-      $(this).height($(this).parent().height() - $(this).prev('.ui-dialog-titlebar').height() - 30);
-      $(this).width($(this).prev('.ui-dialog-titlebar').width());
-    }
-
 
     $(function () {
       $.noConflict();
@@ -900,7 +894,11 @@ export class DiagramComponent implements OnInit {
       firstfor, firstif, secondwhile, secondif, link, link2, link3, link4, link5, link6, link7, link8]);
   }
 
-
+  // this is a temp bug fix for jquery ui open bug
+  resizeEvent(event, ui) {
+    $(this).height($(this).parent().height() - $(this).prev('.ui-dialog-titlebar').height() - 30);
+    $(this).width($(this).prev('.ui-dialog-titlebar').width());
+  }
 
    CtrlUnpress() {
     self.shapeClick(ctrlCodeArray[ctrlArrayCounter - 1][ctrlArrayCounter2], null, 0, 0);
