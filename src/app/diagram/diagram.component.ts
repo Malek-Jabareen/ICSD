@@ -47,6 +47,7 @@ export class DiagramComponent implements OnInit {
   public dialogOpacity: boolean = false;
   public ignoreP: boolean = false;
   public ignoreI: boolean = false;
+  public ignoreCbra: boolean = true;
 
   @Input() functionText = '';
 
@@ -1763,7 +1764,7 @@ if ( document.getElementById('dialog' + dialogNumber + 'b') == undefined) {
       qq = null;
       funcName3 = this.functionText.substring(this.functionText.indexOf('{') + 1, this.functionText.lastIndexOf('}'));
       funcName2 = /* replaceAll */funcName3.replace(new RegExp('for([ ]*)\\(([^;:]*)(;)([^;]*)(;)([^\\)]*)\\)', 'g'), ' for$1($2,$4,$6) ');
-      qq = Ast.build(funcName2);
+      qq = Ast.build( funcName2 , this.ignoreCbra );
       const rect = new joint.shapes.basic.Rect({
         position: {x: 3, y: 3},
         size: {width: 900, height: 50},
@@ -1790,7 +1791,7 @@ if ( document.getElementById('dialog' + dialogNumber + 'b') == undefined) {
 
       yPoint.push(max + 1);
       this.lineChartData = yPoint;
-      this.build(qq, 1, graph, rect, 3);
+      this.build(qq, 1, graph, rect, 3 );
       fieldArray = [ ];
       this.fieldA = fieldArray;
 
@@ -1906,4 +1907,5 @@ if ( document.getElementById('dialog' + dialogNumber + 'b') == undefined) {
       $('#dialogSim').trigger('refreshEvent');
     }
   }
+
 }

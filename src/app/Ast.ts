@@ -18,7 +18,7 @@ export class Ast {
 
 
 
-  static build(__function: string): Ast {
+  static build(__function: string , flagCbra: boolean ): Ast {
     const funcx: Ast = new Ast();
     let functionx: Ast = new Ast();
     let str = __function;
@@ -169,8 +169,8 @@ export class Ast {
           RegExp('for([ ]*)\\(([^,:]*)(,)([^,]*)(,)([^\\)]*)\\)', 'g'), ' for$1($2;$4;$6) ');
           funcx.info = cin + '';
           if ( qin === 1) {
-            funcx.deepth = Math.max(this.build(funcx.textq).deepth + 1 , funcx.deepth);
-            funcx.ref = this.build(funcx.textq).ref;
+            funcx.deepth = Math.max(this.build(funcx.textq , flagCbra).deepth + 1 , funcx.deepth);
+            funcx.ref = this.build(funcx.textq , flagCbra).ref;
           }
           functionx = functionx.add(funcx);
           funcx.textq = '';
@@ -181,7 +181,9 @@ export class Ast {
         } else {
           for (let j: number = i + 1; j < stt.length; j++) {
             if (/* contains */stt[j].indexOf('{') !== -1) {
+              if (flagCbra) {
               cin++;
+            }
               funcx.fullTextq += '\n' + stt[j];
               if (cq !== 0 || qin === 1 ) {
                 funcx.textq += '\n' + stt[j];
@@ -189,7 +191,9 @@ export class Ast {
               cq++;
             } else {
               if (/* contains */stt[j].indexOf('}') !== -1) {
-                cin++;
+                if (flagCbra) {
+                  cin++;
+                }
                 funcx.fullTextq += '\n' + stt[j];
                 cq--;
                 if (cq === 0) {
@@ -228,8 +232,8 @@ export class Ast {
                   (/* replaceAll */funcx.textq.toLowerCase().trim().replace(new RegExp
                   ('\n([ ]*)while', 'g'), ' ' ), funcx.textq.toLowerCase().trim() ))
                   || /* contains */funcx.textq.toLowerCase().trim().indexOf('while') === 0) {
-                    funcx.deepth = Math.max(this.build(funcx.textq).deepth + 1 , funcx.deepth);
-                    funcx.ref = this.build(funcx.textq).ref; }
+                    funcx.deepth = Math.max(this.build(funcx.textq , flagCbra).deepth + 1 , funcx.deepth);
+                    funcx.ref = this.build(funcx.textq , flagCbra).ref; }
                   funcx.fullTextq = /* replaceAll */funcx.fullTextq.replace(new
                   RegExp('for([ ]*)\\(([^,:]*)(,)([^,]*)(,)([^\\)]*)\\)', 'g'), ' for$1($2;$4;$6) ');
                   functionx = functionx.add(funcx);
@@ -318,8 +322,8 @@ export class Ast {
           funcx.info = cin + '';
           if ( qin === 1) {
             funcx.info = cin + '';
-            funcx.deepth = Math.max(this.build(funcx.textq).deepth + 1 , funcx.deepth);
-            funcx.ref = this.build(funcx.textq).ref;
+            funcx.deepth = Math.max(this.build(funcx.textq , flagCbra).deepth + 1 , funcx.deepth);
+            funcx.ref = this.build(funcx.textq , flagCbra).ref;
           }
           functionx = functionx.add(funcx);
           funcx.textq = '';
@@ -330,16 +334,18 @@ export class Ast {
         } else {
           for (let j: number = i + 1; j < stt.length; j++) {
             if (/* contains */stt[j].indexOf('{') !== -1) {
-              cin++;
-              funcx.fullTextq += '\n' + stt[j];
+              if (flagCbra) {
+                cin++;
+              }              funcx.fullTextq += '\n' + stt[j];
               if (cq !== 0 || qin === 1 ) {
                 funcx.textq += '\n' + stt[j];
               }
               cq++;
             } else {
               if (/* contains */stt[j].indexOf('}') !== -1) {
-                cin++;
-                funcx.fullTextq += '\n' + stt[j];
+                if (flagCbra) {
+                  cin++;
+                }                funcx.fullTextq += '\n' + stt[j];
                 cq--;
                 if (cq === 0) {
                   if ( qin === 1) {
@@ -383,8 +389,8 @@ export class Ast {
                   (/* replaceAll */funcx.textq.toLowerCase().trim().replace(new RegExp
                   ('\n([ ]*)while', 'g'), ' ' ), funcx.textq.toLowerCase().trim() ))
                   || /* contains */funcx.textq.toLowerCase().trim().indexOf('while') === 0) {
-                    funcx.deepth = Math.max(this.build(funcx.textq).deepth + 1, funcx.deepth);
-                    funcx.ref = this.build(funcx.textq).ref; }
+                    funcx.deepth = Math.max(this.build(funcx.textq , flagCbra).deepth + 1, funcx.deepth);
+                    funcx.ref = this.build(funcx.textq , flagCbra).ref; }
                   funcx.fullTextq = /* replaceAll */funcx.fullTextq.replace(new
                   RegExp('for([ ]*)\\(([^,:]*)(,)([^,]*)(,)([^\\)]*)\\)', 'g'), ' for$1($2;$4;$6) ');
                   functionx = functionx.add(funcx);
@@ -465,8 +471,8 @@ export class Ast {
           RegExp('for([ ]*)\\(([^,:]*)(,)([^,]*)(,)([^\\)]*)\\)', 'g'), ' for$1($2;$4;$6) ');
           if ( qin === 1 ) {
             funcx.info = cin + '';
-            funcx.deepth = Math.max(this.build(funcx.textq).deepth + 1 , funcx.deepth);
-            funcx.ref = this.build(funcx.textq).ref;
+            funcx.deepth = Math.max(this.build(funcx.textq , flagCbra).deepth + 1 , funcx.deepth);
+            funcx.ref = this.build(funcx.textq , flagCbra).ref;
           }
           functionx = functionx.add(funcx);
           funcx.textq = '';
@@ -477,16 +483,18 @@ export class Ast {
         } else {
           for (let j: number = i + 1; j < stt.length; j++) {
             if (/* contains */stt[j].indexOf('{') !== -1) {
-              cin++;
-              funcx.fullTextq += '\n' + stt[j];
+              if (flagCbra) {
+                cin++;
+              }              funcx.fullTextq += '\n' + stt[j];
               if (cq !== 0 || qin === 1 ) {
                 funcx.textq += '\n' + stt[j];
               }
               cq++;
             } else {
               if (/* contains */stt[j].indexOf('}') !== -1) {
-                cin++;
-                funcx.fullTextq += '\n' + stt[j];
+                if (flagCbra) {
+                  cin++;
+                }                funcx.fullTextq += '\n' + stt[j];
                 cq--;
                 if (cq === 0) {
                   if ( qin === 1 ) {
@@ -523,8 +531,8 @@ export class Ast {
                   (/* replaceAll */funcx.textq.toLowerCase().trim().replace(new RegExp
                   ('\n([ ]*)while', 'g'), ' ' ), funcx.textq.toLowerCase().trim() ))
                   || /* contains */funcx.textq.toLowerCase().trim().indexOf('while') === 0) {
-                    funcx.deepth = Math.max(this.build(funcx.textq).deepth + 1 , funcx.deepth);
-                    funcx.ref = this.build(funcx.textq).ref; }
+                    funcx.deepth = Math.max(this.build(funcx.textq , flagCbra).deepth + 1 , funcx.deepth);
+                    funcx.ref = this.build(funcx.textq , flagCbra).ref; }
                   funcx.fullTextq = /* replaceAll */funcx.fullTextq.replace(new
                   RegExp('for([ ]*)\\(([^,:]*)(,)([^,]*)(,)([^\\)]*)\\)', 'g'), ' for$1($2;$4;$6) ');
                   functionx = functionx.add(funcx);
@@ -587,8 +595,8 @@ export class Ast {
           funcx.fullTextq = /* replaceAll */funcx.fullTextq.replace(new
           RegExp('for([ ]*)\\(([^,:]*)(,)([^,]*)(,)([^\\)]*)\\)', 'g'), ' for$1($2;$4;$6) ');
           if ( qin === 1 ) {
-            funcx.deepth = Math.max(this.build(funcx.textq).deepth + 1 , funcx.deepth);
-            funcx.ref = this.build(funcx.textq).ref;
+            funcx.deepth = Math.max(this.build(funcx.textq , flagCbra).deepth + 1 , funcx.deepth);
+            funcx.ref = this.build(funcx.textq , flagCbra).ref;
           }
           functionx = functionx.add(funcx);
           cin++;
@@ -599,8 +607,9 @@ export class Ast {
         } else {
           for (let j: number = i + 1; j < stt.length; j++) {
             if (/* contains */stt[j].indexOf('{') !== -1) {
-              cin++;
-              funcx.fullTextq += '\n' + stt[j];
+              if (flagCbra) {
+                cin++;
+              }              funcx.fullTextq += '\n' + stt[j];
               if (cq !== 0 || qin === 1 ) {
                 funcx.textq += '\n' + stt[j];
               }
@@ -608,8 +617,9 @@ export class Ast {
             } else {
               if (/* contains */stt[j].indexOf('}') !== -1) {
                 cq--;
-                cin++;
-                funcx.fullTextq += '\n' + stt[j];
+                if (flagCbra) {
+                  cin++;
+                }                funcx.fullTextq += '\n' + stt[j];
                 if (cq === 0) {
                   if ( qin === 1 ) {
                     funcx.textq += '\n' + stt[j];
@@ -645,8 +655,8 @@ export class Ast {
                   (/* replaceAll */funcx.textq.toLowerCase().trim().replace(new RegExp
                   ('\n([ ]*)while', 'g'), ' ' ), funcx.textq.toLowerCase().trim() ))
                   || /* contains */funcx.textq.toLowerCase().trim().indexOf('while') === 0) {
-                    funcx.deepth = Math.max(this.build(funcx.textq).deepth + 1 , funcx.deepth);
-                    funcx.ref = this.build(funcx.textq).ref; }
+                    funcx.deepth = Math.max(this.build(funcx.textq , flagCbra).deepth + 1 , funcx.deepth);
+                    funcx.ref = this.build(funcx.textq , flagCbra).ref; }
                   funcx.fullTextq = /* replaceAll */funcx.fullTextq.replace(new
                   RegExp('for([ ]*)\\(([^,:]*)(,)([^,]*)(,)([^\\)]*)\\)', 'g'), ' for$1($2;$4;$6) ');
                   functionx = functionx.add(funcx);
@@ -750,8 +760,8 @@ export class Ast {
               (/* replaceAll */funcx.textq.toLowerCase().trim().replace(new RegExp
               ('\n([ ]*)while', 'g'), ' ' ), funcx.textq.toLowerCase().trim() ))
               || /* contains */funcx.textq.toLowerCase().trim().indexOf('while') === 0) {
-                funcx.deepth = Math.max(this.build(funcx.textq).deepth + 1 , funcx.deepth);
-                funcx.ref = this.build(funcx.textq).ref; }
+                funcx.deepth = Math.max(this.build(funcx.textq , flagCbra).deepth + 1 , funcx.deepth);
+                funcx.ref = this.build(funcx.textq , flagCbra).ref; }
               funcx.fullTextq = /* replaceAll */funcx.fullTextq.replace(new
               RegExp('for([ ]*)\\(([^,:]*)(,)([^,]*)(,)([^\\)]*)\\)', 'g'), ' for$1($2;$4;$6) ');
               functionx = functionx.add(funcx);
@@ -798,8 +808,8 @@ export class Ast {
                 (/* replaceAll */funcx.textq.toLowerCase().trim().replace(new RegExp
                 ('\n([ ]*)while', 'g'), ' ' ), funcx.textq.toLowerCase().trim() ))
                 || /* contains */funcx.textq.toLowerCase().trim().indexOf('while') === 0) {
-                  funcx.deepth = Math.max(this.build(funcx.textq).deepth + 1 , funcx.deepth);
-                  funcx.ref = this.build(funcx.textq).ref;
+                  funcx.deepth = Math.max(this.build(funcx.textq , flagCbra).deepth + 1 , funcx.deepth);
+                  funcx.ref = this.build(funcx.textq , flagCbra).ref;
                 }
                 funcx.fullTextq = /* replaceAll */funcx.fullTextq.replace(new
                 RegExp('for([ ]*)\\(([^,:]*)(,)([^,]*)(,)([^\\)]*)\\)', 'g'), ' for$1($2;$4;$6) ');
@@ -895,8 +905,8 @@ export class Ast {
             (/* replaceAll */funcx.textq.toLowerCase().trim().replace(new RegExp
             ('\n([ ]*)while', 'g'), ' ' ), funcx.textq.toLowerCase().trim() ))
             || /* contains */funcx.textq.toLowerCase().trim().indexOf('while') === 0) {
-              funcx.deepth = Math.max(this.build(funcx.textq).deepth + 1 , funcx.deepth);
-              funcx.ref = this.build(funcx.textq).ref; }
+              funcx.deepth = Math.max(this.build(funcx.textq , flagCbra).deepth + 1 , funcx.deepth);
+              funcx.ref = this.build(funcx.textq , flagCbra).ref; }
             funcx.fullTextq = /* replaceAll */funcx.fullTextq.replace(new
             RegExp('for([ ]*)\\(([^,:]*)(,)([^,]*)(,)([^\\)]*)\\)', 'g'), ' for$1($2;$4;$6) ');
             functionx = functionx.add(funcx);
@@ -977,8 +987,8 @@ export class Ast {
           funcx.info = cin + '';
           if ( qin === 1) {
             funcx.info = cin + '';
-            funcx.deepth = Math.max(this.build(funcx.textq).deepth + 1 , funcx.deepth);
-            funcx.ref = this.build(funcx.textq).ref;
+            funcx.deepth = Math.max(this.build(funcx.textq , flagCbra).deepth + 1 , funcx.deepth);
+            funcx.ref = this.build(funcx.textq , flagCbra).ref;
           }
           functionx = functionx.add(funcx);
           funcx.textq = '';
@@ -992,16 +1002,18 @@ export class Ast {
           }
           for (let j: number = i + 1; j < stt.length; j++) {
             if (/* contains */stt[j].indexOf('{') !== -1) {
-              cin++;
-              funcx.fullTextq += '\n' + stt[j];
+              if (flagCbra) {
+                cin++;
+              }              funcx.fullTextq += '\n' + stt[j];
               if (cq !== 0 || qin === 1) {
                 funcx.textq += '\n' + stt[j];
               }
               cq++;
             } else {
               if (/* contains */stt[j].indexOf('}') !== -1) {
-                cin++;
-                funcx.fullTextq += '\n' + stt[j];
+                if (flagCbra) {
+                  cin++;
+                }                funcx.fullTextq += '\n' + stt[j];
                 cq--;
                 if (cq === 0) {
                   if (qin === 1) {
@@ -1036,13 +1048,13 @@ export class Ast {
                   (/* replaceAll */funcx.textq.toLowerCase().trim().replace(new RegExp
                   ('\n([ ]*)while', 'g'), ' ' ), funcx.textq.toLowerCase().trim() ))
                   || /* contains */funcx.textq.toLowerCase().trim().indexOf('while') === 0) {
-                    funcx.deepth = Math.max(this.build(funcx.textq).deepth + 1 , funcx.deepth);
-                    funcx.ref = this.build(funcx.textq).ref;
+                    funcx.deepth = Math.max(this.build(funcx.textq , flagCbra).deepth + 1 , funcx.deepth);
+                    funcx.ref = this.build(funcx.textq , flagCbra).ref;
                   } else {
                     if ( qin === 1) {
                       funcx.info = cin + '';
-                      funcx.deepth = Math.max(this.build(funcx.textq).deepth + 1 , funcx.deepth);
-                      funcx.ref = this.build(funcx.textq).ref;
+                      funcx.deepth = Math.max(this.build(funcx.textq , flagCbra).deepth + 1 , funcx.deepth);
+                      funcx.ref = this.build(funcx.textq , flagCbra).ref;
                     }
                   }
                   funcx.fullTextq = /* replaceAll */funcx.fullTextq.replace(new
