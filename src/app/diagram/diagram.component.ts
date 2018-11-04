@@ -1618,6 +1618,7 @@ if ( document.getElementById('dialog' + dialogNumber + 'b') == undefined) {
  } */
 
   alirt() {
+    graphScale=1;
 
     const strx = 'ast[] x; if(this.ref!=null){ x=new ast[this.ref.length+1]; }' +
       ' else{x=new ast[1];}int i=0; if(this.ref!=null){for (i = 0; i < this.ref.length;' +
@@ -1754,8 +1755,8 @@ if ( document.getElementById('dialog' + dialogNumber + 'b') == undefined) {
     diagramheight = height;
     paper = new joint.dia.Paper({
       el: jQuery('#diagramXXX'),
-      gridSize: 11,
-      width: 9020,
+      gridSize: 10,
+      width: 920,
       height : height,
       model: graph,
       linkView: joint.dia.LightLinkView,
@@ -1763,9 +1764,6 @@ if ( document.getElementById('dialog' + dialogNumber + 'b') == undefined) {
         return !(cellView instanceof joint.dia.ElementView );*/
     });
 
-    if (graphScale != 1) {
-      paper.setDimensions(920 + (graphScale) * 1000,height);
-    }
     paper.setInteractivity({elementMove: false});
     if (this.functionText !== '') {
       //  document.getElementById('func2').innerHTML=this.functionText;
@@ -1828,14 +1826,14 @@ if ( document.getElementById('dialog' + dialogNumber + 'b') == undefined) {
   }
 
   zoomin() {
-    graphScale += 0.1;
-    paper.setDimensions(920 + (graphScale - 1) * 1000, diagramheight);
+    graphScale += 0.3;
+    paper.setDimensions(920 + (graphScale - 1) * 1000, diagramheight * graphScale);
    paper.scale(graphScale, graphScale);
   }
 
   zoomout() {
-    graphScale -= 0.1;
-    paper.setDimensions(920 + (graphScale - 1) * 1000, diagramheight);
+    graphScale -= 0.3;
+    paper.setDimensions(920 + (graphScale - 1) * 1000, diagramheight * graphScale);
     paper.scale(graphScale, graphScale);
   }
 
