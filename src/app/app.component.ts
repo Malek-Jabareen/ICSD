@@ -23,13 +23,14 @@ export class AppComponent implements OnInit {
 
   hideDiagram() {
     this.hide = !this.hide;
-    if (this.hide == false) {
+    this.fT2 = this.component1.functionText;
+    /*if (this.hide == false) {
       this.zoomin();
       this.zoomin();
     } else {
       this.zoomout();
       this.zoomout();
-    }
+    }*/
   }
 
 
