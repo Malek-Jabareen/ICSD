@@ -12,6 +12,7 @@ let dialogNumber = 1;
 let maxR = 1;
 const cellDialog = [];
 let paper;
+let sizeH = 12000;
 let graphScale = 1;
 let matches = [];
 let ctrlArrayCounter = 0 ;
@@ -1145,7 +1146,7 @@ export class DiagramComponent implements OnInit {
   }
 
 
-  build(Qer: Ast, num: number, graph: joint.dia.Graph, rect: joint.shapes.basic.Generic, c: number) {
+  build(Qer: Ast, num: number, graph: joint.dia.Graph, rect: joint.shapes.basic.Generic, c: number, p: joint.dia.Paper) {
     joint.shapes.basic.trapez = joint.shapes.basic.Generic.extend({
 
       markup: '<g class="rotatable"><g class="scalable"><polygon points="60,0 140,0 200,100 0,100"/></g><text/></g>',
@@ -1200,7 +1201,7 @@ export class DiagramComponent implements OnInit {
         });
         graph.addCells([s, link]);
         if (qq.ref[i].ref !== null) {
-          this.build(qq.ref[i], num + 1, graph, s, c);
+          this.build(qq.ref[i], num + 1, graph, s, c, paper);
         }
         c = c + (parseInt(qq.ref[i].info, 10) / ww) * rect.size().width;
       } else {
@@ -1208,7 +1209,7 @@ export class DiagramComponent implements OnInit {
           const s = new joint.shapes.basic.Circle({
             position: {x: c, y: num * 55 + 50 * num},
             size: {width: (parseInt(qq.ref[i].info, 10) / ww) * rect.size().width, height: 50},
-            attrs: {circle: {fill: '#33FF51'}, text: {text: 'WHILE', fill: 'white', textF: qq.ref[i].fullTextq}}
+            attrs: {circle: {fill: '#33FF51'}, text: {text: '', type: 'WHILE', fill: 'white', textF: qq.ref[i].fullTextq}}
           });
           const link = new joint.dia.Link({
             source: {id: rect.id},
@@ -1216,7 +1217,7 @@ export class DiagramComponent implements OnInit {
           });
           graph.addCells([s, link]);
           if (qq.ref[i].ref !== null) {
-            this.build(qq.ref[i], num + 1, graph, s, c);
+            this.build(qq.ref[i], num + 1, graph, s, c, paper);
           }
           c = c + (parseInt(qq.ref[i].info, 10) / ww) * rect.size().width;
         } else {
@@ -1241,7 +1242,7 @@ export class DiagramComponent implements OnInit {
             });
             graph.addCells([s, link]);
             if (qq.ref[i].ref !== null) {
-              this.build(qq.ref[i], num + 1, graph, s, c);
+              this.build(qq.ref[i], num + 1, graph, s, c, paper);
             }
             c = c + (parseInt(qq.ref[i].info, 10) / ww) * rect.size().width;
           } else {
@@ -1264,7 +1265,7 @@ export class DiagramComponent implements OnInit {
               });
               graph.addCells([s, link]);
               if (qq.ref[i].ref !== null) {
-                this.build(qq.ref[i], num + 1, graph, s, c);
+                this.build(qq.ref[i], num + 1, graph, s, c, paper);
               }
               c = c + (parseInt(qq.ref[i].info, 10) / ww) * rect.size().width;
             } else {
@@ -1288,7 +1289,7 @@ export class DiagramComponent implements OnInit {
                 });
                 graph.addCells([s, link]);
                 if (qq.ref[i].ref !== null) {
-                  this.build(qq.ref[i], num + 1, graph, s, c);
+                  this.build(qq.ref[i], num + 1, graph, s, c, paper);
                 }
                 c = c + (parseInt(qq.ref[i].info, 10) / ww) * rect.size().width;
               } else {
@@ -1312,7 +1313,7 @@ export class DiagramComponent implements OnInit {
                   });
                   graph.addCells([s, link]);
                   if (qq.ref[i].ref !== null) {
-                    this.build(qq.ref[i], num + 1, graph, s, c);
+                    this.build(qq.ref[i], num + 1, graph, s, c, paper);
                   }
                   c = c + (parseInt(qq.ref[i].info, 10) / ww) * rect.size().width;
                 } else {
@@ -1739,10 +1740,21 @@ if ( document.getElementById('dialog' + dialogNumber + 'b') == undefined) {
 
 
     const graph = new joint.dia.Graph;
+    let funcNamex = '';
+    let funcName2x = '';
+    let funcName3x = '';
+    funcNamex = this.functionText.substring(0, this.functionText.indexOf('('));
+    const a = funcNamex.trim().split(' ');
+    funcNamex = a[a.length - 1];
+    let qq: Ast;
+    qq = null;
+    funcName3x = this.functionText.substring(this.functionText.indexOf('{') + 1, this.functionText.lastIndexOf('}'));
+    funcName2x = /* replaceAll */funcName3x.replace(new RegExp('for([ ]*)\\(([^;:]*)(;)([^;]*)(;)([^\\)]*)\\)', 'g'), ' for$1($2,$4,$6) ');
     paper = new joint.dia.Paper({
       el: jQuery('#diagramXXX'),
       gridSize: 10,
       width: 920,
+      height : Ast.build( funcName2x , this.ignoreCbra ).deepth * 115 + 275,
       model: graph,
       linkView: joint.dia.LightLinkView,
       /*interactive: function(cellView, method) {
@@ -1791,7 +1803,7 @@ if ( document.getElementById('dialog' + dialogNumber + 'b') == undefined) {
 
       yPoint.push(max + 1);
       this.lineChartData = yPoint;
-      this.build(qq, 1, graph, rect, 3 );
+      this.build(qq, 1, graph, rect, 3, paper);
       fieldArray = [ ];
       this.fieldA = fieldArray;
 
