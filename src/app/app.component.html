@@ -10,6 +10,9 @@
   <li class="liHide"><a href="#" onclick="$('#dialogSim').dialog('open');" title="Show similarity ratios between the codes">Ratios</a></li>
   <li class="liHide"><a href="#" onclick="$('#dialogPref').dialog('open');" title="Set preferences">Preferences</a></li>
   <li class="liHide"><a href="#" onclick="$('.ui-dialog-content').dialog('close');" title="Close all active windows">Clean</a></li>
+
+  <li class="liHide"><a href="#" (click)="zoomin()" title="Expand diagram's size">+</a></li>
+  <li class="liHide"><a href="#"  (click)="zoomout()" title="Decrease diagram's size">-</a></li>
   <li><a href="#" onclick="$('#dialogHelp').dialog('open');" title="What is this app?">Help</a></li>
 
  <!-- <li class="liHide2" id="dialog1b"><a href="#" onclick="$('#dialog1').parent().show(); document.getElementById('dialog1b').style.display='none';" title="Show dialog">Win 1</a></li>

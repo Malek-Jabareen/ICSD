@@ -22,7 +22,7 @@ let fieldArray: Array<String>;
 let firstTimeShape = true;
 let ctrlListening = false;
 let self = null;
-
+let diagramheight=0;
 
 @Component({
   selector: 'app-diagram',
@@ -1618,7 +1618,8 @@ if ( document.getElementById('dialog' + dialogNumber + 'b') == undefined) {
  } */
 
   alirt() {
-    graphScale = 1;
+    graphScale=1;
+
     const strx = 'ast[] x; if(this.ref!=null){ x=new ast[this.ref.length+1]; }' +
       ' else{x=new ast[1];}int i=0; if(this.ref!=null){for (i = 0; i < this.ref.length;' +
       ' i++){x[i]=this.ref[i];}}x[i]=new ast();x[i].info=function.info;x[i].text=function.text;x[i].textq=function.textq;' +
@@ -1750,16 +1751,19 @@ if ( document.getElementById('dialog' + dialogNumber + 'b') == undefined) {
     qq = null;
     funcName3x = this.functionText.substring(this.functionText.indexOf('{') + 1, this.functionText.lastIndexOf('}'));
     funcName2x = /* replaceAll */funcName3x.replace(new RegExp('for([ ]*)\\(([^;:]*)(;)([^;]*)(;)([^\\)]*)\\)', 'g'), ' for$1($2,$4,$6) ');
+  let height = Ast.build( funcName2x , this.ignoreCbra ).deepth * 115 + 275;
+    diagramheight = height;
     paper = new joint.dia.Paper({
       el: jQuery('#diagramXXX'),
       gridSize: 10,
       width: 920,
-      height : Ast.build( funcName2x , this.ignoreCbra ).deepth * 115 + 275,
+      height : height,
       model: graph,
       linkView: joint.dia.LightLinkView,
       /*interactive: function(cellView, method) {
         return !(cellView instanceof joint.dia.ElementView );*/
     });
+
     paper.setInteractivity({elementMove: false});
     if (this.functionText !== '') {
       //  document.getElementById('func2').innerHTML=this.functionText;
@@ -1822,14 +1826,14 @@ if ( document.getElementById('dialog' + dialogNumber + 'b') == undefined) {
   }
 
   zoomin() {
-    graphScale += 0.1;
-    paper.setDimensions(920 + (graphScale - 1) * 1000, 800);
-    paper.scale(graphScale, graphScale);
+    graphScale += 0.3;
+    paper.setDimensions(920 + (graphScale - 1) * 1000, diagramheight * graphScale);
+   paper.scale(graphScale, graphScale);
   }
 
   zoomout() {
-    graphScale -= 0.1;
-    paper.setDimensions(920 + (graphScale - 1) * 1000, 800);
+    graphScale -= 0.3;
+    paper.setDimensions(920 + (graphScale - 1) * 1000, diagramheight * graphScale);
     paper.scale(graphScale, graphScale);
   }
 
