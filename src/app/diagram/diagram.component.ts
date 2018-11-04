@@ -48,6 +48,7 @@ export class DiagramComponent implements OnInit {
   public dialogOpacity: boolean = false;
   public ignoreP: boolean = false;
   public ignoreI: boolean = false;
+  public ignoreN: boolean = true;
   public ignoreCbra: boolean = true;
 
   @Input() functionText = '';
@@ -960,8 +961,14 @@ export class DiagramComponent implements OnInit {
       str = str.replace(/}/g, '');
     }
 
-    str = str.replace(/\n/g, '');
-    str = str.replace(/\t/g, '');
+    if (this.ignoreN == true) {
+      str = str.replace(/\n/g, '');
+      str = str.replace(/\t/g, '');
+    }
+    else {
+      str = str.replace(/\n/g, 'N');
+      str = str.replace(/\t/g, 'T');
+    }
     str = str.replace(/ /g, '');
 
 

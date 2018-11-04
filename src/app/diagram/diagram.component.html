@@ -10,6 +10,7 @@
     <b>Calculations</b><br>
     <input type="checkbox" id="ig" [(ngModel)]="ignoreP" (change)="refreshSim()">Ignore curly parenthesis<br>
     <input type="checkbox" id="ig2" [(ngModel)]="ignoreI" (change)="refreshSim()">Ignore 'AND' and 'OR' inside a IF statement<br>
+    <input type="checkbox" id="ig3" [(ngModel)]="ignoreN" (change)="refreshSim()">Ignore new line and tab character<br>
     <hr>
     <b>Parsing</b><br>
     <input type="checkbox" id="cBra" [(ngModel)]="ignoreCbra">Calculate curly parenthesis as a code line<br>
