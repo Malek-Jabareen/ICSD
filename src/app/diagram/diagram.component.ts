@@ -1409,21 +1409,21 @@ if ( document.getElementById('dialog' + dialogNumber + 'b') == undefined) {
 
 
         let count = 0;
-        for (let n = 0; n < dialogNumber; n++) {
+        // 100 - the auto set will stop working after reopening 100 windows in one session, which is very rare.
+        for (let n = 0; n < 100; n++) {
           if (cellDialog[n] !== undefined) {
             count++;
           }
         }
-
 
         let winWidth = (pageW / (count+1+0.5));
        // alert(winWidth);
         if (winWidth > 550) { winWidth = 550; }
         if (winWidth < 400) { winWidth = 400; }
 
-
         let x = 0;
-        for (let n = 0; n < dialogNumber; n++) {
+        // 100 - the auto set will stop working after reopening 100 windows in one session, which is very rare. 
+        for (let n = 0; n < 100; n++) {
           if (cellDialog[n] !== undefined) {
             // alert('dialog ' + x +' is open' );
             // n+1 is the dialog that currently open
@@ -1437,15 +1437,112 @@ if ( document.getElementById('dialog' + dialogNumber + 'b') == undefined) {
               if (x == 0) {
                 $("#dialog" + (n + 1)).dialog("option", "position", {my: "left center", at: "left center", of: window});
                 $("#dialog" + (n + 1)).dialog("option", "width", winWidth);
-              } else {
+              } else if (x == 1) {
                 $("#dialog" + (n + 1)).dialog("option", "position", {my: "center center", at: "center center", of: window});
                 $("#dialog" + (n + 1)).dialog("option", "width", winWidth);
               }
-              $("#dialog" + dialogNumber).dialog("option", "position", {my: "right center", at: "right center", of: window});
+                $("#dialog" + dialogNumber).dialog("option", "position", {my: "right center", at: "right center", of: window});
+                $("#dialog" + dialogNumber).dialog("option", "width", winWidth);
+              x++;
+            }
+            else if (count == 3) {
+              if (x == 0) {
+                $("#dialog" + (n + 1)).dialog("option", "position", {my: "left top", at: "left top", of: window});
+                $("#dialog" + (n + 1)).dialog("option", "width", winWidth);
+                let height = $("#dialog" + (n + 1)).dialog("option", "height");
+                // alert(height + ' ' + pageH);
+                if (((pageH / 2) - 125) < height) {
+                  $("#dialog" + (n + 1)).dialog("option", "height", ((pageH / 2) - 125));
+                }
+
+              } else if (x == 1) {
+                $("#dialog" + (n + 1)).dialog("option", "position", {my: "center top", at: "center top", of: window});
+                $("#dialog" + (n + 1)).dialog("option", "width", winWidth);
+              }
+              else if (x == 2) {
+                $("#dialog" + (n+1)).dialog("option", "position", {my: "right top", at: "right top", of: window});
+                $("#dialog" + (n+1)).dialog("option", "width", winWidth);
+              }
+              $("#dialog" + dialogNumber).dialog("option", "position", {my: "left bottom", at: "left bottom", of: window});
+              $("#dialog" + dialogNumber).dialog("option", "height", ((pageH / 2) - 125));
               $("#dialog" + dialogNumber).dialog("option", "width", winWidth);
               x++;
             }
-            else if (count >= 3) {
+            else if (count == 4) {
+              if (x == 0) {
+                $("#dialog" + (n + 1)).dialog("option", "position", {my: "left top", at: "left top", of: window});
+                $("#dialog" + (n + 1)).dialog("option", "width", winWidth);
+                let height = $("#dialog" + (n + 1)).dialog("option", "height");
+                if (((pageH / 2) - 125) < height) {
+                  $("#dialog" + (n + 1)).dialog("option", "height", ((pageH / 2) - 125));
+                }
+
+              } else if (x == 1) {
+                $("#dialog" + (n + 1)).dialog("option", "position", {my: "center top", at: "center top", of: window});
+                $("#dialog" + (n + 1)).dialog("option", "width", winWidth);
+
+                let height = $("#dialog" + (n + 1)).dialog("option", "height");
+                if (((pageH / 2) - 125) < height) {
+                  $("#dialog" + (n + 1)).dialog("option", "height", ((pageH / 2) - 125));
+                }
+              }
+              else if (x == 2) {
+                $("#dialog" + (n+1)).dialog("option", "position", {my: "right top", at: "right top", of: window});
+                $("#dialog" + (n+1)).dialog("option", "width", winWidth);
+              }
+              else if (x == 3) {
+                $("#dialog" + (n+1)).dialog("option", "position", {my: "left bottom", at: "left bottom", of: window});
+                $("#dialog" + (n+1)).dialog("option", "height", ((pageH / 2) - 125));
+                $("#dialog" + (n+1)).dialog("option", "width", winWidth);
+              }
+              $("#dialog" + dialogNumber).dialog("option", "position", {my: "center bottom", at: "center bottom", of: window});
+              $("#dialog" + dialogNumber).dialog("option", "height", ((pageH / 2) - 125));
+              $("#dialog" + dialogNumber).dialog("option", "width", winWidth);
+              x++;
+            }
+            else if (count == 5) {
+              if (x == 0) {
+                $("#dialog" + (n + 1)).dialog("option", "position", {my: "left top", at: "left top", of: window});
+                $("#dialog" + (n + 1)).dialog("option", "width", winWidth);
+                let height = $("#dialog" + (n + 1)).dialog("option", "height");
+                if (((pageH / 2) - 125) < height) {
+                  $("#dialog" + (n + 1)).dialog("option", "height", ((pageH / 2) - 125));
+                }
+
+              } else if (x == 1) {
+                $("#dialog" + (n + 1)).dialog("option", "position", {my: "center top", at: "center top", of: window});
+                $("#dialog" + (n + 1)).dialog("option", "width", winWidth);
+
+                let height = $("#dialog" + (n + 1)).dialog("option", "height");
+                if (((pageH / 2) - 125) < height) {
+                  $("#dialog" + (n + 1)).dialog("option", "height", ((pageH / 2) - 125));
+                }
+              }
+              else if (x == 2) {
+                $("#dialog" + (n+1)).dialog("option", "position", {my: "right top", at: "right top", of: window});
+                $("#dialog" + (n+1)).dialog("option", "width", winWidth);
+
+                let height = $("#dialog" + (n + 1)).dialog("option", "height");
+                if (((pageH / 2) - 125) < height) {
+                  $("#dialog" + (n + 1)).dialog("option", "height", ((pageH / 2) - 125));
+                }
+              }
+              else if (x == 3) {
+                $("#dialog" + (n+1)).dialog("option", "position", {my: "left bottom", at: "left bottom", of: window});
+                $("#dialog" + (n+1)).dialog("option", "height", ((pageH / 2) - 125));
+                $("#dialog" + (n+1)).dialog("option", "width", winWidth);
+              }
+              else if (x == 4) {
+                $("#dialog" + (n+1)).dialog("option", "position", {my: "center bottom", at: "center bottom", of: window});
+                $("#dialog" + (n+1)).dialog("option", "height", ((pageH / 2) - 125));
+                $("#dialog" + (n+1)).dialog("option", "width", winWidth);
+              }
+              $("#dialog" + dialogNumber).dialog("option", "position", {my: "right bottom", at: "right bottom", of: window});
+              $("#dialog" + dialogNumber).dialog("option", "height", ((pageH / 2) - 125));
+              $("#dialog" + dialogNumber).dialog("option", "width", winWidth);
+              x++;
+            }
+            else if (count >= 6) {
               $("#dialog" + dialogNumber).dialog("option", "width", winWidth);
             }
 
