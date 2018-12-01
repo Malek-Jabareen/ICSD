@@ -51,6 +51,7 @@
         alert('This website is not fully support for mobile devices, please use a desktop pc.');
       }
       document.getElementById('savebtn12').addEventListener('click', save_to_database);
+      document.getElementById('closebtn12').addEventListener('click', clear_forum);
     }
     function conv(){
       if (document.getElementById('func').value == '') {
@@ -107,27 +108,25 @@
       var url = 'https://icsd-app.firebaseio.com/Functions/' + keywords_str + '.' + 'json';
       var my_request = new XMLHttpRequest();
       my_request.open('GET', url);
-      my_request.onreadystatechange = function () {
-          try {
-            push_func_to_database(keywords_str, JSON.parse(my_request.responseText).length);
-          }
-          catch (e){}
-        };
-      my_request.send();
-      if(document.getElementById('howtosave').innerHTML == '0'){
-        push_func_to_database(keywords_str, 0);
-      }
-      document.getElementById('howtosave').innerHTML = '0';
+      push_func_to_database(keywords_str);
     }
 
-    function push_func_to_database(keywords_name, counter) {
-      firebase.database().ref('/Functions/'+ keywords_name + '/' + counter + '/').set(
+    function push_func_to_database(keywords_name) {
+      firebase.database().ref('/Functions/'+ keywords_name + '/').push(
         {
             "body": document.getElementById('func').value,
             "name": document.getElementById('funcname').value
         });
       alert('Function saved in our database');
-      document.getElementById('howtosave').innerHTML = '1';
+      clear_forum();
+    }
+
+    function clear_forum() {
+      document.getElementById('funcname').value = '';
+      document.getElementById('keywords').value = '';
+      document.getElementById('newkeyword').value = '';
+      document.getElementById('chosen').value = '';
+
     }
   </script>
   <meta name="viewport" content="width=device-width, initial-scale=1">

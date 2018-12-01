@@ -450,6 +450,7 @@ export class DiagramComponent implements OnInit {
         //   close: function() { $('#convert').focus(); },
         buttons: {
           'Close': {
+            id: 'closebtn12',
             text: 'Close',
             click: function () {
               $(this).dialog('close');
