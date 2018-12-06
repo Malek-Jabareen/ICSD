@@ -1,0 +1,75 @@
+<style>
+
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+  }
+
+
+  /* Create three equal columns that floats next to each other */
+  .fcolumn {
+    float: left;
+    width: 6%;
+    padding: 10px;
+    resize:both;
+    overflow:auto;
+  }
+  .tcolumn {
+    float: left;
+    width: 30%;
+    padding: 0px;
+    resize:both;
+    overflow:auto;
+    height:130vh
+  }
+  .icolumn {
+    float: left;
+    width: 63%;
+    padding: 0px;
+    resize:both;
+    overflow:auto;
+    height:130vh
+  }
+
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<body>
+<header style="padding: 20px">
+<h3 style="text-align: center;">CSDs of Relatively Long Functions of Real Software</h3><br>
+  Left column contains a list of functions that were taken from real software. Clicking on the buttons will show you two new columns of the source code and its corresponding CSD. This page is not a tool
+  for building CSD for functions, but rather a collection of interesting functions with their CSD. If you are interested in working with the tool that creates these CSDs and learn about more features it suggests you
+  are invited to visit this link <a href="http://icsd-app.firebaseapp.com" style="color: blue">ICSD</a>. What you need is simply copying the source code of the function at hand to the textarea of ICSD then click the <strong> convert </strong>
+  button.
+</header>
+<div class="row">
+  <div class="fcolumn">
+    <button (click)="myf('f1')" class="clear" id="f1">f1</button><br><br>
+    <button (click)="myf('f2')" class="clear" id="f2">f2</button><br><br>
+    <button (click)="myf('f3')" class="clear" id="f3">f3</button><br><br>
+    <button (click)="myf('f4')" class="clear" id="f4">f4</button><br><br>
+    <button (click)="myf('f5')" class="clear" id="f5">f5</button><br><br>
+    <button (click)="myf('f6')" class="clear" id="f6">f6</button><br><br>
+    <button (click)="myf('f7')" class="clear" id="f7">f7</button><br><br>
+    <button (click)="myf('f8')" class="clear" id="f8">f8</button><br><br>
+    <button (click)="myf('f9')" class="clear" id="f9">f9</button><br><br>
+    <button (click)="myf('f10')" class="clear" id="f10">f10</button><br><br>
+    <button (click)="myf('f11')" class="clear" id="f11">f11</button><br><br>
+    <button (click)="myf('f12')" class="clear" id="f12">f12</button><br><br>
+    <button (click)="myf('f13')" class="clear" id="f13">f13</button><br><br>
+  </div>
+  <div class="tcolumn" id='t' >
+    <pre>{{funcTxt}}
+    </pre>
+  </div>
+  <div class="icolumn" id='s'>
+  </div>
+  </div>
+
+</body>
+<div class="row">
+</div>
+
+
