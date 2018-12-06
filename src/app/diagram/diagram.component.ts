@@ -446,6 +446,18 @@ export class DiagramComponent implements OnInit {
         height: 600,
         width: 1000
       });
+      $('#dialogExample').dialog({
+        //  close: function() { $('#convert').focus(); },
+        open: function () {
+          $('#accordion').accordion({
+            heightStyle: "content"
+          });
+        },
+
+        autoOpen: false,
+        height: 830,
+        width: 1300
+      });
       $('#dialogSave').dialog({
         //   close: function() { $('#convert').focus(); },
         buttons: {
@@ -1423,7 +1435,7 @@ if ( document.getElementById('dialog' + dialogNumber + 'b') == undefined) {
         if (winWidth < 400) { winWidth = 400; }
 
         let x = 0;
-        // 100 - the auto set will stop working after reopening 100 windows in one session, which is very rare. 
+        // 100 - the auto set will stop working after reopening 100 windows in one session, which is very rare.
         for (let n = 0; n < 100; n++) {
           if (cellDialog[n] !== undefined) {
             // alert('dialog ' + x +' is open' );

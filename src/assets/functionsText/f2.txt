@@ -1,0 +1,97 @@
+//not regular but has interesting functionraw.githubusercontent.com_ObjectProcessMethodology_OPCAT4_master_trunk_src_gui_opdProject_OpdProject 
+private void drawLinkedThings(ThingInstance rootInstance,
+                                  ThingInstance originInstance) {
+        Vector sourceLinks = new Vector();
+        Vector destinationLinks = new Vector();
+        Hashtable addedInstances = new Hashtable();
+
+        for (Enumeration e = originInstance.getRelatedInstances(); e.hasMoreElements(); ) {
+            Object currInstance = e.nextElement();
+
+            if (currInstance instanceof LinkInstance) {
+                if (this._isSource4link(originInstance,
+                        (LinkInstance) currInstance)) {
+                    sourceLinks.add(currInstance);
+                } else {
+                    destinationLinks.add(currInstance);
+                }
+            }
+        }
+
+        ThingInstance originParent = (ThingInstance) originInstance.getParentIXThingInstance();
+
+        if (originParent != null) {
+            for (Enumeration e2 = originParent.getRelatedInstances(); e2.hasMoreElements(); ) {
+
+                Instance currInstance = (Instance) e2.nextElement();
+                if (currInstance instanceof LinkInstance) {
+                    OpmProceduralLink currLink = (OpmProceduralLink) currInstance.getEntry().getLogicalEntity();
+
+                    CommandWrapper cw;
+                    if (this._isSource4link(originParent,
+                            (LinkInstance) currInstance)) {
+                        cw = new CommandWrapper(
+                                rootInstance.getEntry().getId(), rootInstance.getKey(),
+                                ((LinkInstance) currInstance).getDestinationInstance().getEntry().getId(), ((LinkInstance) currInstance).getDestinationInstance().getKey(),
+                                Constants.getType4Link(currLink), this);
+                    } else {
+                        cw = new CommandWrapper(((LinkInstance) currInstance).getSourceInstance().getEntry().getId(),
+                                ((LinkInstance) currInstance).getSourceInstance().getKey(),
+                                rootInstance.getEntry().getId(), rootInstance.getKey(), Constants.getType4Link(currLink), this);
+                    }
+
+                    CheckResult cr = CheckModule.checkCommand(cw);
+                    if (cr.getResult() == IXCheckResult.RIGHT) {
+                        if (this._isSource4link(originParent,
+                                (LinkInstance) currInstance)) {
+                            // check if the entry is alrady in
+                            long insID = currInstance.getEntry().getId();
+                            int i = 0;
+                            for (i = 0; i < sourceLinks.size(); i++) {
+                                if (((Instance) sourceLinks.get(i)).getEntry().getId() == insID) {
+                                    break;
+                                }
+                            }
+                            if (i == sourceLinks.size()) {
+                                sourceLinks.add(currInstance);
+                            }
+                        } else {
+
+                            long insID = currInstance.getEntry().getId();
+                            int i = 0;
+                            for (i = 0; i < destinationLinks.size(); i++) {
+                                if (((Instance) destinationLinks.get(i)).getEntry().getId() == insID) {
+                                    break;
+                                }
+                            }
+                            if (i == destinationLinks.size()) {
+                                destinationLinks.add(currInstance);
+                            }
+                        }
+                    }
+
+                }
+            }
+        }
+
+        for (int i = 0; i < sourceLinks.size(); i++) {
+            this._drawElement(rootInstance, (LinkInstance) sourceLinks.get(i),
+                    true, i, sourceLinks.size() + destinationLinks.size(),
+                    addedInstances);
+        }
+
+        try {
+            for (int i = 0; i < destinationLinks.size(); i++) {
+                this._drawElement(rootInstance, (LinkInstance) destinationLinks.get(i), false, i + sourceLinks.size(), sourceLinks.size() + destinationLinks.size(), addedInstances);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // _drawElements(sourceLinks, addedInstances, rootThing, 0,
+        // sourceLinks.size()+destinationLinks.size(), true);
+        // _drawElements(destinationLinks, addedInstances, rootThing,
+        // sourceLinks.size(), sourceLinks.size()+destinationLinks.size(),
+        // false);
+
+    }

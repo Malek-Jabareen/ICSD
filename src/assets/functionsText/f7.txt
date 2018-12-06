@@ -1,0 +1,350 @@
+// raw.githubusercontent.com_ObjectProcessMethodology_OPCAT4_b1b361e43e52e1146dac6f1c2b5d635ec03f19ef_tags_release-2.86_src_extensionTools_Documents_Doc_Document_craz
+public void FromTemp(FileInputStream inFile) throws IOException {
+		try {
+			FileInputStream file = inFile;
+
+			if (file.read() == '1') {
+				this.DocInfo.GI.setClient(true);
+			} else {
+				this.DocInfo.GI.setClient(false);
+			}
+
+			if (file.read() == '1') {
+				this.DocInfo.GI.setOverview(true);
+			} else {
+				this.DocInfo.GI.setOverview(false);
+			}
+
+			if (file.read() == '1') {
+				this.DocInfo.GI.setCurrent(true);
+			} else {
+				this.DocInfo.GI.setCurrent(false);
+			}
+
+			if (file.read() == '1') {
+				this.DocInfo.GI.setGoals(true);
+			} else {
+				this.DocInfo.GI.setGoals(false);
+			}
+
+			if (file.read() == '1') {
+				this.DocInfo.GI.setBusiness(true);
+			} else {
+				this.DocInfo.GI.setBusiness(false);
+			}
+
+			if (file.read() == '1') {
+				this.DocInfo.GI.setFuture(true);
+			} else {
+				this.DocInfo.GI.setFuture(false);
+			}
+
+			if (file.read() == '1') {
+				this.DocInfo.GI.setHard(true);
+			} else {
+				this.DocInfo.GI.setHard(false);
+			}
+
+			if (file.read() == '1') {
+				this.DocInfo.GI.setInputs(true);
+			} else {
+				this.DocInfo.GI.setInputs(false);
+			}
+
+			if (file.read() == '1') {
+				this.DocInfo.GI.setIssues(true);
+			} else {
+				this.DocInfo.GI.setIssues(false);
+			}
+
+			if (file.read() == '1') {
+				this.DocInfo.GI.setProblems(true);
+			} else {
+				this.DocInfo.GI.setProblems(false);
+			}
+
+			if (file.read() == '1') {
+				this.DocInfo.GI.setUsers(true);
+			} else {
+				this.DocInfo.GI.setUsers(false);
+			}
+
+			if (file.read() == '1') {
+				this.DocInfo.GI.setOper(true);
+			} else {
+				this.DocInfo.GI.setOper(false);
+			}
+
+			if (file.read() == '1') {
+				this.DocInfo.Data.Obj.setType(true);
+			} else {
+				this.DocInfo.Data.Obj.setType(false);
+			}
+
+			if (file.read() == '1') {
+				this.DocInfo.Data.Obj.setDesc(true);
+			} else {
+				this.DocInfo.Data.Obj.setDesc(false);
+			}
+
+			if (file.read() == '1') {
+				this.DocInfo.Data.Obj.setInValue(true);
+			} else {
+				this.DocInfo.Data.Obj.setInValue(false);
+			}
+
+			if (file.read() == '1') {
+				this.DocInfo.Data.Obj.setEssence(true);
+			} else {
+				this.DocInfo.Data.Obj.setEssence(false);
+			}
+
+			if (file.read() == '1') {
+				this.DocInfo.Data.Obj.setIndex(true);
+			} else {
+				this.DocInfo.Data.Obj.setIndex(false);
+			}
+
+			if (file.read() == '1') {
+				this.DocInfo.Data.Obj.setScope(true);
+			} else {
+				this.DocInfo.Data.Obj.setScope(false);
+			}
+
+			if (file.read() == '1') {
+				this.DocInfo.Data.Obj.setOrigin(true);
+			} else {
+				this.DocInfo.Data.Obj.setOrigin(false);
+			}
+
+			if (file.read() == '1') {
+				this.DocInfo.Data.Obj.setStates(true);
+			} else {
+				this.DocInfo.Data.Obj.setStates(false);
+			}
+
+			if (file.read() == '1') {
+				this.DocInfo.Data.Obj.setStateDesc(true);
+			} else {
+				this.DocInfo.Data.Obj.setStateDesc(false);
+			}
+
+			if (file.read() == '1') {
+				this.DocInfo.Data.Obj.setStateInitial(true);
+			} else {
+				this.DocInfo.Data.Obj.setStateInitial(false);
+			}
+
+			if (file.read() == '1') {
+				this.DocInfo.Data.Obj.setStateTime(true);
+			} else {
+				this.DocInfo.Data.Obj.setStateTime(false);
+			}
+
+			if (file.read() == '1') {
+				this.DocInfo.Data.Proc.setDesc(true);
+			} else {
+				this.DocInfo.Data.Proc.setDesc(false);
+			}
+
+			if (file.read() == '1') {
+				this.DocInfo.Data.Proc.setEssence(true);
+			} else {
+				this.DocInfo.Data.Proc.setEssence(false);
+			}
+
+			if (file.read() == '1') {
+				this.DocInfo.Data.Proc.setOrigin(true);
+			} else {
+				this.DocInfo.Data.Proc.setOrigin(false);
+			}
+
+			if (file.read() == '1') {
+				this.DocInfo.Data.Proc.setScope(true);
+			} else {
+				this.DocInfo.Data.Proc.setScope(false);
+			}
+
+			if (file.read() == '1') {
+				this.DocInfo.Data.Proc.setBody(true);
+			} else {
+				this.DocInfo.Data.Proc.setBody(false);
+			}
+
+			if (file.read() == '1') {
+				this.DocInfo.Data.Proc.setActTime(true);
+			} else {
+				this.DocInfo.Data.Proc.setActTime(false);
+			}
+
+			if (file.read() == '1') {
+				this.DocInfo.Data.Rel.setAgPar(true);
+			} else {
+				this.DocInfo.Data.Rel.setAgPar(false);
+			}
+
+			if (file.read() == '1') {
+				this.DocInfo.Data.Rel.setClassInst(true);
+			} else {
+				this.DocInfo.Data.Rel.setClassInst(false);
+			}
+
+			if (file.read() == '1') {
+				this.DocInfo.Data.Rel.setFeChar(true);
+			} else {
+				this.DocInfo.Data.Rel.setFeChar(false);
+			}
+
+			if (file.read() == '1') {
+				this.DocInfo.Data.Rel.setGenSpec(true);
+			} else {
+				this.DocInfo.Data.Rel.setGenSpec(false);
+			}
+
+			if (file.read() == '1') {
+				this.DocInfo.Data.Rel.setBiDir(true);
+			} else {
+				this.DocInfo.Data.Rel.setBiDir(false);
+			}
+
+			if (file.read() == '1') {
+				this.DocInfo.Data.Rel.setUniDir(true);
+			} else {
+				this.DocInfo.Data.Rel.setUniDir(false);
+			}
+
+			if (file.read() == '1') {
+				this.DocInfo.Data.Link.setAgent(true);
+			} else {
+				this.DocInfo.Data.Link.setAgent(false);
+			}
+
+			if (file.read() == '1') {
+				this.DocInfo.Data.Link.setCondition(true);
+			} else {
+				this.DocInfo.Data.Link.setCondition(false);
+			}
+
+			if (file.read() == '1') {
+				this.DocInfo.Data.Link.setEffect(true);
+			} else {
+				this.DocInfo.Data.Link.setEffect(false);
+			}
+
+			if (file.read() == '1') {
+				this.DocInfo.Data.Link.setEvent(true);
+			} else {
+				this.DocInfo.Data.Link.setEvent(false);
+			}
+
+			if (file.read() == '1') {
+				this.DocInfo.Data.Link.setException(true);
+			} else {
+				this.DocInfo.Data.Link.setException(false);
+			}
+
+			if (file.read() == '1') {
+				this.DocInfo.Data.Link.setInstEvent(true);
+			} else {
+				this.DocInfo.Data.Link.setInstEvent(false);
+			}
+
+			if (file.read() == '1') {
+				this.DocInfo.Data.Link.setInvocation(true);
+			} else {
+				this.DocInfo.Data.Link.setInvocation(false);
+			}
+
+			if (file.read() == '1') {
+				this.DocInfo.Data.Link.setResCons(true);
+			} else {
+				this.DocInfo.Data.Link.setResCons(false);
+			}
+
+			if (file.read() == '1') {
+				this.DocInfo.Data.Link.setInstrument(true);
+			} else {
+				this.DocInfo.Data.Link.setInstrument(false);
+			}
+
+			if (file.read() == '1') {
+				this.DocInfo.Data.Link.setCond(true);
+			} else {
+				this.DocInfo.Data.Link.setCond(false);
+			}
+
+			if (file.read() == '1') {
+				this.DocInfo.Data.Link.setPath(true);
+			} else {
+				this.DocInfo.Data.Link.setPath(false);
+			}
+
+			if (file.read() == '1') {
+				this.DocInfo.Data.Link.setReactTime(true);
+			} else {
+				this.DocInfo.Data.Link.setReactTime(false);
+			}
+
+			if (file.read() == '1') {
+				this.DocInfo.opdopl.setOPDAll(true);
+			} else {
+				this.DocInfo.opdopl.setOPDAll(false);
+			}
+
+			if (file.read() == '1') {
+				this.DocInfo.opdopl.setOPDByName(true);
+			} else {
+				this.DocInfo.opdopl.setOPDByName(false);
+			}
+
+			if (file.read() == '1') {
+				this.DocInfo.opdopl.setOPDNone(true);
+			} else {
+				this.DocInfo.opdopl.setOPDNone(false);
+			}
+
+			if (file.read() == '1') {
+				this.DocInfo.opdopl.setOPLAll(true);
+			} else {
+				this.DocInfo.opdopl.setOPLAll(false);
+			}
+
+			if (file.read() == '1') {
+				this.DocInfo.opdopl.setOPLByName(true);
+			} else {
+				this.DocInfo.opdopl.setOPLByName(false);
+			}
+
+			if (file.read() == '1') {
+				this.DocInfo.opdopl.setOPLNone(true);
+			} else {
+				this.DocInfo.opdopl.setOPLNone(false);
+			}
+
+			if (file.read() == '1') {
+				this.DocInfo.opdopl.setOPLAccording(true);
+			} else {
+				this.DocInfo.opdopl.setOPLAccording(false);
+			}
+
+			String until = "";
+			char c = (char) file.read();
+			while (c != ';') {
+				until += c;
+				c = (char) file.read();
+			}
+			this.DocInfo.opdopl.setOPDUntil(until);
+
+			until = "";
+			c = (char) file.read();
+			while (c != ';') {
+				until += c;
+				c = (char) file.read();
+			}
+			this.DocInfo.opdopl.setOPLUntil(until);
+		} catch (IOException e) {
+			System.out.println("error");
+			return;
+		}
+
+	}// end of FromTemp

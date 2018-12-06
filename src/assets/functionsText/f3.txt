@@ -1,0 +1,224 @@
+//not regular but has interesting functionraw.githubusercontent.com_ObjectProcessMethodology_OPCAT4_master_trunk_src_gui_opdProject_OpdProject
+public String _copy(Opd copyFrom, Opd copyTo, int x, int y,
+                        Container parent, boolean isUndoable) {
+
+        GridPanel.updateColor(null);
+
+        try {
+
+            Hashtable t = new Hashtable(); // things
+            Hashtable l = new Hashtable(); // links
+            Hashtable fr = new Hashtable(); // fundamental relations
+            Hashtable gr = new Hashtable(); // general relations
+            Hashtable selectedItems = copyFrom.getSelectedItemsHash();
+            // all selected Instances
+
+            boolean wasNewOpd = false;
+
+            Instance inst = null;
+            Enumeration e;
+            ThingInstance ti = null;
+
+            // undo only when action == PASTE
+            CompoundUndoAction undoAction = new CompoundUndoAction();
+
+            Opd oldOpd = this.currentOpd;
+
+            this.currentOpd = copyFrom;
+
+            // sort all selected Instances according to the type
+            for (e = selectedItems.elements(); e.hasMoreElements(); ) {
+                inst = (Instance) e.nextElement();
+                if (inst instanceof ThingInstance) {
+                    t.put(new Long(inst.getKey().getEntityInOpdId()), inst);
+                } else if (inst instanceof LinkInstance) {
+                    l.put(new Long(inst.getKey().getEntityInOpdId()), inst);
+                } else if (inst instanceof FundamentalRelationInstance) {
+                    fr.put(new Long(inst.getKey().getEntityInOpdId()), inst);
+                } else if (inst instanceof GeneralRelationInstance) {
+                    gr.put(new Long(inst.getKey().getEntityInOpdId()), inst);
+                }
+            }
+
+            if (t.size() == 0) {
+                // no things where selected so nothing to do
+                return null;
+            }
+
+            // now calculate the most topleft point
+            // we calculate it from _graphical_ selection so if
+            // one of DraggedPoints or OpdFundamentalRelations outstends the
+            // OpdThings
+            // bounds it would taken in count
+            Component[] bgcs = copyFrom.getSelection().graphicalSelectionComponents();
+            int topleftX = Integer.MAX_VALUE;
+            int topleftY = Integer.MAX_VALUE;
+
+            for (int i = 0; i < bgcs.length; i++) {
+                if (bgcs[i].getX() < topleftX) {
+                    topleftX = bgcs[i].getX();
+                }
+                if (bgcs[i].getY() < topleftY) {
+                    topleftY = bgcs[i].getY();
+                }
+            }
+
+            int theX, theY; // really x,y to paste
+            this.currentOpd = copyTo;
+            // ////////////////////////////////////////////////////////
+            // this hash holds oldInstance/newInstance pairs
+            // so we can add all links/relations properly
+            Hashtable orig2new = new Hashtable();
+            // ////////////////////////////////////////////////////////
+
+            for (Enumeration e1 = t.elements(); e1.hasMoreElements(); ) {
+                ti = (ThingInstance) e1.nextElement();
+
+                // calc real location
+                theX = x + ti.getX() - topleftX;
+                theY = y + ti.getY() - topleftY;
+
+                if (ti instanceof ProcessInstance) {
+                    ProcessInstance pi;
+                    pi = this.addProcess(theX, theY, parent, ti.getLogicalId(),
+                            -1);
+                    pi.setLocation(theX, theY);
+                    pi.getThing().fitToContent();
+                    pi.copyPropsFrom((ProcessInstance) ti);
+                    pi.update();
+
+                    if (isUndoable == true) {
+                        undoAction.addAction(new UndoableAddProcess(this, pi));
+                    }
+
+                    orig2new.put(ti, pi);
+                }
+
+                if (ti instanceof ObjectInstance) {
+                    ObjectInstance oi;
+                    oi = this.addObject(theX, theY, parent, ti.getLogicalId(),
+                            -1, true);
+                    oi.setLocation(theX, theY);
+                    oi.getThing().fitToContent();
+                    oi.copyPropsFrom((ObjectInstance) ti);
+                    // oi.setUnfoldingOpd(ti.getUnfoldingOpd());
+                    oi.update();
+
+                    if (isUndoable == true) {
+                        undoAction.addAction(new UndoableAddObject(this, oi));
+                    }
+                    orig2new.put(ti, oi);
+
+                    ObjectInstance oldOi = (ObjectInstance) ti;
+                    StateInstance newSi, oldSi;
+                    for (Enumeration locEnum = oldOi.getStateInstances(); locEnum.hasMoreElements(); ) {
+                        oldSi = (StateInstance) locEnum.nextElement();
+                        for (Enumeration enum1 = oi.getStateInstances(); enum1.hasMoreElements(); ) {
+                            newSi = (StateInstance) enum1.nextElement();
+                            if (oldSi.getLogicalId() == newSi.getLogicalId()) {
+                                orig2new.put(oldSi, newSi);
+                            }
+                        }
+                    }
+                }
+            }
+
+            ConnectionEdgeInstance origSrc, origDst, newSrc, newDst;
+            // it's time to paste links
+            LinkInstance origLi, newLi;
+            for (Enumeration e2 = l.elements(); e2.hasMoreElements(); ) {
+                origLi = (LinkInstance) e2.nextElement();
+                origSrc = origLi.getSourceInstance();
+                origDst = origLi.getDestinationInstance();
+                newSrc = (ConnectionEdgeInstance) orig2new.get(origSrc);
+                newDst = (ConnectionEdgeInstance) orig2new.get(origDst);
+                if ((newSrc != null) && (newDst != null)) {
+                    newLi = this.addLink(newSrc.getConnectionEdge(), origLi.getSourceDragger().getRelativeConnectionPoint(),
+                            newDst.getConnectionEdge(), origLi.getDestinationDragger().getRelativeConnectionPoint(), newSrc.getConnectionEdge().getParent(), Constants.getType4Link((OpmProceduralLink) origLi.getEntry().getLogicalEntity()),
+                            origLi.getEntry().getId(), -1);
+                    newLi.copyPropsFrom(origLi);
+                    newLi.update();
+                    if (isUndoable == true) {
+                        undoAction.addAction(new UndoableAddLink(this, newLi));
+                    }
+                }
+
+            }
+
+            // paste fundamental relations
+            FundamentalRelationInstance origFri, newFri;
+            for (Enumeration e2 = fr.elements(); e2.hasMoreElements(); ) {
+                origFri = (FundamentalRelationInstance) e2.nextElement();
+                origSrc = (ConnectionEdgeInstance) origFri.getGraphicalRelationRepresentation().getSourceInstance();
+                origDst = (ConnectionEdgeInstance) origFri.getDestinationInstance();
+                newSrc = (ConnectionEdgeInstance) orig2new.get(origSrc);
+                newDst = (ConnectionEdgeInstance) orig2new.get(origDst);
+                if ((newSrc != null) && (newDst != null)) {
+                    newFri = this.addFundRelation(
+                            newSrc.getConnectionEdge(),
+                            origFri.getDestinationDragger().getRelativeConnectionPoint(),
+                            newDst.getConnectionEdge(),
+                            origFri.getDestinationDragger().getRelativeConnectionPoint(),
+                            Constants.getType4Relation((OpmStructuralRelation) origFri.getEntry().getLogicalEntity()),
+                            newSrc.getConnectionEdge().getParent(),
+                            origFri.getEntry().getId(), -1);
+                    // newFri.copyPropsFrom(origFri);
+                    // newFri.update();
+                    if (isUndoable == true) {
+                        undoAction.addAction(new UndoableAddFundamentalRelation(
+                                this, newFri));
+                    }
+                }
+
+            }
+
+            // paste general relations
+            GeneralRelationInstance origGri, newGri;
+            for (Enumeration e2 = gr.elements(); e2.hasMoreElements(); ) {
+                origGri = (GeneralRelationInstance) e2.nextElement();
+                origSrc = (ConnectionEdgeInstance) origGri.getSourceInstance();
+                origDst = (ConnectionEdgeInstance) origGri.getDestinationInstance();
+                newSrc = (ConnectionEdgeInstance) orig2new.get(origSrc);
+                newDst = (ConnectionEdgeInstance) orig2new.get(origDst);
+                if ((newSrc != null) && (newDst != null)) {
+                    newGri = this.addGeneralRelation(
+                            newSrc.getConnectionEdge(),
+                            origGri.getDestinationDragger().getRelativeConnectionPoint(),
+                            newDst.getConnectionEdge(),
+                            origGri.getDestinationDragger().getRelativeConnectionPoint(),
+                            newSrc.getConnectionEdge().getParent(),
+                            Constants.getType4Relation((OpmStructuralRelation) origGri.getEntry().getLogicalEntity()),
+                            origGri.getEntry().getId(), -1);
+                    // newGri.copyPropsFrom(origFri);
+                    newGri.update();
+                    if (isUndoable == true) {
+                        undoAction.addAction(new UndoableAddGeneralRelation(
+                                this, newGri));
+                    }
+                }
+            }
+
+            this.currentOpd = oldOpd;
+
+            if (wasNewOpd) {
+                Opcat2.getUndoManager().discardAllEdits();
+                Opcat2.setRedoEnabled(false);
+                Opcat2.setUndoEnabled(false);
+            }
+            if (isUndoable == true) {
+                Opcat2.updateStructureChange(Opcat2.LOGICAL_CHANGE);
+                Opcat2.getUndoManager().undoableEditHappened(
+                        new UndoableEditEvent(this, undoAction));
+                Opcat2.setUndoEnabled(Opcat2.getUndoManager().canUndo());
+                Opcat2.setRedoEnabled(Opcat2.getUndoManager().canRedo());
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(Opcat2.getFrame(),
+                    "Could not Copy, Check Selection Validity", "Opcat2 Error",
+                    JOptionPane.ERROR_MESSAGE);
+            deselectAll();
+            StateMachine.reset();
+            OpcatLogger.error(ex);
+        }
+        return null;
+    }

@@ -1,0 +1,360 @@
+//raw.githubusercontent.com_ObjectProcessMethodology_OPCAT4_b1b361e43e52e1146dac6f1c2b5d635ec03f19ef_tags_release-2.86_src_extensionTools_Documents_Doc_Document_craz
+public void CreateTemplate(ISystem sys, String filename) throws IOException {
+		try {
+			this.mySys = sys;
+			FileOutputStream file;
+
+			String dirName = "Templates"; // Directory name
+			File dir = new File(dirName); // File object for directory
+			if (!dir.exists()) {
+				dir.mkdir(); // ...create it
+			}
+
+			File aFile = new File(dir, filename);
+			aFile.createNewFile(); // Now create a new file if necessary
+
+			file = new FileOutputStream(aFile);
+
+			// for each field of genInfo put 1 if selected, else 0
+			if (this.DocInfo.GI.getClient()) {
+				file.write('1');
+			} else {
+				file.write('0');
+			}
+
+			if (this.DocInfo.GI.getOverview()) {
+				file.write('1');
+			} else {
+				file.write('0');
+			}
+
+			if (this.DocInfo.GI.getCurrent()) {
+				file.write('1');
+			} else {
+				file.write('0');
+			}
+
+			if (this.DocInfo.GI.getGoals()) {
+				file.write('1');
+			} else {
+				file.write('0');
+			}
+
+			if (this.DocInfo.GI.getBusiness()) {
+				file.write('1');
+			} else {
+				file.write('0');
+			}
+
+			if (this.DocInfo.GI.getFuture()) {
+				file.write('1');
+			} else {
+				file.write('0');
+			}
+
+			if (this.DocInfo.GI.getHard()) {
+				file.write('1');
+			} else {
+				file.write('0');
+			}
+
+			if (this.DocInfo.GI.getInputs()) {
+				file.write('1');
+			} else {
+				file.write('0');
+			}
+
+			if (this.DocInfo.GI.getIssues()) {
+				file.write('1');
+			} else {
+				file.write('0');
+			}
+
+			if (this.DocInfo.GI.getProblems()) {
+				file.write('1');
+			} else {
+				file.write('0');
+			}
+
+			if (this.DocInfo.GI.getUsers()) {
+				file.write('1');
+			} else {
+				file.write('0');
+			}
+
+			if (this.DocInfo.GI.getOper()) {
+				file.write('1');
+			} else {
+				file.write('0');
+			}
+
+			// for each field of object put 1 if selected, else 0
+			if (this.DocInfo.Data.Obj.getType()) {
+				file.write('1');
+			} else {
+				file.write('0');
+			}
+
+			if (this.DocInfo.Data.Obj.getDesc()) {
+				file.write('1');
+			} else {
+				file.write('0');
+			}
+
+			if (this.DocInfo.Data.Obj.getInValue()) {
+				file.write('1');
+			} else {
+				file.write('0');
+			}
+
+			if (this.DocInfo.Data.Obj.getEssence()) {
+				file.write('1');
+			} else {
+				file.write('0');
+			}
+
+			if (this.DocInfo.Data.Obj.getIndex()) {
+				file.write('1');
+			} else {
+				file.write('0');
+			}
+
+			if (this.DocInfo.Data.Obj.getScope()) {
+				file.write('1');
+			} else {
+				file.write('0');
+			}
+
+			if (this.DocInfo.Data.Obj.getOrigin()) {
+				file.write('1');
+			} else {
+				file.write('0');
+			}
+
+			if (this.DocInfo.Data.Obj.getStates()) {
+				file.write('1');
+			} else {
+				file.write('0');
+			}
+
+			if (this.DocInfo.Data.Obj.getStateDesc()) {
+				file.write('1');
+			} else {
+				file.write('0');
+			}
+
+			if (this.DocInfo.Data.Obj.getStateInitial()) {
+				file.write('1');
+			} else {
+				file.write('0');
+			}
+
+			if (this.DocInfo.Data.Obj.getStateTime()) {
+				file.write('1');
+			} else {
+				file.write('0');
+			}
+
+			// for each field of process put 1 if selected, else 0
+			if (this.DocInfo.Data.Proc.getDesc()) {
+				file.write('1');
+			} else {
+				file.write('0');
+			}
+
+			if (this.DocInfo.Data.Proc.getEssence()) {
+				file.write('1');
+			} else {
+				file.write('0');
+			}
+
+			if (this.DocInfo.Data.Proc.getOrigin()) {
+				file.write('1');
+			} else {
+				file.write('0');
+			}
+
+			if (this.DocInfo.Data.Proc.getScope()) {
+				file.write('1');
+			} else {
+				file.write('0');
+			}
+
+			if (this.DocInfo.Data.Proc.getBody()) {
+				file.write('1');
+			} else {
+				file.write('0');
+			}
+
+			if (this.DocInfo.Data.Proc.getActTime()) {
+				file.write('1');
+			} else {
+				file.write('0');
+			}
+
+			// for each field of relation put 1 if selected, else 0
+			if (this.DocInfo.Data.Rel.getAgPar()) {
+				file.write('1');
+			} else {
+				file.write('0');
+			}
+
+			if (this.DocInfo.Data.Rel.getClassInst()) {
+				file.write('1');
+			} else {
+				file.write('0');
+			}
+
+			if (this.DocInfo.Data.Rel.getFeChar()) {
+				file.write('1');
+			} else {
+				file.write('0');
+			}
+
+			if (this.DocInfo.Data.Rel.getGenSpec()) {
+				file.write('1');
+			} else {
+				file.write('0');
+			}
+
+			if (this.DocInfo.Data.Rel.getBiDir()) {
+				file.write('1');
+			} else {
+				file.write('0');
+			}
+
+			if (this.DocInfo.Data.Rel.getUniDir()) {
+				file.write('1');
+			} else {
+				file.write('0');
+			}
+
+			// for each field of link put 1 if selected, else 0
+			if (this.DocInfo.Data.Link.getAgent()) {
+				file.write('1');
+			} else {
+				file.write('0');
+			}
+
+			if (this.DocInfo.Data.Link.getCondition()) {
+				file.write('1');
+			} else {
+				file.write('0');
+			}
+
+			if (this.DocInfo.Data.Link.getEffect()) {
+				file.write('1');
+			} else {
+				file.write('0');
+			}
+
+			if (this.DocInfo.Data.Link.getEvent()) {
+				file.write('1');
+			} else {
+				file.write('0');
+			}
+
+			if (this.DocInfo.Data.Link.getException()) {
+				file.write('1');
+			} else {
+				file.write('0');
+			}
+
+			if (this.DocInfo.Data.Link.getInstEvent()) {
+				file.write('1');
+			} else {
+				file.write('0');
+			}
+
+			if (this.DocInfo.Data.Link.getInvocation()) {
+				file.write('1');
+			} else {
+				file.write('0');
+			}
+
+			if (this.DocInfo.Data.Link.getResCons()) {
+				file.write('1');
+			} else {
+				file.write('0');
+			}
+
+			if (this.DocInfo.Data.Link.getInstrument()) {
+				file.write('1');
+			} else {
+				file.write('0');
+			}
+
+			if (this.DocInfo.Data.Link.getCond()) {
+				file.write('1');
+			} else {
+				file.write('0');
+			}
+
+			if (this.DocInfo.Data.Link.getPath()) {
+				file.write('1');
+			} else {
+				file.write('0');
+			}
+
+			if (this.DocInfo.Data.Link.getReactTime()) {
+				file.write('1');
+			} else {
+				file.write('0');
+			}
+
+			// for each field of OPD put 1 if selected, else 0
+			if (this.DocInfo.opdopl.getOPDAll()) {
+				file.write('1');
+			} else {
+				file.write('0');
+			}
+
+			if (this.DocInfo.opdopl.getOPDByName()) {
+				file.write('1');
+			} else {
+				file.write('0');
+			}
+
+			if (this.DocInfo.opdopl.getOPDNone()) {
+				file.write('1');
+			} else {
+				file.write('0');
+			}
+
+			// for each field of OPL put 1 if selected, else 0
+			if (this.DocInfo.opdopl.getOPLAll()) {
+				file.write('1');
+			} else {
+				file.write('0');
+			}
+
+			if (this.DocInfo.opdopl.getOPLByName()) {
+				file.write('1');
+			} else {
+				file.write('0');
+			}
+
+			if (this.DocInfo.opdopl.getOPLNone()) {
+				file.write('1');
+			} else {
+				file.write('0');
+			}
+
+			if (this.DocInfo.opdopl.getOPLAccording()) {
+				file.write('1');
+			} else {
+				file.write('0');
+			}
+
+			// for opd Until level put the value in the file
+			file.write(this.DocInfo.opdopl.getOPDUntil().getBytes());
+			file.write(';');
+			// for opl Until level put the value in the file
+			file.write(this.DocInfo.opdopl.getOPLUntil().getBytes());
+			file.write(';');
+
+		} catch (IOException e) {
+			System.out.println("Error creating a template");
+			return;
+		}
+	}// end of CreateTemplate

@@ -14,6 +14,8 @@
   <li class="liHide"><a href="#" (click)="zoomin()" title="Expand diagram's size">+</a></li>
   <li class="liHide"><a href="#"  (click)="zoomout()" title="Decrease diagram's size">-</a></li>
   <li><a href="#" onclick="$('#dialogHelp').dialog('open');" title="What is this app?">Help</a></li>
+  <li><a href="#" onclick="$('#dialogExample').dialog('open');" title="Examples Of Interesting Functions">Examples Of Interesting Functions</a></li>
+
 
  <!-- <li class="liHide2" id="dialog1b"><a href="#" onclick="$('#dialog1').parent().show(); document.getElementById('dialog1b').style.display='none';" title="Show dialog">Win 1</a></li>
   <li class="liHide2" id="dialog2b"><a href="#" onclick="$('#dialog2').parent().show(); document.getElementById('dialog2b').style.display='none';" title="Show dialog">Win 2</a></li>
@@ -89,9 +91,8 @@
         Duplicate code / clone code is a code that occurs many times within a program. If the programmer wants to do any change to the code, he will need to remember all the places the code occurs, and then change the code every place that the code occurs. Avoiding duplicate code makes it easier to the programmer to make changes when needed.
       </p>
     </div>
-
   </div>
-
-
 </div>
-
+<div id="dialogExample" title="Examples Of Interesting Functions">
+  <app-examples></app-examples>
+</div>
