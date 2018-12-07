@@ -1,0 +1,168 @@
+//https://github.com/ObjectProcessMethodology/OPCAT4/blob/master/trunk/src/gui/opdGraphics/opdBaseComponents/OpdConnectionEdge.java
+protected void _drawIcon(Graphics2D g2, Shape shape) {
+
+        boolean showIcons = Boolean.parseBoolean(Configuration.getInstance().getProperty("show_icons"));
+
+        if (!showIcons) {
+            return;
+        }
+
+        if (!isIconVisible()) {
+            return;
+        }
+
+        PlanarImage planerImage = null;
+        BufferedImage buf = null;
+        if (myEntry.isRoleIconSet() || myEntry.isIconSet()) {
+            if (myEntry.isRoleIconSet()) {
+                planerImage = myEntry.getRoleIcon();
+            } else {
+                planerImage = myEntry.getIcon();
+            }
+            buf = planerImage.getAsBufferedImage();
+        }
+
+        if (getInstance() != null) {
+
+            boolean isChanged = myEntity.isExposedChanged();
+
+            boolean probablyTemplate = myInstance.isTemplateInstance();
+
+            boolean usedUnknown = !myInstance.isPointerInstance() && !probablyTemplate && (myInstance.getEntry().getLogicalEntity().getRolesManager().getRolesCollection().size() > 0);
+
+            if (myEntity.isExposed() && !myInstance.isPointerInstance() && !probablyTemplate) {
+                // exposed no pointer
+                if (isChanged) {
+                    if (myEntity.isPrivateExposed() && myEntity.isPublicExposed()) {
+                        buf = ExposeImages.exposed_public_private_changed;
+                    } else if (myEntity.isPrivateExposed()) {
+                        buf = ExposeImages.exposed_private_changed;
+                    } else if (myEntity.isPublicExposed()) {
+                        buf = ExposeImages.exposed_public_changed;
+                    }
+
+                } else {
+                    if (myEntity.isPrivateExposed() && myEntity.isPublicExposed()) {
+                        buf = ExposeImages.exposed_public_private;
+                    } else if (myEntity.isPrivateExposed()) {
+                        buf = ExposeImages.exposed_private;
+                    } else if (myEntity.isPublicExposed()) {
+                        buf = ExposeImages.exposed_public;
+                    }
+                }
+            } else if (myEntity.isExposed() && myInstance.isPointerInstance() && myInstance.getPointer().isPrivate() && !probablyTemplate) {
+                // private pointer, and exposed
+                if (isChanged) {
+                    if (myEntity.isPrivateExposed() && myEntity.isPublicExposed()) {
+                        buf = ExposeImages.private_pointer_private_exposed_public_exposed_changed;
+                    } else if (myEntity.isPrivateExposed()) {
+                        buf = ExposeImages.private_pointer_private_exposed_changed;
+                    } else if (myEntity.isPublicExposed()) {
+                        buf = ExposeImages.private_pointer_public_exposed_changed;
+                    }
+
+                } else {
+                    if (myEntity.isPrivateExposed() && myEntity.isPublicExposed()) {
+                        buf = ExposeImages.private_pointer_private_exposed_public_exposed;
+                    } else if (myEntity.isPrivateExposed()) {
+                        buf = ExposeImages.private_pointer_private_exposed;
+                    } else if (myEntity.isPublicExposed()) {
+                        buf = ExposeImages.private_pointer_public_exposed;
+                    }
+                }
+            } else if (myEntity.isExposed() && myInstance.isPointerInstance() && !myInstance.getPointer().isPrivate() && !probablyTemplate) {
+                // public pointer, and exposed
+                if (isChanged) {
+                    if (myEntity.isPrivateExposed() && myEntity.isPublicExposed()) {
+                        buf = ExposeImages.public_pointer_private_exposed_public_exposed_changed;
+                    } else if (myEntity.isPrivateExposed()) {
+                        buf = ExposeImages.public_pointer_private_exposed_changed;
+                    } else if (myEntity.isPublicExposed()) {
+                        buf = ExposeImages.public_pointer_public_exposed_changed;
+                    }
+
+                } else {
+                    if (myEntity.isPrivateExposed() && myEntity.isPublicExposed()) {
+                        buf = ExposeImages.public_pointer_private_exposed_public_exposed;
+                    } else if (myEntity.isPrivateExposed()) {
+                        buf = ExposeImages.public_pointer_private_exposed;
+                    } else if (myEntity.isPublicExposed()) {
+                        buf = ExposeImages.public_pointer_public_exposed;
+                    }
+                }
+            } else if (!myEntity.isExposed() && myInstance.isPointerInstance() && myInstance.getPointer().isPrivate() && !probablyTemplate) {
+                // private pointer, not exposed
+                buf = ExposeImages.private_pointer_not_exposed;
+            } else if (!myEntity.isExposed() && myInstance.isPointerInstance() && !myInstance.getPointer().isPrivate() && !probablyTemplate) {
+                // public pointer, not exposed
+                buf = ExposeImages.public_pointer_not_exposed;
+            } else if (probablyTemplate) {
+                // template
+                if (myEntity.isExposed()) {
+                    // exposed template
+                    if (isChanged) {
+                        if (myEntity.isPrivateExposed() && myEntity.isPublicExposed()) {
+                            buf = ExposeImages.template_pointer_private_exposed_public_exposed_changed;
+                        } else if (myEntity.isPrivateExposed()) {
+                            buf = ExposeImages.template_pointer_private_exposed_changed;
+                        } else if (myEntity.isPublicExposed()) {
+                            buf = ExposeImages.template_pointer_public_exposed_changed;
+                        }
+
+                    } else {
+                        if (myEntity.isPrivateExposed() && myEntity.isPublicExposed()) {
+                            buf = ExposeImages.template_pointer_private_exposed_public_exposed;
+                        } else if (myEntity.isPrivateExposed()) {
+                            buf = ExposeImages.template_pointer_private_exposed;
+                        } else if (myEntity.isPublicExposed()) {
+                            buf = ExposeImages.template_pointer_public_exposed;
+                        }
+                    }
+                } else {
+                    // not exposed template
+                    buf = ExposeImages.template_pointer_not_exposed;
+                }
+
+            } else if (usedUnknown) {
+                if (myEntity.isExposed()) {
+                    if (isChanged) {
+                        if (myEntity.isPrivateExposed() && myEntity.isPublicExposed()) {
+                            buf = ExposeImages.unknown_pointer_private_exposed_public_exposed_changed;
+                        } else if (myEntity.isPrivateExposed()) {
+                            buf = ExposeImages.unknown_pointer_private_exposed_changed;
+                        } else if (myEntity.isPublicExposed()) {
+                            buf = ExposeImages.unknown_pointer_public_exposed_changed;
+                        }
+
+                    } else {
+                        if (myEntity.isPrivateExposed() && myEntity.isPublicExposed()) {
+                            buf = ExposeImages.unknown_pointer_private_exposed_public_exposed;
+                        } else if (myEntity.isPrivateExposed()) {
+                            buf = ExposeImages.unknown_pointer_private_exposed;
+                        } else if (myEntity.isPublicExposed()) {
+                            buf = ExposeImages.unknown_pointer_public_exposed;
+                        }
+                    }
+                } else {
+                    if (myEntity.getRolesManager().hasRoles(MetaLibrary.TYPE_POLICY)) {
+                        buf = ExposeImages.unknown_pointer_not_exposed;
+                    }
+                }
+
+            }
+
+        }
+        if (buf != null) {
+
+            Rectangle2D rec = new Rectangle(getSize());
+            TexturePaint texPaint = new TexturePaint(buf, rec);
+            g2.setPaint(texPaint);
+
+            float alpha = Float.valueOf(Configuration.getInstance().getProperty("graphics.default.ThingIconAlphaComposite"));
+
+            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,
+                    alpha));
+            g2.fill(shape);
+        }
+        return;
+    }

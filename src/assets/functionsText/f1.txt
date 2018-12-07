@@ -1,0 +1,177 @@
+//github_opcat4_trunk_FundamentalRelationInstance
+public void arrangeLines() {
+        JComponent rel = this.getGraphicalRelationRepresentation().getRelation();
+        int sX = rel.getX() + rel.getWidth() / 2 - this.points[0].getWidth() / 2;
+        int sY = rel.getY() + rel.getHeight() - this.points[3].getHeight() / 2;
+        int dX = this.destinationDragger.getX() + this.destinationDragger.getWidth() / 2 - this.points[3].getWidth() / 2;
+        int dY = this.destinationDragger.getY() + this.destinationDragger.getHeight() / 2 - this.points[3].getHeight() / 2;
+
+        int draggerSide = 0;
+
+        if (this.destination instanceof OpdProcess) {
+            int side = this.destinationDragger.getSide();
+            double param = this.destinationDragger.getParam();
+
+            if ((side == OpcatConstants.N_BORDER) && ((param >= 0.2) && (param <= 0.8))) {
+                draggerSide = OpcatConstants.N_BORDER;
+            }
+
+            if ((side == OpcatConstants.S_BORDER) && ((param >= 0.2) && (param <= 0.8))) {
+                draggerSide = OpcatConstants.S_BORDER;
+            }
+
+            if (param >= 0.8) {
+                draggerSide = OpcatConstants.E_BORDER;
+            }
+
+            if (param <= 0.2) {
+                draggerSide = OpcatConstants.W_BORDER;
+            }
+
+        } else {
+            draggerSide = this.destinationDragger.getSide();
+        }
+
+        if ((dX < sX) && (dY > sY)) // 1
+        {
+            if (draggerSide == OpcatConstants.N_BORDER) {
+                this.points[0].setAbsolutesLocation(sX, sY + (int) Math.round((dY - sY) / 2.0));
+                this.points[1].setAbsolutesLocation(sX, sY + (int) Math.round((dY - sY) / 2.0));
+                this.points[2].setAbsolutesLocation(sX, sY + (int) Math.round((dY - sY) / 2.0));
+                this.points[3].setAbsolutesLocation(dX, sY + (int) Math.round((dY - sY) / 2.0));
+                return;
+            }
+
+            if (draggerSide == OpcatConstants.E_BORDER) {
+                this.points[0].setAbsolutesLocation(sX, dY);
+                this.points[1].setAbsolutesLocation(sX, dY);
+                this.points[2].setAbsolutesLocation(sX, dY);
+                this.points[3].setAbsolutesLocation(sX, dY);
+                return;
+            }
+
+            if (draggerSide == OpcatConstants.S_BORDER) {
+                this.points[0].setAbsolutesLocation(sX, dY + bypassDistance);
+                this.points[1].setAbsolutesLocation(sX, dY + bypassDistance);
+                this.points[2].setAbsolutesLocation(sX, dY + bypassDistance);
+                this.points[3].setAbsolutesLocation(dX, dY + bypassDistance);
+                return;
+            }
+
+            if (draggerSide == OpcatConstants.W_BORDER) {
+                this.points[0].setAbsolutesLocation(sX, sY + (int) Math.round((dY - sY) / 2.0));
+                this.points[1].setAbsolutesLocation(dX - bypassDistance, sY + (int) Math.round((dY - sY) / 2.0));
+                this.points[2].setAbsolutesLocation(dX - bypassDistance, sY + (int) Math.round((dY - sY) / 2.0));
+                this.points[3].setAbsolutesLocation(dX - bypassDistance, dY);
+                return;
+            }
+        }
+
+        if ((dX > sX) && (dY > sY)) // 2
+        {
+            if (draggerSide == OpcatConstants.N_BORDER) {
+                this.points[0].setAbsolutesLocation(sX, sY + (int) Math.round((dY - sY) / 2.0));
+                this.points[1].setAbsolutesLocation(sX, sY + (int) Math.round((dY - sY) / 2.0));
+                this.points[2].setAbsolutesLocation(sX, sY + (int) Math.round((dY - sY) / 2.0));
+                this.points[3].setAbsolutesLocation(dX, sY + (int) Math.round((dY - sY) / 2.0));
+                return;
+            }
+
+            if (draggerSide == OpcatConstants.E_BORDER) {
+                this.points[0].setAbsolutesLocation(sX, sY + (int) Math.round((dY - sY) / 2.0));
+                this.points[1].setAbsolutesLocation(dX + bypassDistance, sY + (int) Math.round((dY - sY) / 2.0));
+                this.points[2].setAbsolutesLocation(dX + bypassDistance, sY + (int) Math.round((dY - sY) / 2.0));
+                this.points[3].setAbsolutesLocation(dX + bypassDistance, dY);
+                return;
+            }
+
+            if (draggerSide == OpcatConstants.S_BORDER) {
+                this.points[0].setAbsolutesLocation(sX, dY + bypassDistance);
+                this.points[1].setAbsolutesLocation(sX, dY + bypassDistance);
+                this.points[2].setAbsolutesLocation(sX, dY + bypassDistance);
+                this.points[3].setAbsolutesLocation(dX, dY + bypassDistance);
+                return;
+            }
+
+            if (draggerSide == OpcatConstants.W_BORDER) {
+                this.points[0].setAbsolutesLocation(sX, dY);
+                this.points[1].setAbsolutesLocation(sX, dY);
+                this.points[2].setAbsolutesLocation(sX, dY);
+                this.points[3].setAbsolutesLocation(sX, dY);
+                return;
+            }
+        }
+
+        if ((dX < sX) && (dY < sY)) // 3
+        {
+            if (draggerSide == OpcatConstants.N_BORDER) {
+                this.points[0].setAbsolutesLocation(sX, sY + bypassDistance);
+                this.points[1].setAbsolutesLocation(dX + (int) Math.round((sX - dX) / 2.0), sY + bypassDistance);
+                this.points[2].setAbsolutesLocation(dX + (int) Math.round((sX - dX) / 2.0), dY - bypassDistance);
+                this.points[3].setAbsolutesLocation(dX, dY - bypassDistance);
+                return;
+            }
+
+            if (draggerSide == OpcatConstants.E_BORDER) {
+                this.points[0].setAbsolutesLocation(sX, sY + bypassDistance);
+                this.points[1].setAbsolutesLocation(dX + (int) Math.round((sX - dX) / 2.0), sY + bypassDistance);
+                this.points[2].setAbsolutesLocation(dX + (int) Math.round((sX - dX) / 2.0), sY + bypassDistance);
+                this.points[3].setAbsolutesLocation(dX + (int) Math.round((sX - dX) / 2.0), dY);
+                return;
+            }
+
+            if (draggerSide == OpcatConstants.S_BORDER) {
+                this.points[0].setAbsolutesLocation(sX, sY + bypassDistance);
+                this.points[1].setAbsolutesLocation(dX, sY + bypassDistance);
+                this.points[2].setAbsolutesLocation(dX, sY + bypassDistance);
+                this.points[3].setAbsolutesLocation(dX, sY + bypassDistance);
+                return;
+            }
+
+            if (draggerSide == OpcatConstants.W_BORDER) {
+                this.points[0].setAbsolutesLocation(sX, sY + bypassDistance);
+                this.points[1].setAbsolutesLocation(dX - bypassDistance, sY + bypassDistance);
+                this.points[2].setAbsolutesLocation(dX - bypassDistance, sY + bypassDistance);
+                this.points[3].setAbsolutesLocation(dX - bypassDistance, dY);
+                return;
+            }
+        }
+
+        if ((dX > sX) && (dY < sY)) // 4
+        {
+            if (draggerSide == OpcatConstants.N_BORDER) {
+                this.points[0].setAbsolutesLocation(sX, sY + bypassDistance);
+                this.points[1].setAbsolutesLocation(dX + (int) Math.round((sX - dX) / 2.0), sY + bypassDistance);
+                this.points[2].setAbsolutesLocation(dX + (int) Math.round((sX - dX) / 2.0), dY - bypassDistance);
+                this.points[3].setAbsolutesLocation(dX, dY - bypassDistance);
+                return;
+            }
+
+            if (draggerSide == OpcatConstants.E_BORDER) {
+                this.points[0].setAbsolutesLocation(sX, sY + bypassDistance);
+                this.points[1].setAbsolutesLocation(dX + bypassDistance, sY + bypassDistance);
+                this.points[2].setAbsolutesLocation(dX + bypassDistance, sY + bypassDistance);
+                this.points[3].setAbsolutesLocation(dX + bypassDistance, dY);
+                return;
+            }
+
+            if (draggerSide == OpcatConstants.S_BORDER) {
+                this.points[0].setAbsolutesLocation(sX, sY + bypassDistance);
+                this.points[1].setAbsolutesLocation(dX, sY + bypassDistance);
+                this.points[2].setAbsolutesLocation(dX, sY + bypassDistance);
+                this.points[3].setAbsolutesLocation(dX, sY + bypassDistance);
+                return;
+            }
+
+            if (draggerSide == OpcatConstants.W_BORDER) {
+                this.points[0].setAbsolutesLocation(sX, sY + bypassDistance);
+                this.points[1].setAbsolutesLocation(dX + (int) Math.round((sX - dX) / 2.0), sY + bypassDistance);
+                this.points[2].setAbsolutesLocation(dX + (int) Math.round((sX - dX) / 2.0), sY + bypassDistance);
+                this.points[3].setAbsolutesLocation(dX + (int) Math.round((sX - dX) / 2.0), dY);
+                return;
+
+            }
+        }
+
+    }
+

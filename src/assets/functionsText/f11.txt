@@ -1,0 +1,938 @@
+//https://github.com/ObjectProcessMethodology/OPCAT4/blob/master/tags/release-2.86/src/extensionTools/Documents/Doc/Document.java
+private final int jjStopStringLiteralDfa_0(int pos, long active0, long active1, long active2)
+{
+   switch (pos)
+   {
+      case 0:
+         if ((active0 & 0x20000000c00L) != 0L || (active1 & 0x1400000000000L) != 0L)
+         {
+            jjmatchedKind = 57;
+            return 519;
+         }
+         if ((active0 & 0x3ca003c00000L) != 0L || (active1 & 0x945014605419000aL) != 0L || (active2 & 0x1L) != 0L)
+            return 322;
+         if ((active1 & 0x8000000000L) != 0L)
+         {
+            jjmatchedKind = 55;
+            return 40;
+         }
+         if ((active0 & 0x8000040L) != 0L)
+         {
+            jjmatchedKind = 55;
+            return 87;
+         }
+         if ((active0 & 0x60000000L) != 0L || (active1 & 0x2800000000000L) != 0L)
+         {
+            jjmatchedKind = 57;
+            return 498;
+         }
+         if ((active0 & 0x1001b10000020L) != 0L || (active1 & 0x2000210000220020L) != 0L)
+            return 520;
+         if ((active0 & 0x40044001c0000L) != 0L || (active1 & 0x80000000000L) != 0L)
+         {
+            jjmatchedKind = 55;
+            return 122;
+         }
+         if ((active0 & 0x2000080000000L) != 0L || (active1 & 0x800000000L) != 0L)
+         {
+            jjmatchedKind = 55;
+            return 12;
+         }
+         if ((active0 & 0x6000L) != 0L)
+         {
+            jjmatchedKind = 55;
+            return 54;
+         }
+         if ((active0 & 0xc10000039380L) != 0L || (active1 & 0x5600L) != 0L)
+         {
+            jjmatchedKind = 55;
+            return 520;
+         }
+         if ((active1 & 0x4000000000000000L) != 0L)
+         {
+            jjmatchedKind = 55;
+            return 103;
+         }
+         return -1;
+      case 1:
+         if ((active0 & 0x20000000c00L) != 0L || (active1 & 0x3400000000000L) != 0L)
+         {
+            if (jjmatchedPos != 1)
+            {
+               jjmatchedKind = 57;
+               jjmatchedPos = 1;
+            }
+            return 519;
+         }
+         if ((active1 & 0x800000000L) != 0L)
+         {
+            if (jjmatchedPos != 1)
+            {
+               jjmatchedKind = 55;
+               jjmatchedPos = 1;
+            }
+            return 11;
+         }
+         if ((active0 & 0x800000L) != 0L || (active1 & 0x8400000000000002L) != 0L || (active2 & 0x1L) != 0L)
+            return 321;
+         if ((active0 & 0x20000000L) != 0L)
+         {
+            if (jjmatchedPos == 0)
+            {
+               jjmatchedKind = 57;
+               jjmatchedPos = 0;
+            }
+            return 499;
+         }
+         if ((active0 & 0xc00000000000L) != 0L)
+            return 520;
+         if ((active0 & 0x40000000L) != 0L || (active1 & 0x800000000000L) != 0L)
+         {
+            if (jjmatchedPos != 1)
+            {
+               jjmatchedKind = 57;
+               jjmatchedPos = 1;
+            }
+            return 501;
+         }
+         if ((active0 & 0x80000L) != 0L)
+         {
+            if (jjmatchedPos != 1)
+            {
+               jjmatchedKind = 55;
+               jjmatchedPos = 1;
+            }
+            return 121;
+         }
+         if ((active0 & 0x201139803f3e0L) != 0L || (active1 & 0x6000088000205600L) != 0L)
+         {
+            if (jjmatchedPos != 1)
+            {
+               jjmatchedKind = 55;
+               jjmatchedPos = 1;
+            }
+            return 520;
+         }
+         if ((active0 & 0x200000000000L) != 0L || (active1 & 0x80000L) != 0L)
+            return 474;
+         if ((active0 & 0x4004400140000L) != 0L)
+         {
+            if (jjmatchedPos != 1)
+            {
+               jjmatchedKind = 55;
+               jjmatchedPos = 1;
+            }
+            return 131;
+         }
+         return -1;
+      case 2:
+         if ((active0 & 0x20103880bf3c0L) != 0L || (active1 & 0x4000000000005600L) != 0L)
+         {
+            if (jjmatchedPos != 2)
+            {
+               jjmatchedKind = 55;
+               jjmatchedPos = 2;
+            }
+            return 520;
+         }
+         if ((active1 & 0x2000000000000L) != 0L)
+         {
+            if (jjmatchedPos < 1)
+            {
+               jjmatchedKind = 57;
+               jjmatchedPos = 1;
+            }
+            return 281;
+         }
+         if ((active0 & 0x10000000L) != 0L || (active1 & 0x80000000000L) != 0L)
+         {
+            if (jjmatchedPos < 1)
+            {
+               jjmatchedKind = 55;
+               jjmatchedPos = 1;
+            }
+            return -1;
+         }
+         if ((active0 & 0x20000000c00L) != 0L || (active1 & 0x1400000000000L) != 0L)
+         {
+            if (jjmatchedPos != 2)
+            {
+               jjmatchedKind = 57;
+               jjmatchedPos = 2;
+            }
+            return 519;
+         }
+         if ((active0 & 0x800000L) != 0L || (active1 & 0x8400000000000002L) != 0L)
+            return 320;
+         if ((active0 & 0x20L) != 0L || (active1 & 0x200000L) != 0L)
+            return 520;
+         if ((active1 & 0x800000000L) != 0L)
+         {
+            if (jjmatchedPos != 2)
+            {
+               jjmatchedKind = 55;
+               jjmatchedPos = 2;
+            }
+            return 521;
+         }
+         if ((active0 & 0x40000000L) != 0L || (active1 & 0x800000000000L) != 0L)
+         {
+            if (jjmatchedPos < 1)
+            {
+               jjmatchedKind = 57;
+               jjmatchedPos = 1;
+            }
+            return 502;
+         }
+         if ((active0 & 0x4004400140000L) != 0L)
+            return 130;
+         return -1;
+      case 3:
+         if ((active0 & 0xf000L) != 0L)
+            return 520;
+         if ((active1 & 0x2800000000000L) != 0L)
+         {
+            if (jjmatchedPos < 1)
+            {
+               jjmatchedKind = 57;
+               jjmatchedPos = 1;
+            }
+            return -1;
+         }
+         if ((active0 & 0xc00L) != 0L || (active1 & 0x400000000000L) != 0L)
+            return 519;
+         if ((active0 & 0x100880b03c0L) != 0L || (active1 & 0x4000000800005600L) != 0L)
+         {
+            if (jjmatchedPos != 3)
+            {
+               jjmatchedKind = 55;
+               jjmatchedPos = 3;
+            }
+            return 520;
+         }
+         if ((active0 & 0x20000000000L) != 0L || (active1 & 0x1000000000000L) != 0L)
+         {
+            if (jjmatchedPos != 3)
+            {
+               jjmatchedKind = 57;
+               jjmatchedPos = 3;
+            }
+            return 519;
+         }
+         if ((active0 & 0x300000000L) != 0L)
+         {
+            if (jjmatchedPos < 2)
+            {
+               jjmatchedKind = 55;
+               jjmatchedPos = 2;
+            }
+            return -1;
+         }
+         if ((active0 & 0x10000000L) != 0L || (active1 & 0x80000000000L) != 0L)
+         {
+            if (jjmatchedPos < 1)
+            {
+               jjmatchedKind = 55;
+               jjmatchedPos = 1;
+            }
+            return -1;
+         }
+         if ((active0 & 0x800000L) != 0L || (active1 & 0x8400000000000002L) != 0L)
+            return 319;
+         return -1;
+      case 4:
+         if ((active1 & 0x400000000000L) != 0L)
+            return 281;
+         if ((active0 & 0x100880b03c0L) != 0L || (active1 & 0x4000000800005600L) != 0L)
+         {
+            if (jjmatchedPos != 4)
+            {
+               jjmatchedKind = 55;
+               jjmatchedPos = 4;
+            }
+            return 520;
+         }
+         if ((active1 & 0x2800000000000L) != 0L)
+         {
+            if (jjmatchedPos < 1)
+            {
+               jjmatchedKind = 57;
+               jjmatchedPos = 1;
+            }
+            return -1;
+         }
+         if ((active0 & 0x20000000000L) != 0L || (active1 & 0x1000000000000L) != 0L)
+         {
+            if (jjmatchedPos != 4)
+            {
+               jjmatchedKind = 57;
+               jjmatchedPos = 4;
+            }
+            return 519;
+         }
+         if ((active0 & 0x300000000L) != 0L)
+         {
+            if (jjmatchedPos < 2)
+            {
+               jjmatchedKind = 55;
+               jjmatchedPos = 2;
+            }
+            return -1;
+         }
+         if ((active0 & 0x10000000L) != 0L || (active1 & 0x80000000000L) != 0L)
+         {
+            if (jjmatchedPos < 1)
+            {
+               jjmatchedKind = 55;
+               jjmatchedPos = 1;
+            }
+            return -1;
+         }
+         return -1;
+      case 5:
+         if ((active0 & 0x100880b03c0L) != 0L || (active1 & 0x4000000800000000L) != 0L)
+         {
+            if (jjmatchedPos != 5)
+            {
+               jjmatchedKind = 55;
+               jjmatchedPos = 5;
+            }
+            return 520;
+         }
+         if ((active1 & 0x2800000000000L) != 0L)
+         {
+            if (jjmatchedPos < 1)
+            {
+               jjmatchedKind = 57;
+               jjmatchedPos = 1;
+            }
+            return -1;
+         }
+         if ((active1 & 0x5600L) != 0L)
+         {
+            if (jjmatchedPos < 4)
+            {
+               jjmatchedKind = 55;
+               jjmatchedPos = 4;
+            }
+            return -1;
+         }
+         if ((active0 & 0x20000000000L) != 0L || (active1 & 0x1000000000000L) != 0L)
+         {
+            if (jjmatchedPos != 5)
+            {
+               jjmatchedKind = 57;
+               jjmatchedPos = 5;
+            }
+            return 519;
+         }
+         if ((active0 & 0x300000000L) != 0L)
+         {
+            if (jjmatchedPos < 2)
+            {
+               jjmatchedKind = 55;
+               jjmatchedPos = 2;
+            }
+            return -1;
+         }
+         if ((active0 & 0x10000000L) != 0L || (active1 & 0x80000000000L) != 0L)
+         {
+            if (jjmatchedPos < 1)
+            {
+               jjmatchedKind = 55;
+               jjmatchedPos = 1;
+            }
+            return -1;
+         }
+         return -1;
+      case 6:
+         if ((active0 & 0x10000000L) != 0L || (active1 & 0x80000000000L) != 0L)
+         {
+            if (jjmatchedPos < 1)
+            {
+               jjmatchedKind = 55;
+               jjmatchedPos = 1;
+            }
+            return -1;
+         }
+         if ((active0 & 0x20000000000L) != 0L)
+         {
+            if (jjmatchedPos != 6)
+            {
+               jjmatchedKind = 57;
+               jjmatchedPos = 6;
+            }
+            return 519;
+         }
+         if ((active1 & 0x4000000000000000L) != 0L)
+         {
+            if (jjmatchedPos < 5)
+            {
+               jjmatchedKind = 55;
+               jjmatchedPos = 5;
+            }
+            return -1;
+         }
+         if ((active1 & 0x5600L) != 0L)
+         {
+            if (jjmatchedPos < 4)
+            {
+               jjmatchedKind = 55;
+               jjmatchedPos = 4;
+            }
+            return -1;
+         }
+         if ((active1 & 0x2800000000000L) != 0L)
+         {
+            if (jjmatchedPos < 1)
+            {
+               jjmatchedKind = 57;
+               jjmatchedPos = 1;
+            }
+            return -1;
+         }
+         if ((active0 & 0x8000040L) != 0L)
+            return 520;
+         if ((active0 & 0x100800b0380L) != 0L || (active1 & 0x800000000L) != 0L)
+         {
+            if (jjmatchedPos != 6)
+            {
+               jjmatchedKind = 55;
+               jjmatchedPos = 6;
+            }
+            return 520;
+         }
+         if ((active1 & 0x1000000000000L) != 0L)
+         {
+            if (jjmatchedPos < 5)
+            {
+               jjmatchedKind = 57;
+               jjmatchedPos = 5;
+            }
+            return -1;
+         }
+         if ((active0 & 0x300000000L) != 0L)
+         {
+            if (jjmatchedPos < 2)
+            {
+               jjmatchedKind = 55;
+               jjmatchedPos = 2;
+            }
+            return -1;
+         }
+         return -1;
+      case 7:
+         if ((active0 & 0x10000000L) != 0L || (active1 & 0x80000000000L) != 0L)
+         {
+            if (jjmatchedPos < 1)
+            {
+               jjmatchedKind = 55;
+               jjmatchedPos = 1;
+            }
+            return -1;
+         }
+         if ((active0 & 0x300L) != 0L)
+         {
+            if (jjmatchedPos < 6)
+            {
+               jjmatchedKind = 55;
+               jjmatchedPos = 6;
+            }
+            return -1;
+         }
+         if ((active1 & 0x4000000000000000L) != 0L)
+         {
+            if (jjmatchedPos < 5)
+            {
+               jjmatchedKind = 55;
+               jjmatchedPos = 5;
+            }
+            return -1;
+         }
+         if ((active0 & 0x20000000000L) != 0L)
+         {
+            if (jjmatchedPos != 7)
+            {
+               jjmatchedKind = 57;
+               jjmatchedPos = 7;
+            }
+            return 519;
+         }
+         if ((active1 & 0x5600L) != 0L)
+         {
+            if (jjmatchedPos < 4)
+            {
+               jjmatchedKind = 55;
+               jjmatchedPos = 4;
+            }
+            return -1;
+         }
+         if ((active1 & 0x2800000000000L) != 0L)
+         {
+            if (jjmatchedPos < 1)
+            {
+               jjmatchedKind = 57;
+               jjmatchedPos = 1;
+            }
+            return -1;
+         }
+         if ((active0 & 0x30080L) != 0L)
+            return 520;
+         if ((active0 & 0x10080080000L) != 0L)
+         {
+            if (jjmatchedPos != 7)
+            {
+               jjmatchedKind = 55;
+               jjmatchedPos = 7;
+            }
+            return 520;
+         }
+         if ((active1 & 0x1000000000000L) != 0L)
+         {
+            if (jjmatchedPos < 5)
+            {
+               jjmatchedKind = 57;
+               jjmatchedPos = 5;
+            }
+            return -1;
+         }
+         if ((active0 & 0x300000000L) != 0L)
+         {
+            if (jjmatchedPos < 2)
+            {
+               jjmatchedKind = 55;
+               jjmatchedPos = 2;
+            }
+            return -1;
+         }
+         return -1;
+      case 8:
+         if ((active0 & 0x20000000000L) != 0L)
+            return 281;
+         if ((active1 & 0x2800000000000L) != 0L)
+         {
+            if (jjmatchedPos < 1)
+            {
+               jjmatchedKind = 57;
+               jjmatchedPos = 1;
+            }
+            return -1;
+         }
+         if ((active1 & 0x5600L) != 0L)
+         {
+            if (jjmatchedPos < 4)
+            {
+               jjmatchedKind = 55;
+               jjmatchedPos = 4;
+            }
+            return -1;
+         }
+         if ((active0 & 0x80080000L) != 0L)
+         {
+            if (jjmatchedPos < 7)
+            {
+               jjmatchedKind = 55;
+               jjmatchedPos = 7;
+            }
+            return -1;
+         }
+         if ((active0 & 0x300L) != 0L)
+         {
+            if (jjmatchedPos < 6)
+            {
+               jjmatchedKind = 55;
+               jjmatchedPos = 6;
+            }
+            return -1;
+         }
+         if ((active0 & 0x300000000L) != 0L)
+         {
+            if (jjmatchedPos < 2)
+            {
+               jjmatchedKind = 55;
+               jjmatchedPos = 2;
+            }
+            return -1;
+         }
+         if ((active0 & 0x10000000L) != 0L || (active1 & 0x80000000000L) != 0L)
+         {
+            if (jjmatchedPos < 1)
+            {
+               jjmatchedKind = 55;
+               jjmatchedPos = 1;
+            }
+            return -1;
+         }
+         return -1;
+      case 9:
+         if ((active1 & 0x2800000000000L) != 0L)
+         {
+            if (jjmatchedPos < 1)
+            {
+               jjmatchedKind = 57;
+               jjmatchedPos = 1;
+            }
+            return -1;
+         }
+         if ((active1 & 0x5600L) != 0L)
+         {
+            if (jjmatchedPos < 4)
+            {
+               jjmatchedKind = 55;
+               jjmatchedPos = 4;
+            }
+            return -1;
+         }
+         if ((active0 & 0x80080000L) != 0L)
+         {
+            if (jjmatchedPos < 7)
+            {
+               jjmatchedKind = 55;
+               jjmatchedPos = 7;
+            }
+            return -1;
+         }
+         if ((active0 & 0x300L) != 0L)
+         {
+            if (jjmatchedPos < 6)
+            {
+               jjmatchedKind = 55;
+               jjmatchedPos = 6;
+            }
+            return -1;
+         }
+         if ((active0 & 0x300000000L) != 0L)
+         {
+            if (jjmatchedPos < 2)
+            {
+               jjmatchedKind = 55;
+               jjmatchedPos = 2;
+            }
+            return -1;
+         }
+         if ((active0 & 0x10000000L) != 0L || (active1 & 0x80000000000L) != 0L)
+         {
+            if (jjmatchedPos < 1)
+            {
+               jjmatchedKind = 55;
+               jjmatchedPos = 1;
+            }
+            return -1;
+         }
+         return -1;
+      case 10:
+         if ((active1 & 0x2800000000000L) != 0L)
+         {
+            if (jjmatchedPos < 1)
+            {
+               jjmatchedKind = 57;
+               jjmatchedPos = 1;
+            }
+            return -1;
+         }
+         if ((active1 & 0x5600L) != 0L)
+         {
+            if (jjmatchedPos < 4)
+            {
+               jjmatchedKind = 55;
+               jjmatchedPos = 4;
+            }
+            return -1;
+         }
+         if ((active0 & 0x80080000L) != 0L)
+         {
+            if (jjmatchedPos < 7)
+            {
+               jjmatchedKind = 55;
+               jjmatchedPos = 7;
+            }
+            return -1;
+         }
+         if ((active0 & 0x200L) != 0L)
+         {
+            if (jjmatchedPos < 6)
+            {
+               jjmatchedKind = 55;
+               jjmatchedPos = 6;
+            }
+            return -1;
+         }
+         if ((active0 & 0x300000000L) != 0L)
+         {
+            if (jjmatchedPos < 2)
+            {
+               jjmatchedKind = 55;
+               jjmatchedPos = 2;
+            }
+            return -1;
+         }
+         if ((active0 & 0x10000000L) != 0L || (active1 & 0x80000000000L) != 0L)
+         {
+            if (jjmatchedPos < 1)
+            {
+               jjmatchedKind = 55;
+               jjmatchedPos = 1;
+            }
+            return -1;
+         }
+         return -1;
+      case 11:
+         if ((active1 & 0x2800000000000L) != 0L)
+         {
+            if (jjmatchedPos < 1)
+            {
+               jjmatchedKind = 57;
+               jjmatchedPos = 1;
+            }
+            return -1;
+         }
+         if ((active1 & 0x5600L) != 0L)
+         {
+            if (jjmatchedPos < 4)
+            {
+               jjmatchedKind = 55;
+               jjmatchedPos = 4;
+            }
+            return -1;
+         }
+         if ((active0 & 0x300000000L) != 0L)
+         {
+            if (jjmatchedPos < 2)
+            {
+               jjmatchedKind = 55;
+               jjmatchedPos = 2;
+            }
+            return -1;
+         }
+         if ((active0 & 0x10000000L) != 0L || (active1 & 0x80000000000L) != 0L)
+         {
+            if (jjmatchedPos < 1)
+            {
+               jjmatchedKind = 55;
+               jjmatchedPos = 1;
+            }
+            return -1;
+         }
+         return -1;
+      case 12:
+         if ((active1 & 0x2000000000000L) != 0L)
+         {
+            if (jjmatchedPos < 1)
+            {
+               jjmatchedKind = 57;
+               jjmatchedPos = 1;
+            }
+            return -1;
+         }
+         if ((active1 & 0x5600L) != 0L)
+         {
+            if (jjmatchedPos < 4)
+            {
+               jjmatchedKind = 55;
+               jjmatchedPos = 4;
+            }
+            return -1;
+         }
+         if ((active0 & 0x300000000L) != 0L)
+         {
+            if (jjmatchedPos < 2)
+            {
+               jjmatchedKind = 55;
+               jjmatchedPos = 2;
+            }
+            return -1;
+         }
+         if ((active0 & 0x10000000L) != 0L || (active1 & 0x80000000000L) != 0L)
+         {
+            if (jjmatchedPos < 1)
+            {
+               jjmatchedKind = 55;
+               jjmatchedPos = 1;
+            }
+            return -1;
+         }
+         return -1;
+      case 13:
+         if ((active1 & 0x5600L) != 0L)
+         {
+            if (jjmatchedPos < 4)
+            {
+               jjmatchedKind = 55;
+               jjmatchedPos = 4;
+            }
+            return -1;
+         }
+         if ((active1 & 0x80000000000L) != 0L)
+         {
+            if (jjmatchedPos < 1)
+            {
+               jjmatchedKind = 55;
+               jjmatchedPos = 1;
+            }
+            return -1;
+         }
+         if ((active0 & 0x300000000L) != 0L)
+         {
+            if (jjmatchedPos < 2)
+            {
+               jjmatchedKind = 55;
+               jjmatchedPos = 2;
+            }
+            return -1;
+         }
+         return -1;
+      case 14:
+         if ((active1 & 0x5600L) != 0L)
+         {
+            if (jjmatchedPos < 4)
+            {
+               jjmatchedKind = 55;
+               jjmatchedPos = 4;
+            }
+            return -1;
+         }
+         if ((active1 & 0x80000000000L) != 0L)
+         {
+            if (jjmatchedPos < 1)
+            {
+               jjmatchedKind = 55;
+               jjmatchedPos = 1;
+            }
+            return -1;
+         }
+         if ((active0 & 0x200000000L) != 0L)
+         {
+            if (jjmatchedPos < 2)
+            {
+               jjmatchedKind = 55;
+               jjmatchedPos = 2;
+            }
+            return -1;
+         }
+         return -1;
+      case 15:
+         if ((active1 & 0x5600L) != 0L)
+         {
+            if (jjmatchedPos < 4)
+            {
+               jjmatchedKind = 55;
+               jjmatchedPos = 4;
+            }
+            return -1;
+         }
+         if ((active1 & 0x80000000000L) != 0L)
+         {
+            if (jjmatchedPos < 1)
+            {
+               jjmatchedKind = 55;
+               jjmatchedPos = 1;
+            }
+            return -1;
+         }
+         if ((active0 & 0x200000000L) != 0L)
+         {
+            if (jjmatchedPos < 2)
+            {
+               jjmatchedKind = 55;
+               jjmatchedPos = 2;
+            }
+            return -1;
+         }
+         return -1;
+      case 16:
+         if ((active1 & 0x4600L) != 0L)
+         {
+            if (jjmatchedPos < 4)
+            {
+               jjmatchedKind = 55;
+               jjmatchedPos = 4;
+            }
+            return -1;
+         }
+         if ((active1 & 0x80000000000L) != 0L)
+         {
+            if (jjmatchedPos < 1)
+            {
+               jjmatchedKind = 55;
+               jjmatchedPos = 1;
+            }
+            return -1;
+         }
+         return -1;
+      case 17:
+         if ((active1 & 0x4600L) != 0L)
+         {
+            if (jjmatchedPos < 4)
+            {
+               jjmatchedKind = 55;
+               jjmatchedPos = 4;
+            }
+            return -1;
+         }
+         if ((active1 & 0x80000000000L) != 0L)
+         {
+            if (jjmatchedPos < 1)
+            {
+               jjmatchedKind = 55;
+               jjmatchedPos = 1;
+            }
+            return -1;
+         }
+         return -1;
+      case 18:
+         if ((active1 & 0x4200L) != 0L)
+         {
+            if (jjmatchedPos < 4)
+            {
+               jjmatchedKind = 55;
+               jjmatchedPos = 4;
+            }
+            return -1;
+         }
+         if ((active1 & 0x80000000000L) != 0L)
+         {
+            if (jjmatchedPos < 1)
+            {
+               jjmatchedKind = 55;
+               jjmatchedPos = 1;
+            }
+            return -1;
+         }
+         return -1;
+      case 19:
+         if ((active1 & 0x4200L) != 0L)
+         {
+            if (jjmatchedPos < 4)
+            {
+               jjmatchedKind = 55;
+               jjmatchedPos = 4;
+            }
+            return -1;
+         }
+         return -1;
+      case 20:
+         if ((active1 & 0x200L) != 0L)
+         {
+            if (jjmatchedPos < 4)
+            {
+               jjmatchedKind = 55;
+               jjmatchedPos = 4;
+            }
+            return -1;
+         }
+         return -1;
+      case 21:
+         if ((active1 & 0x200L) != 0L)
+         {
+            if (jjmatchedPos < 4)
+            {
+               jjmatchedKind = 55;
+               jjmatchedPos = 4;
+            }
+            return -1;
+         }
+         return -1;
+      default :
+         return -1;
+   }
+}

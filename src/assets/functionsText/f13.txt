@@ -1,0 +1,471 @@
+public Collection<TransformationMenu> getDeclaredNamedTransformationMenus(NamedMenuId menuId) {
+    SAbstractConcept cncpt = (SAbstractConcept) menuId.getConcept();
+    switch (conceptIndex3.index(cncpt)) {
+      case 0:
+        if (true) {
+          switch (Arrays.binarySearch(stringSwitchCases_xbvbvu_a0a0a0a1a7, menuId.getFqName())) {
+            case 0:
+              return Arrays.asList(new TransformationMenu[]{new loopLabels()});
+            case 1:
+              return Arrays.asList(new TransformationMenu[]{new loopLabelsAndIfStatement()});
+            default:
+          }
+        }
+        break;
+      case 1:
+        if (true) {
+          switch (Arrays.binarySearch(stringSwitchCases_xbvbvu_a0a0a0b1a7, menuId.getFqName())) {
+            case 0:
+              return Arrays.asList(new TransformationMenu[]{new AddAnnotationMemberDefaultValue()});
+            default:
+          }
+        }
+        break;
+      case 2:
+        if (true) {
+          switch (Arrays.binarySearch(stringSwitchCases_xbvbvu_a0a0a0c1a7, menuId.getFqName())) {
+            case 0:
+              return Arrays.asList(new TransformationMenu[]{new AnonymousClass_ApplySideTransforms()});
+            case 1:
+              return Arrays.asList(new TransformationMenu[]{new expressionRTAfterAnonymous()});
+            default:
+          }
+        }
+        break;
+      case 3:
+        if (true) {
+          switch (Arrays.binarySearch(stringSwitchCases_xbvbvu_a0a0a0d1a7, menuId.getFqName())) {
+            case 0:
+              return Arrays.asList(new TransformationMenu[]{new AddSquareBracketsToarrayCreatorWithInitializer()});
+            default:
+          }
+        }
+        break;
+      case 4:
+        if (true) {
+          switch (Arrays.binarySearch(stringSwitchCases_xbvbvu_a0a0a0e1a7, menuId.getFqName())) {
+            case 0:
+              return Arrays.asList(new TransformationMenu[]{new BaseAssignmentExpression_Alias_TransformationMenu()});
+            default:
+          }
+        }
+        break;
+      case 5:
+        if (true) {
+          switch (Arrays.binarySearch(stringSwitchCases_xbvbvu_a0a0a0f1a7, menuId.getFqName())) {
+            case 0:
+              return Arrays.asList(new TransformationMenu[]{new AddThrowsToMethods()});
+            case 1:
+              return Arrays.asList(new TransformationMenu[]{new AddThrowsToMethods_ext_5()});
+            default:
+          }
+        }
+        break;
+      case 6:
+        if (true) {
+          switch (Arrays.binarySearch(stringSwitchCases_xbvbvu_a0a0a0g1a7, menuId.getFqName())) {
+            case 0:
+              return Arrays.asList(new TransformationMenu[]{new BinaryOperation_Alias_TransformationMenu()});
+            default:
+          }
+        }
+        break;
+      case 7:
+        if (true) {
+          switch (Arrays.binarySearch(stringSwitchCases_xbvbvu_a0a0a0h1a7, menuId.getFqName())) {
+            case 0:
+              return Arrays.asList(new TransformationMenu[]{new convertToTry()});
+            case 1:
+              return Arrays.asList(new TransformationMenu[]{new tryCatch_CatchClause()});
+            default:
+          }
+        }
+        break;
+      case 8:
+        if (true) {
+          switch (Arrays.binarySearch(stringSwitchCases_xbvbvu_a0a0a0i1a7, menuId.getFqName())) {
+            case 0:
+              return Arrays.asList(new TransformationMenu[]{new ClassConceptModifiersExtendsAndImplements()});
+            case 1:
+              return Arrays.asList(new TransformationMenu[]{new ClassConceptModifiersExtendsAndImplements_ext_3()});
+            case 2:
+              return Arrays.asList(new TransformationMenu[]{new ClassConceptModifiersExtendsAndImplements_ext_4()});
+            case 3:
+              return Arrays.asList(new TransformationMenu[]{new ClassConceptModifiersExtendsAndImplements_ext_5()});
+            case 4:
+              return Arrays.asList(new TransformationMenu[]{new ClassConcept_ApplySideTransforms()});
+            default:
+          }
+        }
+        break;
+      case 9:
+        if (true) {
+          switch (Arrays.binarySearch(stringSwitchCases_xbvbvu_a0a0a0j1a7, menuId.getFqName())) {
+            case 0:
+              return Arrays.asList(new TransformationMenu[]{new ClassCreator_ApplySideTransforms()});
+            case 1:
+              return Arrays.asList(new TransformationMenu[]{new newExpression_ClassCreator_ext_2()});
+            default:
+          }
+        }
+        break;
+      case 10:
+        if (true) {
+          switch (Arrays.binarySearch(stringSwitchCases_xbvbvu_a0a0a0k1a7, menuId.getFqName())) {
+            case 0:
+              return Arrays.asList(new TransformationMenu[]{new ClassifierClassExpressionToArray()});
+            default:
+          }
+        }
+        break;
+      case 11:
+        if (true) {
+          switch (Arrays.binarySearch(stringSwitchCases_xbvbvu_a0a0a0l1a7, menuId.getFqName())) {
+            case 0:
+              return Arrays.asList(new TransformationMenu[]{new ExtendedClassImplementTransform()});
+            case 1:
+              return Arrays.asList(new TransformationMenu[]{new addGenericParameter()});
+            case 2:
+              return Arrays.asList(new TransformationMenu[]{new binaryOperations()});
+            case 3:
+              return Arrays.asList(new TransformationMenu[]{new classifierTypeInLocalVarRT()});
+            case 4:
+              return Arrays.asList(new TransformationMenu[]{new csharp_rTransform()});
+            default:
+          }
+        }
+        break;
+      case 12:
+        if (true) {
+          switch (Arrays.binarySearch(stringSwitchCases_xbvbvu_a0a0a0m1a7, menuId.getFqName())) {
+            case 0:
+              return Arrays.asList(new TransformationMenu[]{new ConstructorDeclaration_ApplySideTransforms()});
+            default:
+          }
+        }
+        break;
+      case 13:
+        if (true) {
+          switch (Arrays.binarySearch(stringSwitchCases_xbvbvu_a0a0a0n1a7, menuId.getFqName())) {
+            case 0:
+              return Arrays.asList(new TransformationMenu[]{new newExpression_DefaultClassCreator_ext_2()});
+            default:
+          }
+        }
+        break;
+      case 14:
+        if (true) {
+          switch (Arrays.binarySearch(stringSwitchCases_xbvbvu_a0a0a0o1a7, menuId.getFqName())) {
+            case 0:
+              return Arrays.asList(new TransformationMenu[]{new EnumClass_ApplySideTransforms()});
+            default:
+          }
+        }
+        break;
+      case 15:
+        if (true) {
+          switch (Arrays.binarySearch(stringSwitchCases_xbvbvu_a0a0a0p1a7, menuId.getFqName())) {
+            case 0:
+              return Arrays.asList(new TransformationMenu[]{new EnumConstantDeclaration_ApplySideTransforms()});
+            case 1:
+              return Arrays.asList(new TransformationMenu[]{new enumConstant_rt()});
+            default:
+          }
+        }
+        break;
+      case 16:
+        if (true) {
+          switch (Arrays.binarySearch(stringSwitchCases_xbvbvu_a0a0a0q1a7, menuId.getFqName())) {
+            case 0:
+              return Arrays.asList(new TransformationMenu[]{new Expression_to_type_Cast()});
+            case 1:
+              return Arrays.asList(new TransformationMenu[]{new SubstringExpression_Transform()});
+            case 2:
+              return Arrays.asList(new TransformationMenu[]{new UnaryMinusLeftTransform()});
+            case 3:
+              return Arrays.asList(new TransformationMenu[]{new addComment_Expression()});
+            case 4:
+              return Arrays.asList(new TransformationMenu[]{new arrayAccess()});
+            case 5:
+              return Arrays.asList(new TransformationMenu[]{new assert_()});
+            case 6:
+              return Arrays.asList(new TransformationMenu[]{new assignment_to_variable_declaration()});
+            case 7:
+              return Arrays.asList(new TransformationMenu[]{new assignments()});
+            case 8:
+              return Arrays.asList(new TransformationMenu[]{new binaryOperations_Expression()});
+            case 9:
+              return Arrays.asList(new TransformationMenu[]{new csharp_rTransform_Expression()});
+            case 10:
+              return Arrays.asList(new TransformationMenu[]{new dotExpression()});
+            case 11:
+              return Arrays.asList(new TransformationMenu[]{new expressionStatement()});
+            case 12:
+              return Arrays.asList(new TransformationMenu[]{new expressionToNotExpression()});
+            case 13:
+              return Arrays.asList(new TransformationMenu[]{new expressionToParenthesis()});
+            case 14:
+              return Arrays.asList(new TransformationMenu[]{new expression_to_varaible_declaration()});
+            case 15:
+              return Arrays.asList(new TransformationMenu[]{new instanceOf()});
+            case 16:
+              return Arrays.asList(new TransformationMenu[]{new postfix()});
+            case 17:
+              return Arrays.asList(new TransformationMenu[]{new prefix()});
+            case 18:
+              return Arrays.asList(new TransformationMenu[]{new ternaryOperator()});
+            default:
+          }
+        }
+        break;
+      case 17:
+        if (true) {
+          switch (Arrays.binarySearch(stringSwitchCases_xbvbvu_a0a0a0r1a7, menuId.getFqName())) {
+            case 0:
+              return Arrays.asList(new TransformationMenu[]{new FieldDeclaration_ApplySideTransforms()});
+            default:
+          }
+        }
+        break;
+      case 18:
+        if (true) {
+          switch (Arrays.binarySearch(stringSwitchCases_xbvbvu_a0a0a0s1a7, menuId.getFqName())) {
+            case 0:
+              return Arrays.asList(new TransformationMenu[]{new addGenericTypeVariableInDeclaration()});
+            case 1:
+              return Arrays.asList(new TransformationMenu[]{new genericDeclaration_right()});
+            default:
+          }
+        }
+        break;
+      case 19:
+        if (true) {
+          switch (Arrays.binarySearch(stringSwitchCases_xbvbvu_a0a0a0t1a7, menuId.getFqName())) {
+            case 0:
+              return Arrays.asList(new TransformationMenu[]{new GenericLValueExpression_RTM()});
+            default:
+          }
+        }
+        break;
+      case 20:
+        if (true) {
+          switch (Arrays.binarySearch(stringSwitchCases_xbvbvu_a0a0a0u1a7, menuId.getFqName())) {
+            case 0:
+              return Arrays.asList(new TransformationMenu[]{new AddMethodCallTypeArgument()});
+            case 1:
+              return Arrays.asList(new TransformationMenu[]{new AddMethodCallTypeArgument_ext_1()});
+            case 2:
+              return Arrays.asList(new TransformationMenu[]{new MethodCallFixer_AddFirstArgument()});
+            default:
+          }
+        }
+        break;
+      case 21:
+        if (true) {
+          switch (Arrays.binarySearch(stringSwitchCases_xbvbvu_a0a0a0v1a7, menuId.getFqName())) {
+            case 0:
+              return Arrays.asList(new TransformationMenu[]{new Empty_Visibility_TransformtaionMenu()});
+            default:
+          }
+        }
+        break;
+      case 22:
+        if (true) {
+          switch (Arrays.binarySearch(stringSwitchCases_xbvbvu_a0a0a0w1a7, menuId.getFqName())) {
+            case 0:
+              return Arrays.asList(new TransformationMenu[]{new ifStatement()});
+            default:
+          }
+        }
+        break;
+      case 23:
+        if (true) {
+          switch (Arrays.binarySearch(stringSwitchCases_xbvbvu_a0a0a0x1a7, menuId.getFqName())) {
+            case 0:
+              return Arrays.asList(new TransformationMenu[]{new IncompleteMemberDeclaration_ApplySideTransforms()});
+            default:
+          }
+        }
+        break;
+      case 24:
+        if (true) {
+          switch (Arrays.binarySearch(stringSwitchCases_xbvbvu_a0a0a0y1a7, menuId.getFqName())) {
+            case 0:
+              return Arrays.asList(new TransformationMenu[]{new InstanceMethodCallOperation_ApplySideTransforms()});
+            default:
+          }
+        }
+        break;
+      case 25:
+        if (true) {
+          switch (Arrays.binarySearch(stringSwitchCases_xbvbvu_a0a0a0z1a7, menuId.getFqName())) {
+            case 0:
+              return Arrays.asList(new TransformationMenu[]{new InstanceMethodDeclaration_ApplySideTransforms()});
+            case 1:
+              return Arrays.asList(new TransformationMenu[]{new InstanceMethodDeclaration_ApplySideTransforms_1()});
+            case 2:
+              return Arrays.asList(new TransformationMenu[]{new InstanceMethodDeclaration_static_abstract()});
+            default:
+          }
+        }
+        break;
+      case 26:
+        if (true) {
+          switch (Arrays.binarySearch(stringSwitchCases_xbvbvu_a0a0a0ab1a7, menuId.getFqName())) {
+            case 0:
+              return Arrays.asList(new TransformationMenu[]{new InterfaceModifiersAndExtends_ext_2()});
+            case 1:
+              return Arrays.asList(new TransformationMenu[]{new InterfaceModifiersAndExtends_ext_4()});
+            case 2:
+              return Arrays.asList(new TransformationMenu[]{new InterfaceModifiersAndExtends_ext_5()});
+            case 3:
+              return Arrays.asList(new TransformationMenu[]{new Interface_ApplySideTransforms()});
+            default:
+          }
+        }
+        break;
+      case 27:
+        if (true) {
+          switch (Arrays.binarySearch(stringSwitchCases_xbvbvu_a0a0a0bb1a7, menuId.getFqName())) {
+            case 0:
+              return Arrays.asList(new TransformationMenu[]{new MethodDeclaration_final_native_sync_all_mods()});
+            default:
+          }
+        }
+        break;
+      case 28:
+        if (true) {
+          switch (Arrays.binarySearch(stringSwitchCases_xbvbvu_a0a0a0cb1a7, menuId.getFqName())) {
+            case 0:
+              return Arrays.asList(new TransformationMenu[]{new ModifierTransformationMenuHelper_TOREMOVE()});
+            case 1:
+              return Arrays.asList(new TransformationMenu[]{new addTypeAfterModifier()});
+            default:
+          }
+        }
+        break;
+      case 29:
+        if (true) {
+          switch (Arrays.binarySearch(stringSwitchCases_xbvbvu_a0a0a0db1a7, menuId.getFqName())) {
+            case 0:
+              return Arrays.asList(new TransformationMenu[]{new StaticFieldDeclaration_ApplySideTransforms()});
+            default:
+          }
+        }
+        break;
+      case 30:
+        if (true) {
+          switch (Arrays.binarySearch(stringSwitchCases_xbvbvu_a0a0a0eb1a7, menuId.getFqName())) {
+            case 0:
+              return Arrays.asList(new TransformationMenu[]{new StaticMethodDeclaration_ApplySideTransforms()});
+            case 1:
+              return Arrays.asList(new TransformationMenu[]{new StaticMethodDeclaration_ApplySideTransforms_1()});
+            default:
+          }
+        }
+        break;
+      case 31:
+        if (true) {
+          switch (Arrays.binarySearch(stringSwitchCases_xbvbvu_a0a0a0fb1a7, menuId.getFqName())) {
+            case 0:
+              return Arrays.asList(new TransformationMenu[]{new SwitchStatement_ApplySideTransforms()});
+            case 1:
+              return Arrays.asList(new TransformationMenu[]{new switchLabels()});
+            default:
+          }
+        }
+        break;
+      case 32:
+        if (true) {
+          switch (Arrays.binarySearch(stringSwitchCases_xbvbvu_a0a0a0gb1a7, menuId.getFqName())) {
+            case 0:
+              return Arrays.asList(new TransformationMenu[]{new convertToTry_TryCatchStatement()});
+            case 1:
+              return Arrays.asList(new TransformationMenu[]{new tryCatch_TryCatchStatement()});
+            default:
+          }
+        }
+        break;
+      case 33:
+        if (true) {
+          switch (Arrays.binarySearch(stringSwitchCases_xbvbvu_a0a0a0hb1a7, menuId.getFqName())) {
+            case 0:
+              return Arrays.asList(new TransformationMenu[]{new AddFieldModifiersOnTypes()});
+            case 1:
+              return Arrays.asList(new TransformationMenu[]{new AddMethodModifiersOnTypes()});
+            case 2:
+              return Arrays.asList(new TransformationMenu[]{new AddStaticFieldModifiersOnTypes()});
+            case 3:
+              return Arrays.asList(new TransformationMenu[]{new ForReturnTypeOfTheMethod()});
+            case 4:
+              return Arrays.asList(new TransformationMenu[]{new addComment_Type()});
+            case 5:
+              return Arrays.asList(new TransformationMenu[]{new addGenericTypeDeclaration_Type_default()});
+            case 6:
+              return Arrays.asList(new TransformationMenu[]{new arrayBrackets()});
+            case 7:
+              return Arrays.asList(new TransformationMenu[]{new finalOnTypesInVariables()});
+            case 8:
+              return Arrays.asList(new TransformationMenu[]{new instanceOfIntoTernary()});
+            case 9:
+              return Arrays.asList(new TransformationMenu[]{new variableArityType()});
+            default:
+          }
+        }
+        break;
+      case 34:
+        if (true) {
+          switch (Arrays.binarySearch(stringSwitchCases_xbvbvu_a0a0a0ib1a7, menuId.getFqName())) {
+            case 0:
+              return Arrays.asList(new TransformationMenu[]{new AddBoundToTypeVariableDeclaration()});
+            default:
+          }
+        }
+        break;
+      case 35:
+        if (true) {
+          switch (Arrays.binarySearch(stringSwitchCases_xbvbvu_a0a0a0jb1a7, menuId.getFqName())) {
+            case 0:
+              return Arrays.asList(new TransformationMenu[]{new ArrayAndGenericTypesFromTypesInVarDeclarations()});
+            case 1:
+              return Arrays.asList(new TransformationMenu[]{new VariableDeclaration_ApplySideTransforms()});
+            case 2:
+              return Arrays.asList(new TransformationMenu[]{new variableDeclarationInitializer()});
+            default:
+          }
+        }
+        break;
+      case 36:
+        if (true) {
+          switch (Arrays.binarySearch(stringSwitchCases_xbvbvu_a0a0a0kb1a7, menuId.getFqName())) {
+            case 0:
+              return Arrays.asList(new TransformationMenu[]{new LocalInstanceFieldReference_Transform()});
+            case 1:
+              return Arrays.asList(new TransformationMenu[]{new convertVariableAssignmentToVarDeclaration()});
+            default:
+          }
+        }
+        break;
+      case 37:
+        if (true) {
+          switch (Arrays.binarySearch(stringSwitchCases_xbvbvu_a0a0a0lb1a7, menuId.getFqName())) {
+            case 0:
+              return Arrays.asList(new TransformationMenu[]{new addAbstract()});
+            default:
+          }
+        }
+        break;
+      case 38:
+        if (true) {
+          switch (Arrays.binarySearch(stringSwitchCases_xbvbvu_a0a0a0mb1a7, menuId.getFqName())) {
+            case 0:
+              return Arrays.asList(new TransformationMenu[]{new WildCardType_ApplySideTransforms()});
+            default:
+          }
+        }
+        break;
+      default:
+    }
+
+    return Collections.<TransformationMenu>emptyList();
+  }

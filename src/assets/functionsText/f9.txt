@@ -1,0 +1,158 @@
+//https://github.com/ObjectProcessMethodology/OPCAT4/blob/master/trunk/src/gui/opdGraphics/opdBaseComponents/OpdObject.java
+private void drawText(Graphics2D g2) {
+
+        int stringX = 0;
+        int stringY = 0;
+        OpmObject myObj = (OpmObject) this.myEntity;
+
+
+        Font currentFont = (Font) config.getProperty("ThingFont");
+        currentFont = currentFont
+                .deriveFont((float) (currentFont.getSize2D() * factor));
+
+        g2.setFont(currentFont);
+        this.currentMetrics = this.getFontMetrics(currentFont);
+
+        String text;
+        int sh;
+
+        int numOfRows = 0;
+        double sw = 0;
+
+        int textShift;
+
+        if ((this.myObjectEntry.getStateHash().size() == 0)
+                || (this.statesDrawingStyle == 0)) {
+            textShift = 0;
+        } else {
+            textShift = 0;
+            Component components[] = this.getComponents();
+
+            for (int i = 0; i < components.length; i++) {
+                if ((components[i] instanceof OpdState)
+                        && components[i].isVisible()) {
+                    textShift = Math.max(textShift, components[i].getHeight());
+                }
+            }
+
+        }
+
+        if ((myObj.getType() == null) || myObj.getType().trim().equals("")) {
+            text = this.myEntity.getName();
+        } else {
+            text = myObj.getName() + " :\n" + myObj.getType();
+        }
+
+        String head = "";
+
+        if (((OpmThing) this.myEntity).getScope()
+                .equals(OpcatConstants.PRIVATE)) {
+            head = "- ";
+        }
+
+        if (((OpmThing) this.myEntity).getScope().equals(
+                OpcatConstants.PROTECTED)) {
+            head = "# ";
+        }
+
+        StringTokenizer st = new StringTokenizer(head + text, "\n");
+
+        while (st.hasMoreTokens()) {
+            String tString = st.nextToken();
+            sw = Math.max(sw, this.currentMetrics.stringWidth(tString));
+            numOfRows++;
+        }
+
+        sh = this.currentMetrics.getAscent() * numOfRows;
+
+        st = new StringTokenizer(head + text, "\n");
+        int dY = 0;
+
+        if (this.getTextPosition().equals("C")
+                || this.getTextPosition().equals("E")
+                || this.getTextPosition().equals("W"))
+
+        {
+            stringY = (this.getActualHeight() - 3 - textShift - sh) / 2;
+        }
+
+        if (this.getTextPosition().equals("N")
+                || this.getTextPosition().equals("NE")
+                || this.getTextPosition().equals("NW"))
+
+        {
+            stringY = 6;
+        }
+
+        if (this.getTextPosition().equals("S")
+                || this.getTextPosition().equals("SE")
+                || this.getTextPosition().equals("SW"))
+
+        {
+            stringY = (this.getActualHeight() - 9 - textShift - sh);
+        }
+
+        //
+        if (this.getTextPosition().equals("C")
+                || this.getTextPosition().equals("S")
+                || this.getTextPosition().equals("N")) {
+            while (st.hasMoreTokens()) {
+                String tString = st.nextToken();
+                stringX = (this.getActualWidth()
+                        - this.currentMetrics.stringWidth(tString) - 3) / 2;
+                AttributedString ats = new AttributedString(tString);
+                ats.addAttribute(TextAttribute.FONT, currentFont);
+                if (myObj.isKey()) {
+                    ats.addAttribute(TextAttribute.UNDERLINE,
+                            TextAttribute.UNDERLINE_ON);
+                }
+                dY = dY + this.currentMetrics.getAscent();
+                g2.drawString(ats.getIterator(), stringX, stringY + dY);
+            }
+
+            return;
+        }
+
+        if (this.getTextPosition().equals("NE")
+                || this.getTextPosition().equals("E")
+                || this.getTextPosition().equals("SE")) {
+            while (st.hasMoreTokens()) {
+                String tString = st.nextToken();
+                stringX = (this.getActualWidth() - (int) sw) - 11;
+                AttributedString ats = new AttributedString(tString);
+                ats.addAttribute(TextAttribute.FONT, currentFont);
+                if (myObj.isKey()) {
+                    ats.addAttribute(TextAttribute.UNDERLINE,
+                            TextAttribute.UNDERLINE_ON);
+                }
+                dY = dY + this.currentMetrics.getAscent();
+                g2.drawString(ats.getIterator(), stringX, stringY + dY);
+            }
+
+            return;
+
+        }
+
+        if (this.getTextPosition().equals("NW")
+                || this.getTextPosition().equals("W")
+                || this.getTextPosition().equals("SW")) {
+            stringX = 9;
+
+            while (st.hasMoreTokens()) {
+                String tString = st.nextToken();
+                AttributedString ats = new AttributedString(tString);
+                ats.addAttribute(TextAttribute.FONT, currentFont);
+                if (myObj.isKey()) {
+                    ats.addAttribute(TextAttribute.UNDERLINE,
+                            TextAttribute.UNDERLINE_ON);
+                }
+                dY = dY + this.currentMetrics.getAscent();
+                g2.drawString(ats.getIterator(), stringX, stringY + dY);
+            }
+
+            return;
+
+        }
+
+        // end
+    }

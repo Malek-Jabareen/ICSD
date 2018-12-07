@@ -1,0 +1,117 @@
+//not regular but has interesting functionraw.githubusercontent.com_ObjectProcessMethodology_OPCAT4_master_trunk_src_gui_opdProject_OpdProject
+private String _delete(Enumeration thingsToDelete, int action) {
+
+        Hashtable selConnectionEdgesInst = new Hashtable();
+        Hashtable selLinksRelationsInst = new Hashtable();
+        Instance tmpInst = null;
+
+        for (; thingsToDelete.hasMoreElements(); ) {
+            tmpInst = (Instance) thingsToDelete.nextElement();
+            if (tmpInst instanceof ConnectionEdgeInstance) {
+                selConnectionEdgesInst.put(tmpInst.getKey(), tmpInst);
+            } else {
+                selLinksRelationsInst.put(tmpInst.getKey(), tmpInst);
+            }
+        }
+
+        if ((selConnectionEdgesInst.size() == 0) && (selLinksRelationsInst.size() == 0)) {
+            return "Nothing was selected";
+        }
+
+        if (selLinksRelationsInst.size() != 0) {
+            CheckResult cr = null;
+
+            for (Enumeration e1 = selLinksRelationsInst.elements(); e1.hasMoreElements(); ) {
+                if ((action == DELETE)) {
+                    cr = CheckModule.checkDeletion((Instance) e1.nextElement(),
+                            this);
+                }
+                if (action == CUT) {
+                    cr = CheckModule.checkCut((Instance) e1.nextElement(), this);
+                }
+                if ((cr != null) && (cr.getResult() == IXCheckResult.WRONG)) {
+                    return cr.getMessage();
+                }
+
+                // if ((cr != null) && (cr.getResult() ==
+                // IXCheckResult.WARNING)) {
+                if ((cr != null) && (cr.getResult() == IXCheckResult.WARNING)) {
+                    int retValue = JOptionPane.showConfirmDialog(Opcat2.getFrame(), cr.getMessage() + "\n Do you want to continue?",
+                            "Opcat2 - Warning", JOptionPane.YES_NO_OPTION);
+
+                    if (retValue == JOptionPane.NO_OPTION) {
+                        return null;
+
+                    }
+                }
+                // }
+            }
+
+        }
+
+        if (selConnectionEdgesInst.size() != 0) {
+            CheckResult cr = null;
+
+            // run over all ConnectionEdges and checkTheir possibility for
+            // deletion
+            // if one of them is illegal to delete, operation is canceled
+            for (Enumeration e1 = selConnectionEdgesInst.elements(); e1.hasMoreElements(); ) {
+                if ((action == DELETE)) {
+                    cr = CheckModule.checkDeletion((Instance) e1.nextElement(),
+                            this);
+                }
+                if (action == CUT) {
+                    cr = CheckModule.checkCut((Instance) e1.nextElement(), this);
+                }
+                if ((cr != null) && (cr.getResult() == IXCheckResult.WRONG)) {
+                    return cr.getMessage();
+                }
+
+                if ((cr != null) && (cr.getResult() == IXCheckResult.WARNING)) {
+                    int retValue = JOptionPane.showConfirmDialog(Opcat2.getFrame(), cr.getMessage() + "\n Do you want to continue?",
+                            "Opcat2 - Warning", JOptionPane.YES_NO_OPTION);
+
+                    if (retValue == JOptionPane.NO_OPTION) {
+                        return null;
+
+                    }
+                }
+
+            }
+
+            CompoundUndoAction undoAction = new CompoundUndoAction();
+
+            for (Enumeration e2 = selConnectionEdgesInst.elements(); e2.hasMoreElements(); ) {
+                tmpInst = (Instance) e2.nextElement();
+                for (Enumeration e3 = ((ConnectionEdgeInstance) tmpInst).getRelatedInstances(); e3.hasMoreElements(); ) {
+                    Instance currInstance = (Instance) e3.nextElement();
+                    undoAction.addAction(this.deleteInstance(currInstance));
+                }
+                undoAction.addAction(this.deleteInstance(tmpInst));
+            }
+
+            if ((action == CUT) || (action == DELETE)) {
+                Opcat2.getUndoManager().undoableEditHappened(
+                        new UndoableEditEvent(this, undoAction));
+                Opcat2.setUndoEnabled(Opcat2.getUndoManager().canUndo());
+                Opcat2.setRedoEnabled(Opcat2.getUndoManager().canRedo());
+            }
+
+            //Opcat2.updateStructureChange(Opcat2.LOGICAL_CHANGE);
+            return null;
+        }
+        // Deletion of links and relations
+        CompoundUndoAction undoAction = new CompoundUndoAction();
+        for (Enumeration e4 = selLinksRelationsInst.elements(); e4.hasMoreElements(); ) {
+            undoAction.addAction(this.deleteInstance((Instance) e4.nextElement()));
+        }
+        if ((action == CUT) || (action == DELETE)) {
+            Opcat2.getUndoManager().undoableEditHappened(
+                    new UndoableEditEvent(this, undoAction));
+            Opcat2.setUndoEnabled(Opcat2.getUndoManager().canUndo());
+            Opcat2.setRedoEnabled(Opcat2.getUndoManager().canRedo());
+        }
+        //Opcat2.updateStructureChange(Opcat2.LOGICAL_CHANGE);
+
+        return null;
+    }
