@@ -34,7 +34,6 @@
     firebase.initializeApp(config);
   </script>
   <script>
-  var KeyowrdsCounter = 3;
     function load() {
       // expand the textarea only at the first time the web starts and hide the button
       document.getElementById('func').cols = 120;
@@ -65,45 +64,54 @@
     document.getElementById('func').cols = 40;
     document.getElementById('func').rows = 29;
     document.getElementById('welcome').style.display='none';
-   $(".ui-dialog-content").dialog("close");
-}
-    var database = firebase.database();
-    var keywordsRef = firebase.database().ref('/Keywords');
-    keywordsRef.on('value', function (snapshot) {
-      snapshot.forEach(function (childSnapshot) {
-        var opt = document.createElement('option');
-        opt.value = childSnapshot.val();
-        opt.text = childSnapshot.val();
-        opt.innerHTML = childSnapshot.val();
-        document.getElementById('keywords').appendChild(opt);
-      });
-    });
+    $(".ui-dialog-content").dialog("close");
+    }
 
-    function addKeyword() {
-      var newvalue = document.getElementById('newkeyword').value;
-      if(newvalue == ''){
-        return;
-      }
+    function load_keywords() {
+      var database = firebase.database();
+      var keywordsRef = firebase.database().ref('/Keywords');
+      keywordsRef.on('value', function (snapshot) {
+        snapshot.forEach(function (childSnapshot) {
+          var opt = document.createElement('option');
+          opt.value = childSnapshot.val();
+          opt.text = childSnapshot.val();
+          opt.innerHTML = childSnapshot.val();
+          document.getElementById('keywords').appendChild(opt);
+        });
+      });
+    }
+
+    function addKeyword(str) {
       var select = document.getElementById('keywords');
-      var counter = select.children.length+1;
-      for(var i=0;i<counter-1;i++){
-        if(select.children[i].value == newvalue){
-          alert('Keyword exists!');
-          return;
+      var counter = select.children.length + 1;
+      var flag = 0;
+      for(var i=0;i<counter-1;i++) {
+        if (select.children[i].value == str) {
+          flag = 1;
         }
       }
-      select.innerHTML = '';
-      document.getElementById('newkeyword').value = '';
-      firebase.database().ref('/Keywords/'+counter).set(newvalue);
+      str = trim_string(str);
+      if (flag == 0 && str != ',' && str != ' ' && str != '') firebase.database().ref('/Keywords/').push(str);
+    }
+
+    function trim_string(str){
+      if( str.charAt(0) == ',' ) str = str.substring(1);
+      if ( str.charAt(str.length-1) == ',' ) str = str.substring(0, str.length - 2);
+      if( str.charAt(0) == ' ' ) str = str.substring(1);
+      if ( str.charAt(str.length-1) == ' ' ) str = str.substring(0, str.length - 2);
+      return str ;
     }
     function add_keyword_to_list() {
-      if(document.getElementById('chosen').value.search(document.getElementById('keywords').value+', ') == -1) {
-        document.getElementById('chosen').value += document.getElementById('keywords').value + ', ';
+      if(document.getElementById('chosen').value.search(document.getElementById('keywords').value+',') == -1) {
+        document.getElementById('chosen').value += document.getElementById('keywords').value + ',';
       }
   }
     function save_to_database() {
-      var keywords_array = document.getElementById('chosen').value.split(', ');
-      keywords_array.pop();
+      var keywords_array = document.getElementById('chosen').value.split(',');
+      for( var i = 0 ;i<keywords_array.length;i++ ) {
+        keywords_array[i] = keywords_array[i].trim();
+        addKeyword(keywords_array[i]);
+      }
       keywords_str = keywords_array.sort().toString();
       var url = 'https://icsd-app.firebaseio.com/Functions/' + keywords_str + '.' + 'json';
       var my_request = new XMLHttpRequest();
@@ -112,6 +120,7 @@
     }
 
     function push_func_to_database(keywords_name) {
+      keywords_name = trim_string(keywords_name);
       firebase.database().ref('/Functions/'+ keywords_name + '/').push(
         {
             "body": document.getElementById('func').value,
@@ -122,11 +131,10 @@
     }
 
     function clear_forum() {
-      document.getElementById('funcname').value = '';
       document.getElementById('keywords').value = '';
-      document.getElementById('newkeyword').value = '';
+      document.getElementById('keywords').innerHTML = '';
       document.getElementById('chosen').value = '';
-
+      document.getElementById('funcname').value = document.getElementById('v-35').innerHTML;
     }
   </script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
