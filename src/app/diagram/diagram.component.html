@@ -20,6 +20,9 @@
     <p id="dialogTextSim"></p>
     <p id="serverstatus" style="font-size:10px; color:#ff5100;"></p>
   </div>
+<div id="dialogPreview" title="Preview">
+  <textarea id="previewText" style="width:950px; height:450px;" ></textarea>
+</div>
 
   <div id="dialogFunc" title="Function">
     <textarea autofocus id="func2" style="width:950px; height:500px;" [(ngModel)]="functionText" #functionTextSend (keyup)="onchange(functionTextSend.value)"></textarea>
@@ -33,8 +36,6 @@
     <p id="howtosave" hidden>0</p>
   </div>
   <div id="dialogLoad" title="Load">
-  <b>This feature is not available right now.</b><br><br>
-
 
     Choose keyword: <select id="keywords3" type="text" style="width:200px" onchange="add_func_to_list()">
   </select><br><br>

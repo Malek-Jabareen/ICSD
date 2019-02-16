@@ -446,17 +446,42 @@ export class DiagramComponent implements OnInit {
         height: 600,
         width: 1000
       });
-      $('#dialogExample').dialog({
+      $('#dialogPreview').dialog({
         //  close: function() { $('#convert').focus(); },
-        open: function () {
-          $('#accordion').accordion({
-            heightStyle: "content"
-          });
+
+        buttons: {
+          'Close': {
+            text: 'Close',
+            click: function () {
+              $(this).dialog('close');
+            }
+          },
+          'Load': {
+            id: 'load',
+            text: 'Load',
+            click: function () {
+              var text = (<HTMLInputElement>document.getElementById('previewText')).value;
+            //  var text = $('#previewText').val();
+              self.functionText=text;
+              self.funcTextEvent.emit(text);
+              (<HTMLInputElement>document.getElementById('func')).value=text;
+            //  $('#previewText').val(text);
+              $(this).dialog('close');
+              $('#dialogLoad').dialog('close');
+
+            }
+          }
         },
+        autoOpen: false,
+        height: 600,
+        width: 1000
+      });
+      $('#dialogExample').dialog({
+
 
         autoOpen: false,
-        height: 830,
-        width: 1300
+        height: 600,
+        width: 1100
       });
       $('#dialogSave').dialog({
         //   close: function() { $('#convert').focus(); },
