@@ -460,10 +460,12 @@ export class DiagramComponent implements OnInit {
             id: 'load',
             text: 'Load',
             click: function () {
-              var text = document.getElementById('previewText').value;
+              var text = (<HTMLInputElement>document.getElementById('previewText')).value;
+            //  var text = $('#previewText').val();
               self.functionText=text;
               self.funcTextEvent.emit(text);
-              document.getElementById('func').value=text;
+              (<HTMLInputElement>document.getElementById('func')).value=text;
+            //  $('#previewText').val(text);
               $(this).dialog('close');
               $('#dialogLoad').dialog('close');
 
