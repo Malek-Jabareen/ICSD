@@ -151,13 +151,21 @@
       document.getElementById('choose_func').innerHTML = '';
 
       var opt1 = document.createElement('option');
-      opt1.value = '--select--';
+      opt1.value = 'wait';
       opt1.text = '--select--';
-      opt1.innerHTML = '--select--';
+      opt1.innerHTML = 'Please Wait';
       document.getElementById('keywords3').appendChild(opt1);
+      document.getElementById('keywords3').disabled=true;
 
       var FunctionsRef = firebase.database().ref('/Functions');
      FunctionsRef.on('value', function (snapshot) {
+       document.getElementById('keywords3').disabled=false;
+
+       var selectobject=document.getElementById("keywords3");
+       for (var i=0; i<selectobject.length; i++){
+         if (selectobject.options[i].value == 'wait' )
+           selectobject.remove(i);
+       }
        snapshot.forEach(function (childSnapshot) {
 
          var opt1 = document.createElement('option');
@@ -220,8 +228,8 @@
       var text = func_text.toString();
 
 
-      // text = text.replace(/\/n/g,' sgdsf')
-alert(text);
+      text = text.replace(/\\n/g,"\n");
+      text = text.replace(/\\t/g,"\t");
       document.getElementById('previewText').value=text;
       // alert(document.getElementById("choose_func").getAttribute('text'));
 
