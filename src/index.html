@@ -51,6 +51,7 @@
       }
       document.getElementById('savebtn12').addEventListener('click', save_to_database);
       document.getElementById('closebtn12').addEventListener('click', clear_forum);
+      document.getElementById('loadbtn12').addEventListener('click',just_load );
     }
     function conv(){
       if (document.getElementById('func').value == '') {
@@ -77,6 +78,7 @@
           opt.text = childSnapshot.val();
           opt.innerHTML = childSnapshot.val();
           document.getElementById('keywords').appendChild(opt);
+
         });
       });
     }
@@ -136,6 +138,108 @@
       document.getElementById('chosen').value = '';
       document.getElementById('funcname').value = document.getElementById('v-35').innerHTML;
     }
+
+    var Array_Func= [] ;
+    var func_text="";
+
+    function loads_keywords() {
+      document.getElementById('keywords3').value = '';
+      document.getElementById('keywords3').innerHTML = '';
+      document.getElementById('choose_func').value = '';
+      document.getElementById('choose_func').innerHTML = '';
+
+      var opt1 = document.createElement('option');
+      opt1.value = '--select--';
+      opt1.text = '--select--';
+      opt1.innerHTML = '--select--';
+      document.getElementById('keywords3').appendChild(opt1);
+
+      var FunctionsRef = firebase.database().ref('/Functions');
+     FunctionsRef.on('value', function (snapshot) {
+       snapshot.forEach(function (childSnapshot) {
+
+         var opt1 = document.createElement('option');
+         opt1.value = childSnapshot.key;
+         opt1.text = childSnapshot.key;
+         opt1.innerHTML = childSnapshot.key;
+         document.getElementById('keywords3').appendChild(opt1);
+
+       })
+     })
+   }
+    function add_func_to_list() {
+      Array_Func = [];
+      func_text="";
+      document.getElementById('choose_func').value = '';
+      document.getElementById('choose_func').innerHTML = '';
+      var opt2 = document.createElement('option');
+      opt2.value = '--select--';
+      opt2.text = '--select--';
+      opt2.innerHTML ='--select--';
+
+      document.getElementById('choose_func').appendChild(opt2);
+
+      var FunctionsRef = firebase.database().ref('/Functions');
+      FunctionsRef.on('value', function (snapshot) {
+        snapshot.forEach(function (childSnapshot) {
+
+          if(document.getElementById('keywords3').value.search(childSnapshot.key.trim().split(',')) !== -1)
+          {
+            var f1=firebase.database().ref().child('/Functions/'+childSnapshot.key);
+            f1.on('value', function (snapshot2) {
+              snapshot2.forEach(function (child) {
+
+                var opt2 = document.createElement('option');
+                opt2.value = JSON.stringify(child.child("name")).substring(1,JSON.stringify(child.child("name")).length-1);
+                opt2.text = JSON.stringify(child.child("name")).substring(1,JSON.stringify(child.child("name")).length-1);
+                Array_Func.push(JSON.stringify(child.child("body")));
+
+                opt2.innerHTML = JSON.stringify(child.child("name")).substring(1,JSON.stringify(child.child("name")).length-1);;
+
+                document.getElementById('choose_func').appendChild(opt2);
+              })
+
+            });
+
+
+          }
+
+        })
+      })
+    }
+
+    function load_func(){
+
+      var d=document.getElementById('choose_func');
+      func_text=Array_Func[d.selectedIndex - 1];
+
+       // alert(func_text.toString());
+      // alert(document.getElementById("choose_func").getAttribute('text'));
+
+    }
+
+    function just_load(){
+    //  alert(document.getElementById('func2').value);
+       // document.getElementById('func2').text=func_text.toString();
+
+       alert(func_text.toString());
+
+     // if(document.getElementById('keyword3').value == '--select--')
+     // {   alert('please select a keyword');}
+      //else if(document.getElementById('choose_func').value == '--select--')
+      //{ alert('please select a function to load'); }
+     // else{
+       // alert(func_text.toString());
+       // document.getElementById('functionText').value = func_text.toString();
+      //  document.getElementById('functionText').innerText=func_text.toString();
+
+        //document.getElementById('functionTextConvert').value = func_text.toString();
+        //alert('done');
+     // }
+    }
+
+
+
   </script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
