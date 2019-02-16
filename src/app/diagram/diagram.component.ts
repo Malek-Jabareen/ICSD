@@ -489,8 +489,9 @@ export class DiagramComponent implements OnInit {
               $(this).dialog('close');
             }
           },
-          'Save': {
-            text: 'Save',
+          'Load': {
+            id: 'loadbtn12',
+            text: 'Load',
             click: function () {
               $(this).dialog('close');
             }
@@ -966,7 +967,7 @@ export class DiagramComponent implements OnInit {
     str = str.replace(new RegExp('([^A-Z{};]+);', 'g'), 'L');
 
     if (this.ignoreP == false) {
-      str = str.replace(/{/g, 'P');
+      str = str.replace(/{/g, 'B');
       str = str.replace(/}/g, 'P');
     }
     else {
