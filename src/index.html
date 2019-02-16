@@ -52,6 +52,8 @@
       document.getElementById('savebtn12').addEventListener('click', save_to_database);
       document.getElementById('closebtn12').addEventListener('click', clear_forum);
       document.getElementById('loadbtn12').addEventListener('click',just_load );
+
+
     }
     function conv(){
       if (document.getElementById('func').value == '') {
@@ -213,7 +215,14 @@
       var d=document.getElementById('choose_func');
       func_text=Array_Func[d.selectedIndex - 1];
 
-       // alert(func_text.toString());
+        //alert(func_text.toString());
+      $('#dialogPreview').dialog('open');
+      var text = func_text.toString();
+
+
+      // text = text.replace(/\/n/g,' sgdsf')
+alert(text);
+      document.getElementById('previewText').value=text;
       // alert(document.getElementById("choose_func").getAttribute('text'));
 
     }
@@ -221,7 +230,6 @@
     function just_load(){
     //  alert(document.getElementById('func2').value);
        // document.getElementById('func2').text=func_text.toString();
-
        alert(func_text.toString());
 
      // if(document.getElementById('keyword3').value == '--select--')
