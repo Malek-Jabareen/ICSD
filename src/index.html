@@ -49,13 +49,12 @@
       if (navigator.userAgent.match(/Android/i) || navigator.userAgent.match(/iPhone|iPad|iPod/i)) {
         alert('This website is not fully support for mobile devices, please use a desktop pc.');
       }
-      document.getElementById('savebtn12').addEventListener('click', save_to_database);
-      document.getElementById('closebtn12').addEventListener('click', clear_forum);
-      document.getElementById('loadbtn12').addEventListener('click',just_load );
-
 
     }
     function conv(){
+      document.getElementById('savebtn12').addEventListener('click', save_to_database);
+      document.getElementById('closebtn12').addEventListener('click', clear_forum);
+      document.getElementById('loadbtn12').addEventListener('click',just_load );
       if (document.getElementById('func').value == '') {
         alert('please enter a function');
         return;
@@ -138,11 +137,18 @@
       document.getElementById('keywords').value = '';
       document.getElementById('keywords').innerHTML = '';
       document.getElementById('chosen').value = '';
-      document.getElementById('funcname').value = document.getElementById('v-35').innerHTML;
+      document.getElementById('funcname').value = funcnametosave();
     }
 
     var Array_Func= [] ;
     var func_text="";
+
+    function funcnametosave() {
+        let functionText = document.getElementById('func').innerHTML;
+        let funcNamex = functionText.substring(0, functionText.indexOf('('));
+        const a = funcNamex.trim().split(' ');
+        return a[a.length - 1];
+    }
 
     function loads_keywords() {
       document.getElementById('keywords3').value = '';
@@ -266,6 +272,5 @@
 
 
 <app-root></app-root>
-
 </body>
 </html>

@@ -175,4 +175,13 @@ export class AppComponent implements OnInit {
     this.component1.zoomout();
   }
 
+  funcnametosave(){
+    let functionText = (<HTMLInputElement>document.getElementById('func')).value;
+    let funcNamex = functionText.substring(0, functionText.indexOf('('));
+    const a = funcNamex.trim().split(' ');
+    document.getElementById('funcname').innerHTML = a[a.length - 1];
+    (<HTMLInputElement>document.getElementById('funcname')).value = a[a.length - 1];
+    return a[a.length - 1];
+  }
+
 }
